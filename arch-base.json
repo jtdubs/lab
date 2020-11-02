@@ -31,7 +31,8 @@
             "guest_os_type": "other5xlinux-64",
             "vmx_data": {
                 "firmware": "efi"
-            }
+            },
+            "vm_name": "arch-base"
         }
     ],
 
