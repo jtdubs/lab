@@ -1,0 +1,50 @@
+{
+    "variables": {
+        "iso_url": "iso/archlinux-2020.11.01-x86_64.iso",
+        "iso_checksum": "739fab8d23430a01629a131ae02713a09af86968"
+    },
+
+    "builders": [
+        {
+            "type": "vmware-iso",
+            "disk_size": 32768,
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
+            "http_directory": "srv",
+            "shutdown_command": "sudo -E -S systemctl poweroff -i",
+            "cpus": 1,
+            "memory": 1024,
+            "cores": 2,
+            "network": "vmnet8",
+            "headless": "false",
+            "communicator": "ssh",
+            "ssh_username": "packer",
+            "ssh_password": "packer",
+            "ssh_timeout": "10m",
+            "boot_wait": "5s",
+            "boot_command": [
+                "<enter><wait40>",
+                "/usr/bin/curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>"
+            ],
+            "disk_adapter_type": "scsi",
+            "cdrom_adapter_type": "ide",
+            "guest_os_type": "other5xlinux-64",
+            "vmx_data": {
+                "firmware": "efi"
+            }
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "{{ .Vars }} sudo -E -S bash '{{ .Path }}'",
+            "script": "scripts/bootstrap.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "{{ .Vars }} sudo -E -S bash '{{ .Path }}'",
+            "script": "scripts/install.sh"
+        }
+    ]
+}
