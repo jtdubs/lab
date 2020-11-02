@@ -16,7 +16,7 @@
             "memory": 1024,
             "cores": 2,
             "network": "vmnet8",
-            "headless": "false",
+            "headless": false,
             "communicator": "ssh",
             "ssh_username": "packer",
             "ssh_password": "packer",
@@ -24,7 +24,7 @@
             "boot_wait": "5s",
             "boot_command": [
                 "<enter><wait40>",
-                "/usr/bin/curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>"
+                "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>"
             ],
             "disk_adapter_type": "scsi",
             "cdrom_adapter_type": "ide",
@@ -40,11 +40,6 @@
             "type": "shell",
             "execute_command": "{{ .Vars }} sudo -E -S bash '{{ .Path }}'",
             "script": "scripts/bootstrap.sh"
-        },
-        {
-            "type": "shell",
-            "execute_command": "{{ .Vars }} sudo -E -S bash '{{ .Path }}'",
-            "script": "scripts/install.sh"
         }
     ]
 }
