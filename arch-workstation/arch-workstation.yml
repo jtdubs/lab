@@ -1,0 +1,45 @@
+- name: 'Provision Image'
+  hosts: default
+  become: true
+
+  tasks:
+    - name: Install Packages
+      package:
+        name:
+          - alacritty
+          - bspwm
+          - dmenu
+          - exa
+          - feh
+          - firefox
+          - fish
+          - fzf
+          - git
+          - lightdm
+          - lightdm-gtk-greeter
+          - neovim
+          - network-manager-applet
+          - nodejs
+          - numlockx
+          - picom
+          - pulseaudio
+          - pulseaudio-alsa
+          - python
+          - python-pip
+          - sxhkd
+          - tmux
+          - xf86-video-vmware
+          - xorg-server
+          - xorg-xrdb
+          - xorg-xsetroot
+        state: present
+
+    - name: Window Manager Service
+      service:
+        name: lightdm.service
+        enabled: yes
+
+# yay (https://aur.archlinux.org/yay.git)
+# https://github.com/jtdubs/dotfiles.git
+#          - polybar
+#          - xinit-xsession

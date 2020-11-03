@@ -56,17 +56,6 @@ echo "Configuring ssh..."
 pacman -S --noconfirm openssh
 systemctl enable sshd.service
 
-echo "Creating ansible user..."
-useradd -p $(/usr/bin/openssl passwd -crypt 'ansible') -m -U ansible
-
-echo "Setting up sudo..."
-pacman -S --noconfirm sudo
-cat > /etc/sudoers.d/10_ansible <<EOS
-Defaults env_keep += "SSH_AUTH_SOCK"
-ansible ALL=(ALL) NOPASSWD: ALL
-EOS
-chmod 0440 /etc/sudoers.d/10_ansible
-
 echo "Installing vmware tools..."
 pacman -S --noconfirm linux-headers open-vm-tools nfs-utils
 systemctl enable vmtoolsd.service
@@ -74,6 +63,18 @@ systemctl enable rpcbind.service
 
 echo "Installing updates..."
 pacman -Syu --noconfirm
+
+echo "Installing sudo..."
+pacman -S --noconfirm sudo
+
+echo "Setting up Ansible..."
+useradd -p $(/usr/bin/openssl passwd -crypt 'ansible') -m -U ansible
+pacman -S --noconfirm python
+cat > /etc/sudoers.d/10_ansible <<EOS
+Defaults env_keep += "SSH_AUTH_SOCK"
+ansible ALL=(ALL) NOPASSWD: ALL
+EOS
+chmod 0440 /etc/sudoers.d/10_ansible
 EOF
 
 echo "Entering chroot..."

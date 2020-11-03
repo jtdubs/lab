@@ -1,0 +1,13 @@
+arch-base:
+    install yay
+
+arch-workstation;
+    install ansible-aur
+    use yay to install final packages
+    create jtdubs user
+    clone dotfiles and install them as jtdubs
+
+general:
+    use ssh keys rather than id/pw?
+    how to use ansible-vault or just vault in general?
+    test it

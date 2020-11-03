@@ -1,0 +1,25 @@
+{
+    "builders": [
+        {
+            "type": "vmware-vmx",
+            "source_path": "../arch-base/output-vmware-iso/arch-base.vmx",
+            "shutdown_command": "sudo -E -S systemctl poweroff -i",
+            "communicator": "ssh",
+            "ssh_username": "ansible",
+            "ssh_password": "ansible",
+            "ssh_timeout": "10m",
+            "boot_wait": "15s",
+            "vm_name": "arch-workstation"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "ansible",
+            "user": "ansible",
+            "playbook_file": "./arch-workstation.yml",
+            "use_proxy": false,
+            "extra_arguments": ["-e", "ansible_ssh_pass=ansible"]
+        }
+    ]
+}
