@@ -9,7 +9,8 @@
             "ssh_password": "ansible",
             "ssh_timeout": "10m",
             "boot_wait": "15s",
-            "vm_name": "arch-workstation"
+            "vm_name": "arch-workstation",
+            "display_name": "arch-workstation"
         }
     ],
 
@@ -19,7 +20,8 @@
             "user": "ansible",
             "playbook_file": "./arch-workstation.yml",
             "use_proxy": false,
-            "extra_arguments": ["-e", "ansible_ssh_pass=ansible"]
+            "extra_arguments": ["-e", "ansible_ssh_pass=ansible"],
+            "keep_inventory_file": true
         }
     ]
 }

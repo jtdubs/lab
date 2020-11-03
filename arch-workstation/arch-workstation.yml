@@ -1,9 +1,9 @@
-- name: 'Provision Image'
+- name: Provision Image
   hosts: default
-  become: true
 
   tasks:
     - name: Install Packages
+      become: true
       package:
         name:
           - alacritty
@@ -34,12 +34,26 @@
           - xorg-xsetroot
         state: present
 
-    - name: Window Manager Service
+    - name: Install AUR Packages
+      aur:
+        name:
+          - polybar
+          - xinit-xsession
+        state: present
+
+    - name: Enable Window Manager Service
+      become: true
       service:
         name: lightdm.service
         enabled: yes
 
-# yay (https://aur.archlinux.org/yay.git)
+    - name: Create User
+      become: true
+      user:
+        name: jtdubs
+        comment: Justin Dubs
+        group: wheel
+        shell: /usr/bin/fish
+        state: present
+
 # https://github.com/jtdubs/dotfiles.git
-#          - polybar
-#          - xinit-xsession
