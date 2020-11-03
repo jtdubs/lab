@@ -30,9 +30,12 @@ pacstrap /mnt base linux linux-firmware man-db man-pages
 genfstab -U /mnt >> /mnt/etc/fstab
 
 cat > /mnt/chroot-install.sh <<EOF
+#!/usr/bin/env bash
+
+set -eu
+
 echo "Setting timezone..."
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
-hwclock --systohc
 
 echo "Setting localization..."
 echo LANG=en_US.UTF_8 > /etc/locale.conf
@@ -75,6 +78,20 @@ Defaults env_keep += "SSH_AUTH_SOCK"
 ansible ALL=(ALL) NOPASSWD: ALL
 EOS
 chmod 0440 /etc/sudoers.d/10_ansible
+
+echo "Installing yay..."
+pacman -S --noconfirm base-devel git
+cat > /home/ansible/install-yay.sh <<EOS
+#!/bin/bash
+set -eu
+cd /home/ansible
+git clone https://aur.archlinux.org/yay-git.git
+pushd yay-git
+makepkg --syncdeps --install --noconfirm
+popd
+rm -Rf yay-git
+EOS
+sudo -u ansible bash /home/ansible/install-yay.sh
 EOF
 
 echo "Entering chroot..."
