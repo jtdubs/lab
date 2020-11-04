@@ -42,5 +42,14 @@
             "execute_command": "{{ .Vars }} sudo -E -S bash '{{ .Path }}'",
             "script": "scripts/bootstrap.sh"
         }
+    ],
+
+    "post-processors": [
+        {
+            "type": "shell-local",
+            "inline": [
+                "ssh-keygen -R {{ build `Host` }}"
+            ]
+        }
     ]
 }
