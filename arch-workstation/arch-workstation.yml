@@ -58,6 +58,15 @@
         password: "{{ '' | password_hash('sha512') }}"
         update_password: on_create
 
+    - name: Setup Sudoers
+      become: true
+      copy:
+        src: 10_jtdubs
+        dest: /etc/sudoers.d/10_jtdubs
+        owner: root
+        group: root
+        mode: '0440'
+
     - name: Clone Dotfiles
       become: true
       become_user: jtdubs

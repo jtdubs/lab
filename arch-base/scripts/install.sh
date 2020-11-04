@@ -16,9 +16,6 @@ echo 127.0.0.1 arch-base > /etc/hosts
 echo ::1 arch-base >> /etc/hosts
 echo 127.0.1.1 arch-base.localdomain arch-base >> /etc/hosts
 
-echo "Setting root password..."
-usermod -p $(/usr/bin/openssl passwd -crypt 'toor') root
-
 echo "Configuring network..."
 pacman -S --noconfirm networkmanager dhclient
 systemctl enable NetworkManager.service
@@ -39,7 +36,7 @@ echo "Installing sudo..."
 pacman -S --noconfirm sudo
 
 echo "Setting up Ansible..."
-useradd -p $(/usr/bin/openssl passwd -crypt 'ansible') -m -U ansible
+useradd -m -U ansible
 pacman -S --noconfirm python
 cat > /etc/sudoers.d/10_ansible <<EOS
 Defaults env_keep += "SSH_AUTH_SOCK"

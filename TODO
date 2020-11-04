@@ -1,4 +1,1 @@
-- No root password (sudo only)
-- No ansible password (ssh only)
-- Setup sudoers entry for jtdubs
 - Fix Xorg resizing in arch VM???
