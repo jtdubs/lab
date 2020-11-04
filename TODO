@@ -1,8 +1,4 @@
-arch-workstation;
-    clone dotfiles and install them as jtdubs
-
-general:
-#    fix known_hosts file issue - clean it up after packer build w/ local shell provisioner or post-processor
-    ansible: use ssh keys rather than id/pw?
-    use ansible-vault for ssh keys?
-    use ansible-vault for jtdubs password
+- No root password (sudo only)
+- No ansible password (ssh only)
+- Setup sudoers entry for jtdubs
+- Fix Xorg resizing in arch VM???

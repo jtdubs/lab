@@ -6,7 +6,7 @@
             "shutdown_command": "sudo -E -S systemctl poweroff -i",
             "communicator": "ssh",
             "ssh_username": "ansible",
-            "ssh_password": "ansible",
+            "ssh_private_key_file": "../ansible_id_rsa",
             "ssh_timeout": "10m",
             "boot_wait": "15s",
             "vm_name": "arch-workstation",
@@ -17,11 +17,8 @@
     "provisioners": [
         {
             "type": "ansible",
-            "user": "ansible",
             "playbook_file": "./arch-workstation.yml",
-            "use_proxy": false,
-            "extra_arguments": ["-e", "ansible_ssh_pass=ansible"],
-            "keep_inventory_file": true
+            "use_proxy": false
         }
     ],
 

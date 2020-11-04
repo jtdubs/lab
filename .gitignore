@@ -1,3 +1,5 @@
 iso/
 output*/
 packer_cache/
+.undodir/
+Session.vim

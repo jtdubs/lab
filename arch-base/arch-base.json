@@ -38,11 +38,30 @@
 
     "provisioners": [
         {
+            "type": "file",
+            "sources": [
+                "../ansible_id_rsa.pub",
+                "scripts/install.sh"
+            ],
+            "destination": "/tmp/"
+        },
+        {
             "type": "shell",
-            "execute_command": "{{ .Vars }} sudo -E -S bash '{{ .Path }}'",
+            "execute_command": "sudo -E -S bash '{{ .Path }}'",
             "script": "scripts/bootstrap.sh"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo -E -S systemd-nspawn --machine=guest -D /mnt /install.sh"
+            ]
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo -E -S bash '{{ .Path }}'",
+            "script": "scripts/cleanup.sh"
         }
-    ],
+      ],
 
     "post-processors": [
         {

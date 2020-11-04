@@ -55,5 +55,26 @@
         group: wheel
         shell: /usr/bin/fish
         state: present
+        password: "{{ '' | password_hash('sha512') }}"
+        update_password: on_create
 
-# https://github.com/jtdubs/dotfiles.git
+    - name: Clone Dotfiles
+      become: true
+      become_user: jtdubs
+      git:
+        repo: "https://github.com/jtdubs/dotfiles.git"
+        dest: /home/jtdubs/dotfiles
+
+    - name: Install Dotfile Requirements
+      become: true
+      become_user: jtdubs
+      pip:
+        requirements: /home/jtdubs/dotfiles/requirements.txt
+
+    - name: Install Dotfiles
+      become: true
+      become_user: jtdubs
+      shell:
+        chdir: /home/jtdubs/dotfiles
+        cmd: ./sync.py
+        creates: /home/jtdubs/.xsession
