@@ -3,3 +3,5 @@ output*/
 packer_cache/
 .undodir/
 Session.vim
+/packer_id_rsa
+/packer_id_rsa.pub
