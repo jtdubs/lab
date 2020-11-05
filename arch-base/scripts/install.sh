@@ -35,32 +35,32 @@ pacman -Syu --noconfirm
 echo "Installing sudo..."
 pacman -S --noconfirm sudo
 
-echo "Setting up Ansible..."
-useradd -m -U ansible
+echo "Setting up Packer..."
+useradd -m -U packer
 pacman -S --noconfirm python
-cat > /etc/sudoers.d/10_ansible <<EOS
+cat > /etc/sudoers.d/10_packer <<EOS
 Defaults env_keep += "SSH_AUTH_SOCK"
-ansible ALL=(ALL) NOPASSWD: ALL
+packer ALL=(ALL) NOPASSWD: ALL
 EOS
-chmod 0440 /etc/sudoers.d/10_ansible
+chmod 0440 /etc/sudoers.d/10_packer
 
 echo "Installing authorized_keys..."
-mkdir -p /home/ansible/.ssh
-mv /ansible_id_rsa.pub /home/ansible/.ssh/authorized_keys
-chown -R ansible:ansible /home/ansible/.ssh
-chmod 700 /home/ansible/.ssh
-chmod 600 /home/ansible/.ssh/authorized_keys
+mkdir -p /home/packer/.ssh
+mv /packer_id_rsa.pub /home/packer/.ssh/authorized_keys
+chown -R packer:packer /home/packer/.ssh
+chmod 700 /home/packer/.ssh
+chmod 600 /home/packer/.ssh/authorized_keys
 
 echo "Installing yay..."
 pacman -S --noconfirm base-devel git
-cat > /home/ansible/install-yay.sh <<EOS
+cat > /home/packer/install-yay.sh <<EOS
 #!/bin/bash
 set -eu
-cd /home/ansible
+cd /home/packer
 git clone https://aur.archlinux.org/yay-git.git
 pushd yay-git
 makepkg --syncdeps --install --noconfirm
 popd
 rm -Rf yay-git
 EOS
-sudo -u ansible bash /home/ansible/install-yay.sh
+sudo -u packer bash /home/packer/install-yay.sh

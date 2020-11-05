@@ -1,6 +1,7 @@
 {
     "variables": {
-        "iso_url": "iso/archlinux-2020.11.01-x86_64.iso",
+        "iso_url": "http://mirrors.mit.edu/archlinux/iso/2020.11.01/archlinux-2020.11.01-x86_64.iso",
+        "iso_path": "iso/archlinux-2020.11.01-x86_64.iso",
         "iso_checksum": "739fab8d23430a01629a131ae02713a09af86968"
     },
 
@@ -8,7 +9,10 @@
         {
             "type": "vmware-iso",
             "disk_size": 32768,
-            "iso_url": "{{ user `iso_url` }}",
+            "iso_urls": [
+                "{{ user `iso_path` }}",
+                "{{ user `iso_url` }}"
+            ],
             "iso_checksum": "sha1:{{ user `iso_checksum` }}",
             "http_directory": "srv",
             "shutdown_command": "sudo systemctl poweroff -i",
@@ -40,7 +44,7 @@
         {
             "type": "file",
             "sources": [
-                "../ansible_id_rsa.pub",
+                "../packer_id_rsa.pub",
                 "scripts/install.sh"
             ],
             "destination": "/tmp/"
