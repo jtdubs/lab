@@ -3,7 +3,7 @@
         {
             "type": "vmware-vmx",
             "source_path": "../arch-base/output-vmware-iso/arch-base.vmx",
-            "shutdown_command": "sudo -E -S systemctl poweroff -i",
+            "shutdown_command": "sudo systemctl poweroff -i",
             "communicator": "ssh",
             "ssh_username": "ansible",
             "ssh_private_key_file": "../ansible_id_rsa",
@@ -16,9 +16,13 @@
 
     "provisioners": [
         {
-            "type": "ansible",
-            "playbook_file": "./arch-workstation.yml",
-            "use_proxy": false
+            "type": "shell",
+            "script": "scripts/setup.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
+            "script": "scripts/setup-jtdubs.sh"
         }
     ],
 

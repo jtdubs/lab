@@ -11,7 +11,7 @@
             "iso_url": "{{ user `iso_url` }}",
             "iso_checksum": "sha1:{{ user `iso_checksum` }}",
             "http_directory": "srv",
-            "shutdown_command": "sudo -E -S systemctl poweroff -i",
+            "shutdown_command": "sudo systemctl poweroff -i",
             "cpus": 1,
             "memory": 1024,
             "cores": 2,
@@ -47,18 +47,18 @@
         },
         {
             "type": "shell",
-            "execute_command": "sudo -E -S bash '{{ .Path }}'",
+            "execute_command": "sudo bash '{{ .Path }}'",
             "script": "scripts/bootstrap.sh"
         },
         {
             "type": "shell",
             "inline": [
-                "sudo -E -S systemd-nspawn --machine=guest -D /mnt /install.sh"
+                "sudo systemd-nspawn --machine=guest -D /mnt /install.sh"
             ]
         },
         {
             "type": "shell",
-            "execute_command": "sudo -E -S bash '{{ .Path }}'",
+            "execute_command": "sudo bash '{{ .Path }}'",
             "script": "scripts/cleanup.sh"
         }
       ],
