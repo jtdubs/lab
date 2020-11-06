@@ -36,7 +36,38 @@
             "vmx_data": {
                 "firmware": "efi"
             },
-            "vm_name": "arch-base"
+            "vm_name": "arch-base",
+            "keep_registered": true
+        },
+        {
+            "type": "virtualbox-iso",
+            "disk_size": 32768,
+            "iso_urls": [
+                "{{ user `iso_path` }}",
+                "{{ user `iso_url` }}"
+            ],
+            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
+            "http_directory": "srv",
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "cpus": 2,
+            "memory": 1024,
+            "headless": false,
+            "communicator": "ssh",
+            "ssh_username": "packer",
+            "ssh_password": "packer",
+            "ssh_timeout": "10m",
+            "boot_wait": "5s",
+            "boot_command": [
+                "<enter><wait40>",
+                "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>"
+            ],
+            "hard_drive_interface": "scsi",
+            "guest_os_type": "ArchLinux_64",
+            "vboxmanage": [
+                [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ]
+            ],
+            "vm_name": "arch-base",
+            "keep_registered": true
         }
     ],
 
@@ -45,7 +76,9 @@
             "type": "file",
             "sources": [
                 "../packer_id_rsa.pub",
-                "scripts/install.sh"
+                "scripts/install.sh",
+                "scripts/install-vmware.sh",
+                "scripts/install-virtualbox.sh"
             ],
             "destination": "/tmp/"
         },
@@ -58,6 +91,20 @@
             "type": "shell",
             "inline": [
                 "sudo systemd-nspawn --machine=guest -D /mnt /install.sh"
+            ]
+        },
+        {
+            "type": "shell",
+            "only": "vmware-iso",
+            "inline": [
+                "sudo systemd-nspawn --machine=guest -D /mnt /install-vmware.sh"
+            ]
+        },
+        {
+            "type": "shell",
+            "only": "virtualbox-iso",
+            "inline": [
+                "sudo systemd-nspawn --machine=guest -D /mnt /install-virtualbox.sh"
             ]
         },
         {

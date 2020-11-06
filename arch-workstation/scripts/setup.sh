@@ -12,14 +12,11 @@ sudo pacman -S --noconfirm \
 
 yay -S --noconfirm polybar xinit-xsession
 
-
 echo "Enabling Window Manager..."
 sudo systemctl enable lightdm.service
 
-
 echo "Creating jtdubs user..."
 sudo useradd -c "Justin Dubs" -U -G wheel -s /usr/bin/fish -m -p $(/usr/bin/openssl passwd -crypt '') jtdubs
-
 
 echo "Creating sudoers entry..."
 echo "jtdubs ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/10_jtdubs
