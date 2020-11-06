@@ -21,8 +21,7 @@
             "ssh_private_key_file": "../packer_id_rsa",
             "ssh_timeout": "10m",
             "boot_wait": "15s",
-            "vm_name": "arch-workstation",
-            "keep_registered": true
+            "vm_name": "arch-workstation"
         }
     ],
 
@@ -44,6 +43,9 @@
             "inline": [
                 "ssh-keygen -R {{ build `Host` }}"
             ]
+        },
+        {
+            "type": "vagrant"
         }
     ]
 }

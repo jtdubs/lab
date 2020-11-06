@@ -1,3 +1,4 @@
 - Register boxes with Vagrant
-- Split bootloader scripts out into separate bootstrap-vmware and bootstrap-virtualbox steps
-- Move this all to the new SSD
+# - Split bootloader scripts out into separate bootstrap-vmware and bootstrap-virtualbox steps
+# - Move this all to the new SSD
+- Ubuntu base image

@@ -36,8 +36,7 @@
             "vmx_data": {
                 "firmware": "efi"
             },
-            "vm_name": "arch-base",
-            "keep_registered": true
+            "vm_name": "arch-base"
         },
         {
             "type": "virtualbox-iso",
@@ -66,8 +65,7 @@
             "vboxmanage": [
                 [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ]
             ],
-            "vm_name": "arch-base",
-            "keep_registered": true
+            "vm_name": "arch-base"
         }
     ],
 
@@ -118,6 +116,9 @@
             "inline": [
                 "ssh-keygen -R {{ build `Host` }}"
             ]
+        },
+        {
+            "type": "vagrant"
         }
     ]
 }
