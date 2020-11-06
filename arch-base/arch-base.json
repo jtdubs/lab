@@ -89,22 +89,20 @@
         },
         {
             "type": "shell",
-            "inline": [
-                "sudo systemd-nspawn --machine=guest -D /mnt /install.sh"
-            ]
-        },
-        {
-            "type": "shell",
             "only": "vmware-iso",
-            "inline": [
-                "sudo systemd-nspawn --machine=guest -D /mnt /install-vmware.sh"
-            ]
+            "execute_command": "sudo bash '{{ .Path }}'",
+            "script": "scripts/bootstrap-vmware.sh"
         },
         {
             "type": "shell",
             "only": "virtualbox-iso",
+            "execute_command": "sudo bash '{{ .Path }}'",
+            "script": "scripts/bootstrap-virtualbox.sh"
+        },
+        {
+            "type": "shell",
             "inline": [
-                "sudo systemd-nspawn --machine=guest -D /mnt /install-virtualbox.sh"
+                "sudo systemd-nspawn --machine=guest -D /mnt /install.sh"
             ]
         },
         {

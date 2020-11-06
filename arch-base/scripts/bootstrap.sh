@@ -21,20 +21,11 @@ mkdir -p /mnt/boot
 mount /dev/sda1 /mnt/boot
 swapon /dev/sda2
 
-echo "Creating EFI boot entry..."
-BLKID=$(blkid -s PARTUUID -o value /dev/sda3)
-echo "BLKID=$BLKID"
-efibootmgr --disk /dev/sda --part 1 --create --label "Arch Linux" --loader /vmlinuz-linux --unicode "root=PARTUUID=$BLKID rw initrd=\initramfs-linux.img" --verbose
-efibootmgr --bootorder 0004
-
-echo "Creating fallback EFI startup.nsh..."
-echo "\\vmlinuz-linux root=PARTUUID=$BLKID rw initrd=\\initramfs-linux.img" > /mnt/boot/startup.nsh
-
 echo "Bootstrapping..."
 pacstrap /mnt base linux linux-firmware man-db man-pages
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "Placing chroot files..."
-chmod a+x /tmp/install*.sh
-mv /tmp/install*.sh /mnt
+chmod a+x /tmp/install.sh
+mv /tmp/install.sh /mnt
 mv /tmp/packer_id_rsa.pub /mnt
