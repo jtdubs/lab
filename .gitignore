@@ -5,3 +5,4 @@ packer_cache/
 Session.vim
 /packer_id_rsa
 /packer_id_rsa.pub
+*.box
