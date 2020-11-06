@@ -6,5 +6,4 @@ Session.vim
 /packer_id_rsa
 /packer_id_rsa.pub
 *.box
-Vagrantfile
 .vagrant
