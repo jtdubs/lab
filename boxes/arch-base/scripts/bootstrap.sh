@@ -29,3 +29,4 @@ echo "Placing chroot files..."
 chmod a+x /tmp/install.sh
 mv /tmp/install.sh /mnt
 mv /tmp/packer_id_rsa.pub /mnt
+mv /tmp/vagrant_id_rsa.pub /mnt

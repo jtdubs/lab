@@ -1,6 +1,13 @@
 Dependencies:
 - Packer
 - VMWare or VirtualBox
+- Vagrant (optional)
+
+
+Structure:
+- boxes/ -- Packer definitions for VM images
+- envs/  -- Vagrant environments
+
 
 Instructions:
 ```

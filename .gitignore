@@ -1,9 +1,9 @@
+*.box
+.undodir/
+.vagrant
+/*_id_rsa
+/*_id_rsa.pub
+Session.vim
 iso/
 output*/
 packer_cache/
-.undodir/
-Session.vim
-/packer_id_rsa
-/packer_id_rsa.pub
-*.box
-.vagrant

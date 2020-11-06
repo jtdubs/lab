@@ -74,6 +74,7 @@
         {
             "type": "file",
             "sources": [
+                "../vagrant_id_rsa.pub",
                 "../packer_id_rsa.pub",
                 "scripts/install.sh",
                 "scripts/install-vmware.sh",
