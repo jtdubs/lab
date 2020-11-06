@@ -1,4 +1,18 @@
-- Register boxes with Vagrant
-# - Split bootloader scripts out into separate bootstrap-vmware and bootstrap-virtualbox steps
-# - Move this all to the new SSD
 - Ubuntu base image
+- Need a vagrant user and ssh key on the box (replace packer w/ vagrant??)
+- Build script
+    Runs the right packer build command
+    Registers the resulting box w/ vagrant
+    Top-level build script builds all the boxes?
+
+structure:
+    boxes/
+        arch-base/
+            ...
+        arch-workstation/
+            ...
+    envs/
+        desktop/
+            Vagrantfile
+        lab/
+            Vagrantfile
