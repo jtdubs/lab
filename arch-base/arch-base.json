@@ -9,6 +9,7 @@
         {
             "type": "vmware-iso",
             "disk_size": 32768,
+            "disk_type_id": 0,
             "iso_urls": [
                 "{{ user `iso_path` }}",
                 "{{ user `iso_url` }}"
@@ -116,9 +117,6 @@
             "inline": [
                 "ssh-keygen -R {{ build `Host` }}"
             ]
-        },
-        {
-            "type": "vagrant"
         }
     ]
 }

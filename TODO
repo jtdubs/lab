@@ -1,9 +1,6 @@
 - Ubuntu base image
 - Need a vagrant user and ssh key on the box (replace packer w/ vagrant??)
-- Build script
-    Runs the right packer build command
-    Registers the resulting box w/ vagrant
-    Top-level build script builds all the boxes?
+- Split packer into VM builds & Vagrant packager files
 
 structure:
     boxes/

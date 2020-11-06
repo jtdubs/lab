@@ -1,0 +1,35 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-vmware-iso/disk.vmdk",
+                    "output-vmware-iso/arch-base.nvram",
+                    "output-vmware-iso/arch-base.vmsd",
+                    "output-vmware-iso/arch-base.vmx",
+                    "output-vmware-iso/arch-base.vmxf"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "vmware",
+                "output": "arch-base-vmware.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add arch-base-vmware.box --name arch-base-vmware"
+                ]
+            }
+        ]
+    ]
+}

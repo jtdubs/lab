@@ -1,0 +1,32 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-virtualbox-iso/arch-base.ovf",
+                    "output-virtualbox-iso/arch-base-disk001.vmdk"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "virtualbox",
+                "output": "arch-base-virtualbox.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add arch-base-virtualbox.box --name arch-base-virtualbox"
+                ]
+            }
+        ]
+    ]
+}
