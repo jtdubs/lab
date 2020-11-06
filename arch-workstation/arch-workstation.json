@@ -43,9 +43,6 @@
             "inline": [
                 "ssh-keygen -R {{ build `Host` }}"
             ]
-        },
-        {
-            "type": "vagrant"
         }
     ]
 }

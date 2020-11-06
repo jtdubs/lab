@@ -1,6 +1,6 @@
 - Ubuntu base image
+- Kali base image
 - Need a vagrant user and ssh key on the box (replace packer w/ vagrant??)
-- Split packer into VM builds & Vagrant packager files
 
 structure:
     boxes/
