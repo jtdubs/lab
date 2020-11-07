@@ -38,7 +38,7 @@ packer ALL=(ALL) NOPASSWD: ALL
 EOS
 chmod 0440 /etc/sudoers.d/10_packer
 mkdir -p /home/packer/.ssh
-mv /packer_id_rsa.pub /home/packer_keys
+mv /packer_id_rsa.pub /home/packer/.ssh/authorized_keys
 chown -R packer:packer /home/packer/.ssh
 chmod 700 /home/packer/.ssh
 chmod 600 /home/packer/.ssh/authorized_keys

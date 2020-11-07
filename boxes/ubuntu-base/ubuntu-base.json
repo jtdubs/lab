@@ -1,0 +1,82 @@
+{
+    "variables": {
+        "iso_url": "https://releases.ubuntu.com/20.10/ubuntu-20.10-live-server-amd64.iso",
+        "iso_path": "iso/ubuntu-20.10-live-server-amd64.iso",
+        "iso_checksum": "defdc1ad3af7b661fe2b4ee861fb6fdb5f52039389ef56da6efc05e6adfe3d45"
+    },
+
+    "builders": [
+        {
+            "type": "vmware-iso",
+            "disk_size": 32768,
+            "disk_type_id": 0,
+            "iso_urls": [
+                "{{ user `iso_path` }}",
+                "{{ user `iso_url` }}"
+            ],
+            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
+            "http_directory": "srv",
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "cpus": 1,
+            "memory": 1024,
+            "cores": 2,
+            "network": "vmnet8",
+            "headless": false,
+            "communicator": "ssh",
+            "ssh_username": "packer",
+            "ssh_password": "packer",
+            "ssh_timeout": "10m",
+            "boot_wait": "5s",
+            "boot_command": [
+                "c<wait>",
+                "linux /casper/vmlinuz quiet --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
+                "initrd /casper/initrd<enter>",
+                "boot<enter>"
+            ],
+            "disk_adapter_type": "scsi",
+            "cdrom_adapter_type": "ide",
+            "guest_os_type": "ubuntu-64",
+            "vmx_data": {
+                "firmware": "efi"
+            },
+            "vm_name": "ubuntu-base"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "file",
+            "sources": [
+                "../../vagrant_id_rsa.pub",
+                "../../packer_id_rsa.pub"
+            ],
+            "destination": "/tmp/"
+        },
+        {
+            "type": "shell",
+            "only": "vmware-iso",
+            "execute_command": "echo packer | sudo bash -S '{{ .Path }}'",
+            "script": "scripts/install-vmware.sh"
+        },
+        {
+            "type": "shell",
+            "only": "virtualbox-iso",
+            "execute_command": "echo packer | sudo bash -S '{{ .Path }}'",
+            "script": "scripts/install-virtualbox.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "echo packer | sudo bash -S '{{ .Path }}'",
+            "script": "scripts/install.sh"
+        }
+    ],
+
+    "post-processors": [
+        {
+            "type": "shell-local",
+            "inline": [
+                "ssh-keygen -R {{ build `Host` }}"
+            ]
+        }
+    ]
+}

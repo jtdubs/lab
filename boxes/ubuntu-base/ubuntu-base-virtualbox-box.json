@@ -1,0 +1,32 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-virtualbox-iso/ubuntu-base.ovf",
+                    "output-virtualbox-iso/ubuntu-base-disk001.vmdk"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "virtualbox",
+                "output": "ubuntu-base-virtualbox.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add ubuntu-base-virtualbox.box --name ubuntu-base-virtualbox"
+                ]
+            }
+        ]
+    ]
+}
