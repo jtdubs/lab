@@ -1,8 +1,8 @@
 *.box
 .undodir/
 .vagrant
-/*_id_rsa
-/*_id_rsa.pub
+/*.id_rsa
+/*.id_rsa.pub
 Session.vim
 iso/
 output*/

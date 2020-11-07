@@ -1,12 +1,5 @@
 - Ubuntu base image
-#    - Setup SSH keys for packer and vagrant
-#        Could in theory put packer key in user-data file, if it was a template...
-#        Or can install over ssh
-#    - Create vagrant user
-#    - Clear packer's password
-#    - Install guest tools
-    - Add virtualbox builder
-    - Test them
+    - Clear packer's password
 - Ubuntu workstation image
 - Kali base image
 - Kali workstation image

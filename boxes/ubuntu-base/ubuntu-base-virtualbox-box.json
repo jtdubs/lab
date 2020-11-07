@@ -24,7 +24,7 @@
             {
                 "type": "shell-local",
                 "inline": [
-                    "vagrant box add ubuntu-base-virtualbox.box --name ubuntu-base-virtualbox"
+                    "vagrant box add ubuntu-base-virtualbox.box --name ubuntu-base"
                 ]
             }
         ]

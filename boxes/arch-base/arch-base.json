@@ -74,8 +74,8 @@
         {
             "type": "file",
             "sources": [
-                "../../vagrant_id_rsa.pub",
-                "../../packer_id_rsa.pub",
+                "../../vagrant.id_rsa.pub",
+                "../../packer.id_rsa.pub",
                 "scripts/install.sh",
                 "scripts/install-vmware.sh",
                 "scripts/install-virtualbox.sh"

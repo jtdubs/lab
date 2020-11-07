@@ -27,7 +27,7 @@
             {
                 "type": "shell-local",
                 "inline": [
-                    "vagrant box add arch-base-vmware.box --name arch-base-vmware"
+                    "vagrant box add arch-base-vmware.box --name arch-base"
                 ]
             }
         ]

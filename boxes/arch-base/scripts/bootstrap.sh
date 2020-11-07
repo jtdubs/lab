@@ -28,5 +28,5 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "Placing chroot files..."
 chmod a+x /tmp/install.sh
 mv /tmp/install.sh /mnt
-mv /tmp/packer_id_rsa.pub /mnt
-mv /tmp/vagrant_id_rsa.pub /mnt
+mv /tmp/packer.id_rsa.pub /mnt
+mv /tmp/vagrant.id_rsa.pub /mnt

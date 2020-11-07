@@ -24,7 +24,7 @@
             {
                 "type": "shell-local",
                 "inline": [
-                    "vagrant box add arch-workstation-virtualbox.box --name arch-workstation-virtualbox"
+                    "vagrant box add arch-workstation-virtualbox.box --name arch-workstation"
                 ]
             }
         ]

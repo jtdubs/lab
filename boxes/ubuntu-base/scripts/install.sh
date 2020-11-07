@@ -9,7 +9,7 @@ packer ALL=(ALL) NOPASSWD: ALL
 EOS
 chmod 0440 /etc/sudoers.d/10_packer
 mkdir -p /home/packer/.ssh
-mv /tmp/packer_id_rsa.pub /home/packer/.ssh/authorized_keys
+mv /tmp/packer.id_rsa.pub /home/packer/.ssh/authorized_keys
 chown -R packer:packer /home/packer/.ssh
 chmod 700 /home/packer/.ssh
 chmod 600 /home/packer/.ssh/authorized_keys
@@ -22,10 +22,10 @@ vagrant ALL=(ALL) NOPASSWD: ALL
 EOS
 chmod 0440 /etc/sudoers.d/10_vagrant
 mkdir -p /home/vagrant/.ssh
-mv /tmp/vagrant_id_rsa.pub /home/vagrant/.ssh/authorized_keys
+mv /tmp/vagrant.id_rsa.pub /home/vagrant/.ssh/authorized_keys
 chown -R vagrant:vagrant /home/vagrant/.ssh
 chmod 700 /home/vagrant/.ssh
 chmod 600 /home/vagrant/.ssh/authorized_keys
 
 echo "Removing Packer's password..."
-passwd --delete packer
+passwd --lock packer

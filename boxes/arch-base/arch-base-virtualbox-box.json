@@ -24,7 +24,7 @@
             {
                 "type": "shell-local",
                 "inline": [
-                    "vagrant box add arch-base-virtualbox.box --name arch-base-virtualbox"
+                    "vagrant box add arch-base-virtualbox.box --name arch-base"
                 ]
             }
         ]
