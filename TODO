@@ -1,5 +1,4 @@
-- Ubuntu base image
-    - Clear packer's password
-- Ubuntu workstation image
 - Kali base image
 - Kali workstation image
+- Win10 base
+- Win10 workstation

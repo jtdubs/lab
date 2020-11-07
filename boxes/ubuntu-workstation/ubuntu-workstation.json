@@ -1,0 +1,49 @@
+{
+    "builders": [
+        {
+            "type": "vmware-vmx",
+            "source_path": "../ubuntu-base/output-vmware-iso/ubuntu-base.vmx",
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "communicator": "ssh",
+            "ssh_username": "packer",
+            "ssh_private_key_file": "../../packer.id_rsa",
+            "ssh_timeout": "10m",
+            "boot_wait": "5s",
+            "vm_name": "ubuntu-workstation",
+            "display_name": "ubuntu-workstation"
+        },
+        {
+            "type": "virtualbox-ovf",
+            "source_path": "../ubuntu-base/output-virtualbox-iso/ubuntu-base.ovf",
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "communicator": "ssh",
+            "ssh_username": "packer",
+            "ssh_private_key_file": "../../packer.id_rsa",
+            "ssh_timeout": "10m",
+            "boot_wait": "15s",
+            "vm_name": "ubuntu-workstation"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "shell",
+            "execute_command": "sudo bash '{{ .Path }}'",
+            "script": "scripts/setup.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
+            "script": "scripts/setup-jtdubs.sh"
+        }
+    ],
+
+    "post-processors": [
+        {
+            "type": "shell-local",
+            "inline": [
+                "ssh-keygen -R {{ build `Host` }}"
+            ]
+        }
+    ]
+}
