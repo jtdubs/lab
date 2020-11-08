@@ -1,6 +1,6 @@
 Dependencies:
 - Packer
-- VMWare or VirtualBox
+- VMWare or VirtualBox (with Extension Pack)
 - Vagrant (optional)
 
 
@@ -11,16 +11,13 @@ Structure:
 
 Instructions:
 ```
-> ssh-keygen -f ./packer_id_rsa
+> ./setup.sh
+> pushd boxes/<BOX> && make && popd
+```
 
-VMWare:
-> pushd arch-base        && packer build --only=vmware-iso arch-base.json        && popd
-> pushd arch-workstation && packer build --only=vmware-vmx arch-workstation.json && popd
 
-VirtualBox:
-> pushd arch-base        && packer build --only=virtualbox-iso arch-base.json        && popd
-> pushd arch-workstation && packer build --only=virtualbox-ovf arch-workstation.json && popd
+Makefile Targets:
 
-Both:
-> pushd arch-base        && packer build arch-base.json        && popd
-> pushd arch-workstation && packer build arch-workstation.json && popd
+* all: builds all support VM targets including .box files
+* vmware: builds vmware image and vagrant box
+* vbox: builds virtualbox image and vagrant box

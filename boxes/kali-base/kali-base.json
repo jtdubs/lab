@@ -31,6 +31,7 @@
         {
             "type": "virtualbox-ovf",
             "source_path": "{{ user `ova_path` }}",
+            "import_flags": [ "--eula", "accept" ],
             "shutdown_command": "echo kali | sudo -S systemctl poweroff -i",
             "headless": false,
             "communicator": "ssh",
@@ -38,15 +39,19 @@
             "ssh_password": "kali",
             "ssh_timeout": "2m",
             "vm_name": "kali-base",
-            "boot_wait": "2s",
+            "boot_wait": "5s",
             "boot_command": [
                 "<esc>e",
                 "<down><down><down><down><down><down><down><down><down><down><down><down><down><down><end>",
                 " 3",
                 "<f10>",
-                "<wait20>",
-                "kali<enter>kali<enter><wait>",
+                "<wait25>",
+                "kali<enter><wait>kali<enter><wait>",
                 "echo kali | sudo -S systemctl start ssh<enter>"
+            ],
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "4096"],
+                ["modifyvm", "{{.Name}}", "--cpus", "4"]
             ]
         }
     ],

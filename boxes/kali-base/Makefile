@@ -7,7 +7,7 @@ all:
 
 clean:
 	cmd.exe /c "vagrant box remove --all kali-base"
-	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ova output-kali-converted
+	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf output-kali-converted
 	rm -f *.box
 
 vmware: kali-base-vmware.box
@@ -27,11 +27,11 @@ output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx: input/Kali-Linux-2020.
 output-vmware-vmx/kali-base.vmx: kali-base.json output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx
 	cmd.exe /c "packer build --only=vmware-vmx kali-base.json"
 
-output-virtualbox-ova/kali-base.ovf: kali-base.json
-	cmd.exe /c "packer build --only=virtualbox-ova kali-base.json"
+output-virtualbox-ovf/kali-base.ovf: kali-base.json
+	cmd.exe /c "packer build --only=virtualbox-ovf kali-base.json"
 
 kali-base-vmware.box: output-vmware-vmx/kali-base.vmx
 	cmd.exe /c "packer build kali-base-vmware-box.json"
 
-kali-base-virtualbox.box: output-virtualbox-ova/kali-base.ovf
+kali-base-virtualbox.box: output-virtualbox-ovf/kali-base.ovf
 	cmd.exe /c "packer build kali-base-virtualbox-box.json"

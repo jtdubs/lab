@@ -11,8 +11,8 @@
             {
                 "type": "artifice",
                 "files": [
-                    "output-virtualbox-ova/kali-base.ovf",
-                    "output-virtualbox-ova/kali-base-disk001.vmdk"
+                    "output-virtualbox-ovf/kali-base.ovf",
+                    "output-virtualbox-ovf/kali-base-disk001.vmdk"
                 ]
             },
             {
