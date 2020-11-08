@@ -11,7 +11,7 @@
             {
                 "type": "artifice",
                 "files": [
-                    "output-vmware-vmx/disk.vmdk",
+                    "output-vmware-vmx/disk-cl1.vmdk",
                     "output-vmware-vmx/kali-base.nvram",
                     "output-vmware-vmx/kali-base.vmsd",
                     "output-vmware-vmx/kali-base.vmx",

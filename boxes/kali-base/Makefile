@@ -18,9 +18,11 @@ output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx: input/Kali-Linux-2020.
 	rm -Rf output-kali-converted/
 	mkdir output-kali-converted
 	cp input/Kali-Linux-2020.3-vmware-amd64.vmwarevm/* output-kali-converted/
+	sed -ie 's/^numvcpus = .*/numvcpus = "2"/' output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx
+	sed -ie 's/^memsize = .*/memsize = "4096"/' output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx
+	sed -ie 's/^scsi0:0.fileName = .*/scsi0:0.fileName = "disk.vmdk"/' output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx
 	cmd.exe /c "vmware-vdiskmanager -r output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmdk -t 0 output-kali-converted/disk.vmdk"
 	rm output-kali-converted/Kali-Linux-2020.3-vmware-amd64*.vmdk
-	mv output-kali-converted/disk.vmdk output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmdk
 
 output-vmware-vmx/kali-base.vmx: kali-base.json output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx
 	cmd.exe /c "packer build --only=vmware-vmx kali-base.json"

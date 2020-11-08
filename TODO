@@ -1,9 +1,4 @@
 - Kali base image
-    - Rename disk to disk.vmdk
-    - Update VMX
-        - Disk filename
-        - CPU count
-        - Memory amount
     - Get virtualbox working
     - Disable kali account?
 - Kali workstation image
