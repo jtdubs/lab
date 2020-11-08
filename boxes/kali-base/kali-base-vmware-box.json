@@ -1,0 +1,35 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-vmware-vmx/disk.vmdk",
+                    "output-vmware-vmx/kali-base.nvram",
+                    "output-vmware-vmx/kali-base.vmsd",
+                    "output-vmware-vmx/kali-base.vmx",
+                    "output-vmware-vmx/kali-base.vmxf"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "vmware",
+                "output": "kali-base-vmware.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add kali-base-vmware.box --name kali-base"
+                ]
+            }
+        ]
+    ]
+}

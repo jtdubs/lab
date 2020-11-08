@@ -1,0 +1,32 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-virtualbox-ova/kali-base.ovf",
+                    "output-virtualbox-ova/kali-base-disk001.vmdk"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "virtualbox",
+                "output": "kali-base-virtualbox.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add kali-base-virtualbox.box --name kali-base"
+                ]
+            }
+        ]
+    ]
+}

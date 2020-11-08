@@ -6,4 +6,5 @@
 Session.vim
 iso/
 output*/
+input/
 packer_cache/
