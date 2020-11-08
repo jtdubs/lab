@@ -1,10 +1,7 @@
 {
     "variables": {
-        "iso_url": "https://cdimage.kali.org/kali-2020.3/kali-linux-2020.3-installer-amd64.iso",
-        "iso_path": "input/kali-linux-2020.3-installer-amd64.iso",
-        "iso_checksum": "f3b303ad328f6f7de6d26ac5fe41a3c10e2dfeda431a039323fc504acab4acfc",
         "ova_path": "input/kali-linux-2020.3-vbox-amd64.ova",
-        "vmx_path": "input/Kali-Linux-2020.3-vmware-amd64.vmwarevm/Kali-Linux-2020.3-vmware-amd64.vmx"
+        "vmx_path": "output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx"
     },
 
     "builders": [
@@ -12,12 +9,34 @@
             "type": "vmware-vmx",
             "source_path": "{{ user `vmx_path` }}",
             "disk_type_id": 0,
-            "http_directory": "srv",
+            "vmdk_name": "disk",
             "shutdown_command": "echo kali | sudo -S systemctl poweroff -i",
             "headless": false,
             "communicator": "ssh",
             "ssh_username": "kali",
             "ssh_password": "kali",
+            "ssh_timeout": "2m",
+            "vm_name": "kali-base",
+            "boot_wait": "2s",
+            "boot_command": [
+                "<esc>e",
+                "<down><down><down><down><down><down><down><down><down><down><down><down><down><down><end>",
+                " 3",
+                "<f10>",
+                "<wait20>",
+                "kali<enter>kali<enter><wait>",
+                "echo kali | sudo -S systemctl start ssh<enter>"
+            ]
+        },
+        {
+            "type": "virtualbox-ovf",
+            "source_path": "{{ user `ova_path` }}",
+            "shutdown_command": "echo kali | sudo -S systemctl poweroff -i",
+            "headless": false,
+            "communicator": "ssh",
+            "ssh_username": "kali",
+            "ssh_password": "kali",
+            "ssh_timeout": "2m",
             "vm_name": "kali-base",
             "boot_wait": "2s",
             "boot_command": [
