@@ -1,2 +1,17 @@
 - Win10 base
+#    - https://github.com/luciusbono/Packer-Windows10
+#    - Unattend file
+#        - SkipAutoActivation
+#        - Autologin & enable winrm
+    - VirtualBox support
+#    - Install guest tools
 - Win10 workstation
+    - Create jtdubs user
+    - Install "Windows Terminal"
+    - Install "PowerShell Core"
+    - Load windows terminal config file
+    - Install WSL Ubuntu
+    - WSL - Install neovim, git, nodejs
+    - Grab dotfiles like usual
+    - Install firefox
+    - Install visual studio code

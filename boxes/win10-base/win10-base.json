@@ -12,7 +12,8 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "floppy_files": [
-                "autounattend.xml"
+                "autounattend.xml",
+                "scripts/Enable-WinRM.ps1"
             ],
             "http_directory": "srv",
             "cpus": 1,
@@ -29,6 +30,9 @@
             "disk_adapter_type": "scsi",
             "cdrom_adapter_type": "ide",
             "guest_os_type": "windows9-64",
+            "shutdown_command": "powershell Stop-Computer",
+            "tools_upload_flavor": "windows",
+            "tools_upload_path": "c:/Windows/Temp/vmware-tools.iso",
             "vmx_data": {
                 "firmware": "efi",
                 "scsi0.virtualDev": "lsisas1068"
@@ -38,6 +42,17 @@
     ],
 
     "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "scripts/Disable-AutoLogin.ps1",
+                "scripts/Install-VMWare-Tools.ps1",
+                "scripts/Install-Updates.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        }
     ],
 
     "post-processors": [
