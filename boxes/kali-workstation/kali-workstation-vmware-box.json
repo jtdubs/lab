@@ -1,0 +1,35 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-vmware-vmx/disk-cl2.vmdk",
+                    "output-vmware-vmx/kali-workstation.nvram",
+                    "output-vmware-vmx/kali-workstation.vmsd",
+                    "output-vmware-vmx/kali-workstation.vmx",
+                    "output-vmware-vmx/kali-workstation.vmxf"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "vmware",
+                "output": "kali-workstation-vmware.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add kali-workstation-vmware.box --name kali-workstation"
+                ]
+            }
+        ]
+    ]
+}

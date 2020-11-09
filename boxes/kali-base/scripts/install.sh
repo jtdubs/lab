@@ -2,6 +2,12 @@
 
 set -eu
 
+echo "Updating package list..."
+apt-get update
+
+echo "Enable SSH service..."
+systemctl enable ssh
+
 echo "Setting up Packer..."
 useradd -m -U packer
 cat > /etc/sudoers.d/10_packer <<EOS

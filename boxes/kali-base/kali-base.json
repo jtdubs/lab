@@ -17,6 +17,7 @@
             "ssh_password": "kali",
             "ssh_timeout": "2m",
             "vm_name": "kali-base",
+            "display_name": "kali-base",
             "boot_wait": "2s",
             "boot_command": [
                 "<esc>e",

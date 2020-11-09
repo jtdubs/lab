@@ -6,7 +6,8 @@ all:
 	cmd.exe /c "packer build kali-base-virtualbox-box.json"
 
 clean:
-	cmd.exe /c "vagrant box remove --all kali-base"
+	cmd.exe /c "vagrant box remove --all kali-base --provider vmware" || true
+	cmd.exe /c "vagrant box remove --all kali-base --provider virtualbox" || true
 	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf output-kali-converted
 	rm -f *.box
 

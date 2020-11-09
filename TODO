@@ -1,3 +1,5 @@
+- Check apt-get install's to make sure they are in NONINTERACTIVE
 - Kali workstation image
+    Make sure session works...
 - Win10 base
 - Win10 workstation
