@@ -1,0 +1,45 @@
+{
+    "variables": {
+        "iso_path": "iso/Windows.iso",
+        "iso_checksum": "file:iso/sha256sum"
+    },
+
+    "builders": [
+        {
+            "type": "vmware-iso",
+            "disk_size": 32768,
+            "disk_type_id": 0,
+            "iso_url": "{{ user `iso_path` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "floppy_files": [
+                "autounattend.xml"
+            ],
+            "http_directory": "srv",
+            "cpus": 1,
+            "memory": 1024,
+            "cores": 2,
+            "network": "vmnet8",
+            "headless": false,
+            "communicator": "winrm",
+            "winrm_username": "packer",
+            "winrm_password": "packer",
+            "winrm_timeout": "30m",
+            "boot_wait": "2s",
+            "boot_command": [ "<enter>" ],
+            "disk_adapter_type": "scsi",
+            "cdrom_adapter_type": "ide",
+            "guest_os_type": "windows9-64",
+            "vmx_data": {
+                "firmware": "efi",
+                "scsi0.virtualDev": "lsisas1068"
+            },
+            "vm_name": "win10-base"
+        }
+    ],
+
+    "provisioners": [
+    ],
+
+    "post-processors": [
+    ]
+}
