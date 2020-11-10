@@ -1,3 +1,5 @@
+$ErrorActionPreference="Stop"
+
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
 
 Install-PackageProvider -Name NuGet -Force
