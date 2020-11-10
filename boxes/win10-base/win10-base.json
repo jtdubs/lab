@@ -14,6 +14,7 @@
             "iso_checksum": "{{ user `iso_checksum` }}",
             "floppy_files": [
                 "autounattend.xml",
+                "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
@@ -26,7 +27,7 @@
             "communicator": "winrm",
             "winrm_username": "packer",
             "winrm_password": "packer",
-            "winrm_timeout": "30m",
+            "winrm_timeout": "60m",
             "boot_wait": "2s",
             "boot_command": [ "<enter>" ],
             "disk_adapter_type": "scsi",
@@ -46,7 +47,8 @@
             "type": "powershell",
             "scripts": [
                 "scripts/Disable-AutoLogin.ps1",
-                "scripts/Install-VMWare-Tools.ps1"
+                "scripts/Install-VMWare-Tools.ps1",
+                "scripts/Install-Chocolatey.ps1"
             ]
         },
         {
