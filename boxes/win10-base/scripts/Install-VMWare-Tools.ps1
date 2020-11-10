@@ -2,7 +2,7 @@ $ErrorActionPreference="Stop"
 
 $iso = "C:\Windows\Temp\vmware-tools.iso"
 
-Invoke-WebRequest "http://$env:PACKER_HTTP_ADDR/windows.iso" -OutFile $iso -UseBasicParsing
+Invoke-WebRequest "http://$env:PACKER_HTTP_ADDR/vmware-tools.iso" -OutFile $iso -UseBasicParsing
 Mount-DiskImage $iso
 
 $exe = (Get-DiskImage -ImagePath $iso | Get-Volume).DriveLetter + ":\setup.exe"

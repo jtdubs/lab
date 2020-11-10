@@ -1,10 +1,9 @@
+- General
+    - Make the whole cmd.exe thing configurable...
+
 - Win10 base
-#    - https://github.com/luciusbono/Packer-Windows10
-#    - Unattend file
-#        - SkipAutoActivation
-#        - Autologin & enable winrm
     - VirtualBox support
-#    - Install guest tools
+
 - Win10 workstation
     - Create jtdubs user
     - Install "Windows Terminal"

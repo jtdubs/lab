@@ -1,8 +1,7 @@
 {
     "variables": {
         "iso_path": "iso/Windows.iso",
-        "iso_checksum": "file:iso/sha256sum",
-        "tools_path": "C:\\Program Files (x86)\\VMWare\\VMWare Workstation\\"
+        "iso_checksum": "file:iso/sha256sum"
     },
 
     "builders": [
@@ -13,12 +12,12 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "floppy_files": [
-                "autounattend.xml",
+                "unattend/vmware/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
-            "http_directory": "{{ user `tools_path` }}",
+            "http_directory": "tools",
             "cpus": 1,
             "memory": 1024,
             "cores": 2,
@@ -39,6 +38,31 @@
                 "scsi0.virtualDev": "lsisas1068"
             },
             "vm_name": "win10-base"
+        },
+        {
+            "type": "virtualbox-iso",
+            "disk_size": 32768,
+            "iso_url": "{{ user `iso_path` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "floppy_files": [
+                "unattend/virtualbox/autounattend.xml",
+                "scripts/Set-Network.ps1",
+                "scripts/Install-Updates.ps1",
+                "scripts/Enable-WinRM.ps1"
+            ],
+            "http_directory": "tools",
+            "cpus": 2,
+            "memory": 1024,
+            "headless": false,
+            "communicator": "winrm",
+            "winrm_username": "packer",
+            "winrm_password": "packer",
+            "winrm_timeout": "60m",
+            "boot_wait": "2s",
+            "boot_command": [ "<enter>" ],
+            "hard_drive_interface": "sata",
+            "guest_os_type": "Windows10_64",
+            "vm_name": "win10-base"
         }
     ],
 
@@ -47,8 +71,21 @@
             "type": "powershell",
             "scripts": [
                 "scripts/Disable-AutoLogin.ps1",
-                "scripts/Install-VMWare-Tools.ps1",
                 "scripts/Install-Chocolatey.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "only": "vmware-iso",
+            "scripts": [
+                "scripts/Install-VMWare-Tools.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "only": "virtualbox-iso",
+            "scripts": [
+                "scripts/Install-VirtualBox-Tools.ps1"
             ]
         },
         {

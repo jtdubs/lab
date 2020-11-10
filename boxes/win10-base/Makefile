@@ -17,7 +17,7 @@ vbox: win10-base-virtualbox.box
 output-vmware-iso/win10-base.vmx: win10-base.json
 	cmd.exe /c "packer build --only=vmware-iso --on-error=ask win10-base.json"
 
-output-virtualbox-iso/win10-base.ovf: win10-base.json
+output-virtualbox-iso/win10-base.ovf: win10-base.json unattend.iso
 	cmd.exe /c "packer build --only=virtualbox-iso win10-base.json"
 
 win10-base-vmware.box: output-vmware-iso/win10-base.vmx
