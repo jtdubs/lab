@@ -1,6 +1,6 @@
 $ErrorActionPreference="Stop"
 
-$isr = "C:\Windows\Temp\vmware-tools.iso"
+$iso = "C:\Windows\Temp\vmware-tools.iso"
 
 Invoke-WebRequest "http://$env:PACKER_HTTP_ADDR/windows.iso" -OutFile $iso -UseBasicParsing
 Mount-DiskImage $iso
