@@ -1,4 +1,5 @@
 *.box
+*.iso
 .undodir/
 .vagrant
 /*.id_rsa
