@@ -1,4 +1,7 @@
+Hyper-V support...
+
 Win10 workstation
+    - Switch to Win10 Pro
 #    - Split into phase 1 (as packer) and phase 2 (as jtdubs)
 #    - Setup jtdubs
 #        - Install local store apps (terminal & ubuntu)

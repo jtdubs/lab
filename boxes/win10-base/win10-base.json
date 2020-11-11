@@ -12,15 +12,15 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "floppy_files": [
-                "unattend/vmware/autounattend.xml",
+                "unattend/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
             "http_directory": "tools",
             "cpus": 4,
-            "memory": 4096,
             "cores": 4,
+            "memory": 4096,
             "network": "vmnet8",
             "headless": false,
             "communicator": "winrm",
@@ -29,14 +29,10 @@
             "winrm_timeout": "60m",
             "boot_wait": "2s",
             "boot_command": [ "<enter>" ],
-            "disk_adapter_type": "scsi",
+            "disk_adapter_type": "sata",
             "cdrom_adapter_type": "ide",
             "guest_os_type": "windows9-64",
             "shutdown_command": "powershell Stop-Computer",
-            "vmx_data": {
-                "firmware": "efi",
-                "scsi0.virtualDev": "lsisas1068"
-            },
             "vm_name": "win10-base"
         },
         {
@@ -45,7 +41,7 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "floppy_files": [
-                "unattend/virtualbox/autounattend.xml",
+                "unattend/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
