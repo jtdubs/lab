@@ -7,10 +7,10 @@ Mount-DiskImage $iso
 
 $certdir = (Get-DiskImage -ImagePath $iso | Get-Volume).DriveLetter + ":\cert\"
 $certexe = $certdir + "VBoxCertUtil.exe"
-Get-ChildItem $certdir *.cer | % { & $VBoxCertUtil add-trusted-publisher $_.FullName --root $_.FullName }
+Get-ChildItem $certdir *.cer | % { & $certexe add-trusted-publisher $_.FullName --root $_.FullName }
 
 $toolsexe = (Get-DiskImage -ImagePath $iso | Get-Volume).DriveLetter + ":\VBoxWindowsAdditions.exe"
-Start-Process $exe '/S' -Wait
+Start-Process $toolsexe '/S' -Wait
 
 Dismount-DiskImage -ImagePath $iso
 Remove-Item $iso
