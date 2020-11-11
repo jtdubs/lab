@@ -8,7 +8,7 @@
             "winrm_username": "packer",
             "winrm_password": "packer",
             "winrm_timeout": "10m",
-            "boot_wait": "30s",
+            "boot_wait": "10s",
             "vm_name": "win10-workstation",
             "display_name": "win10-workstation"
         },
@@ -20,7 +20,7 @@
             "winrm_username": "packer",
             "winrm_password": "packer",
             "winrm_timeout": "10m",
-            "boot_wait": "30s",
+            "boot_wait": "10s",
             "vm_name": "win10-workstation"
         }
     ],
@@ -30,10 +30,16 @@
             "type": "powershell",
             "scripts": [
                 "scripts/Create-User.ps1",
-                "scripts/Install-Software.ps1",
-                "scripts/Install-WSL.ps1",
-                "scripts/Install-WSL-Software.ps1",
-                "scripts/Install-Dotfiles.ps1"
+                "scripts/Install-Software-1.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "scripts": [
+                "scripts/Install-Software-2.ps1"
             ]
         }
     ],
