@@ -26,6 +26,7 @@
             "ssh_username": "packer",
             "ssh_password": "packer",
             "ssh_timeout": "10m",
+            "keep_registered": true,
             "boot_wait": "5s",
             "boot_command": [
                 "<enter><wait40>",
@@ -56,6 +57,7 @@
             "ssh_username": "packer",
             "ssh_password": "packer",
             "ssh_timeout": "10m",
+            "keep_registered": true,
             "boot_wait": "5s",
             "boot_command": [
                 "<enter><wait40>",
@@ -65,6 +67,33 @@
             "guest_os_type": "ArchLinux_64",
             "vboxmanage": [
                 [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ]
+            ],
+            "vm_name": "arch-base"
+        },
+        {
+            "type": "hyperv-iso",
+            "disk_size": 32768,
+            "iso_urls": [
+                "{{ user `iso_path` }}",
+                "{{ user `iso_url` }}"
+            ],
+            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
+            "http_directory": "srv",
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "cpus": 4,
+            "memory": 4096,
+            "headless": false,
+            "generation": 2,
+            "switch_name": "Default Switch",
+            "communicator": "ssh",
+            "ssh_username": "packer",
+            "ssh_password": "packer",
+            "ssh_timeout": "10m",
+            "boot_wait": "5s",
+            "keep_registered": true,
+            "boot_command": [
+                "<enter><wait40>",
+                "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh-hyperv.sh | bash<enter>"
             ],
             "vm_name": "arch-base"
         }
@@ -78,7 +107,8 @@
                 "../../packer.id_rsa.pub",
                 "scripts/install.sh",
                 "scripts/install-vmware.sh",
-                "scripts/install-virtualbox.sh"
+                "scripts/install-virtualbox.sh",
+                "scripts/install-hyperv.sh"
             ],
             "destination": "/tmp/"
         },
@@ -101,6 +131,12 @@
         },
         {
             "type": "shell",
+            "only": "hyperv-iso",
+            "execute_command": "sudo bash '{{ .Path }}'",
+            "script": "scripts/bootstrap-hyperv.sh"
+        },
+        {
+            "type": "shell",
             "inline": [
                 "sudo systemd-nspawn --machine=guest -D /mnt /install.sh"
             ]
@@ -113,6 +149,11 @@
       ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "arch-base-{{ .Provider }}.box"
+        },
         {
             "type": "shell-local",
             "inline": [
