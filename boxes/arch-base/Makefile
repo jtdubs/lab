@@ -10,9 +10,6 @@ all:
 	packer build --on-error=ask arch-base.json
 
 clean:
-	-vagrant box remove --all arch-base --provider vmware_desktop
-	-vagrant box remove --all arch-base --provider virtualbox
-	-vagrant box remove --all arch-base --provider hyperv
 	-$(RM) packer_cache
 	-$(RM) output-vmware-iso
 	-$(RM) output-virtualbox-iso

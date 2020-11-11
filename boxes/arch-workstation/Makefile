@@ -1,28 +1,32 @@
-.PHONY: all clean vmware vbox
+.PHONY: all clean vmware vbox hyperv
+
+ifeq ($(OS),Windows_NT)
+RM = powershell Remove-Item -Recurse -Force
+else
+RM = rm -Rf
+endif
 
 all:
 	packer build --on-error=ask arch-workstation.json
-	packer build --on-error=ask arch-workstation-vmware-box.json
-	packer build --on-error=ask arch-workstation-virtualbox-box.json
 
 clean:
-	-vagrant box remove --all arch-workstation --provider vmware_desktop
-	-vagrant box remove --all arch-workstation --provider virtualbox
-	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf
-	rm -f *.box
+	-$(RM) packer_cache
+	-$(RM) output-vmware-vmx
+	-$(RM) output-virtualbox-ovf
+	-$(RM) output-hyperv-vmcx
+	-$(RM) *.box
 
 vmware: arch-workstation-vmware.box
 
 vbox: arch-workstation-virtualbox.box
 
-output-vmware-vmx/arch-workstation.vmx: arch-workstation.json
+hyperv: arch-workstation-hyperv.box
+
+arch-workstation-vmware.box: arch-workstation.json
 	packer build --on-error=ask --only=vmware-vmx arch-workstation.json
 
-output-virtualbox-ovf/arch-workstation.ovf: arch-workstation.json
+arch-workstation-virtualbox.box: arch-workstation.json
 	packer build --on-error=ask --only=virtualbox-ovf arch-workstation.json
 
-arch-workstation-vmware.box: output-vmware-vmx/arch-workstation.vmx
-	packer build --on-error=ask arch-workstation-vmware-box.json
-
-arch-workstation-virtualbox.box: output-virtualbox-ovf/arch-workstation.ovf
-	packer build --on-error=ask arch-workstation-virtualbox-box.json
+arch-workstation-hyperv.box: arch-workstation.json
+	packer build --on-error=ask --only=hyperv-vmcx arch-workstation.json

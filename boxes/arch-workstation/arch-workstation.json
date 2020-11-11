@@ -1,26 +1,42 @@
 {
     "builders": [
         {
-            "type": "vmware-vmx",
-            "source_path": "../arch-base/output-vmware-iso/arch-base.vmx",
-            "shutdown_command": "sudo systemctl poweroff -i",
+            "boot_wait": "15s",
             "communicator": "ssh",
-            "ssh_username": "packer",
+            "display_name": "arch-workstation",
+            "headless": false,
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "source_path": "../arch-base/output-vmware-iso/arch-base.vmx",
             "ssh_private_key_file": "../../packer.id_rsa",
             "ssh_timeout": "10m",
-            "boot_wait": "15s",
-            "vm_name": "arch-workstation",
-            "display_name": "arch-workstation"
+            "ssh_username": "packer",
+            "type": "vmware-vmx",
+            "vm_name": "arch-workstation"
+
         },
         {
-            "type": "virtualbox-ovf",
-            "source_path": "../arch-base/output-virtualbox-iso/arch-base.ovf",
-            "shutdown_command": "sudo systemctl poweroff -i",
+            "boot_wait": "15s",
             "communicator": "ssh",
-            "ssh_username": "packer",
+            "headless": false,
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "source_path": "../arch-base/output-virtualbox-iso/arch-base.ovf",
             "ssh_private_key_file": "../../packer.id_rsa",
             "ssh_timeout": "10m",
-            "boot_wait": "15s",
+            "ssh_username": "packer",
+            "type": "virtualbox-ovf",
+            "vm_name": "arch-workstation"
+
+        },
+        {
+            "boot_wait": "5s",
+            "clone_from_vmcx_path": "../arch-base/output-hyperv-iso",
+            "communicator": "ssh",
+            "headless": false,
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "ssh_private_key_file": "../../packer.id_rsa",
+            "ssh_timeout": "10m",
+            "ssh_username": "packer",
+            "type": "hyperv-vmcx",
             "vm_name": "arch-workstation"
         }
     ],
@@ -32,12 +48,27 @@
         },
         {
             "type": "shell",
+            "only": "vmware-vmx",
+            "script": "scripts/setup-vmware.sh"
+        },
+        {
+            "type": "shell",
+            "only": "hyperv-vmcx",
+            "script": "scripts/setup-hyperv.sh"
+        },
+        {
+            "type": "shell",
             "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
             "script": "scripts/setup-jtdubs.sh"
         }
     ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "arch-workstation-{{ .Provider }}.box"
+        },
         {
             "type": "shell-local",
             "inline": [
