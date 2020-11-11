@@ -1,0 +1,39 @@
+{
+    "builders": [
+        {
+            "type": "vmware-vmx",
+            "source_path": "output-vmware-iso-phase1/win10-base.vmx",
+            "shutdown_command": "powershell Stop-Computer",
+            "communicator": "winrm",
+            "winrm_username": "jtdubs",
+            "winrm_password": "",
+            "winrm_timeout": "10m",
+            "boot_wait": "10s",
+            "vm_name": "win10-workstation",
+            "display_name": "win10-workstation"
+        },
+        {
+            "type": "virtualbox-ovf",
+            "source_path": "output-virtualbox-iso-phase1/win10-base.ovf",
+            "shutdown_command": "powershell Stop-Computer",
+            "communicator": "winrm",
+            "winrm_username": "jtdubs",
+            "winrm_password": "",
+            "winrm_timeout": "10m",
+            "boot_wait": "10s",
+            "vm_name": "win10-workstation"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "scripts/Install-JTDubs.ps1"
+            ]
+        }
+    ],
+
+    "post-processors": [
+    ]
+}

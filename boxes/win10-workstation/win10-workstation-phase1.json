@@ -9,8 +9,9 @@
             "winrm_password": "packer",
             "winrm_timeout": "10m",
             "boot_wait": "10s",
-            "vm_name": "win10-workstation",
-            "display_name": "win10-workstation"
+            "vm_name": "win10-workstation-phase1",
+            "display_name": "win10-workstation-phase1",
+            "output_directory": "output-vmware-vmx-phase1"
         },
         {
             "type": "virtualbox-ovf",
@@ -21,7 +22,8 @@
             "winrm_password": "packer",
             "winrm_timeout": "10m",
             "boot_wait": "10s",
-            "vm_name": "win10-workstation"
+            "vm_name": "win10-workstation-phase1",
+            "output_directory": "output-virtualbox-ovf-phase1"
         }
     ],
 

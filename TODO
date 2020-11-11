@@ -1,11 +1,7 @@
-VMWare Settings:
-    Processor count somehow coming out as 0.5??
-    Use cpus=4, cores=4
-
 Win10 workstation
-    - Split into phase 1 (as packer) and phase 2 (as jtdubs)
-    - Setup jtdubs
-        - Install local store apps (terminal & ubuntu)
+#    - Split into phase 1 (as packer) and phase 2 (as jtdubs)
+#    - Setup jtdubs
+#        - Install local store apps (terminal & ubuntu)
         - Setup ubuntu
         - Setup sudoers
         - Install WSL packages
