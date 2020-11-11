@@ -6,8 +6,8 @@ all:
 	packer build --on-error=ask kali-base-virtualbox-box.json
 
 clean:
-	vagrant box remove --all kali-base --provider vmware || true
-	vagrant box remove --all kali-base --provider virtualbox || true
+	-vagrant box remove --all kali-base --provider vmware_desktop
+	-vagrant box remove --all kali-base --provider virtualbox
 	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf output-kali-converted
 	rm -f *.box
 

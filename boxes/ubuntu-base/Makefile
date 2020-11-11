@@ -6,7 +6,8 @@ all:
 	packer build --on-error=ask ubuntu-base-virtualbox-box.json
 
 clean:
-	-vagrant box remove --all ubuntu-base
+	-vagrant box remove --all ubuntu-base --provider vmware_desktop
+	-vagrant box remove --all ubuntu-base --provider virtualbox
 	rm -Rf packer_cache output-vmware-iso output-virtualbox-iso
 	rm -f *.box
 

@@ -6,7 +6,8 @@ all:
 	packer build --on-error=ask win10-workstation-virtualbox-box.json
 
 clean:
-	-vagrant box remove --all win10-workstation
+	-vagrant box remove --all win10-workstation --provider vmware_desktop
+	-vagrant box remove --all win10-workstation --provider virtualbox
 	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf
 	rm -f *.box
 
