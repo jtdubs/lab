@@ -18,9 +18,9 @@
                 "scripts/Enable-WinRM.ps1"
             ],
             "http_directory": "tools",
-            "cpus": 1,
+            "cpus": 4,
             "memory": 1024,
-            "cores": 2,
+            "cores": 4,
             "network": "vmnet8",
             "headless": false,
             "communicator": "winrm",
@@ -51,7 +51,7 @@
                 "scripts/Enable-WinRM.ps1"
             ],
             "http_directory": "tools",
-            "cpus": 2,
+            "cpus": 4,
             "memory": 1024,
             "headless": false,
             "communicator": "winrm",
