@@ -1,9 +1,9 @@
 .PHONY: all clean vmware vbox
 
 all:
-	packer build kali-base.json
-	packer build kali-base-vmware-box.json
-	packer build kali-base-virtualbox-box.json
+	packer build --on-error=ask kali-base.json
+	packer build --on-error=ask kali-base-vmware-box.json
+	packer build --on-error=ask kali-base-virtualbox-box.json
 
 clean:
 	vagrant box remove --all kali-base --provider vmware || true
@@ -26,13 +26,13 @@ output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx: input/Kali-Linux-2020.
 	rm output-kali-converted/Kali-Linux-2020.3-vmware-amd64*.vmdk
 
 output-vmware-vmx/kali-base.vmx: kali-base.json output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx
-	packer build --only=vmware-vmx kali-base.json
+	packer build --on-error=ask --only=vmware-vmx kali-base.json
 
 output-virtualbox-ovf/kali-base.ovf: kali-base.json
-	packer build --only=virtualbox-ovf kali-base.json
+	packer build --on-error=ask --only=virtualbox-ovf kali-base.json
 
 kali-base-vmware.box: output-vmware-vmx/kali-base.vmx
-	packer build kali-base-vmware-box.json
+	packer build --on-error=ask kali-base-vmware-box.json
 
 kali-base-virtualbox.box: output-virtualbox-ovf/kali-base.ovf
-	packer build kali-base-virtualbox-box.json
+	packer build --on-error=ask kali-base-virtualbox-box.json
