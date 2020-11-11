@@ -1,0 +1,43 @@
+{
+    "builders": [
+        {
+            "type": "vmware-vmx",
+            "source_path": "../win10-base/output-vmware-iso/win10-base.vmx",
+            "shutdown_command": "powershell Stop-Computer",
+            "communicator": "winrm",
+            "winrm_username": "packer",
+            "winrm_password": "packer",
+            "winrm_timeout": "10m",
+            "boot_wait": "30s",
+            "vm_name": "win10-workstation",
+            "display_name": "win10-workstation"
+        },
+        {
+            "type": "virtualbox-ovf",
+            "source_path": "../win10-base/output-virtualbox-iso/win10-base.ovf",
+            "shutdown_command": "powershell Stop-Computer",
+            "communicator": "winrm",
+            "winrm_username": "packer",
+            "winrm_password": "packer",
+            "winrm_timeout": "10m",
+            "boot_wait": "30s",
+            "vm_name": "win10-workstation"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "scripts/Create-User.ps1",
+                "scripts/Install-Software.ps1",
+                "scripts/Install-WSL.ps1",
+                "scripts/Install-WSL-Software.ps1",
+                "scripts/Install-Dotfiles.ps1"
+            ]
+        }
+    ],
+
+    "post-processors": [
+    ]
+}

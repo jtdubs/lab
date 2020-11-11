@@ -1,0 +1,32 @@
+{
+    "builders": [
+        {
+            "type": "null",
+            "communicator": "none"
+        }
+    ],
+
+    "post-processors": [
+        [
+            {
+                "type": "artifice",
+                "files": [
+                    "output-virtualbox-ovf/win10-workstation.ovf",
+                    "output-virtualbox-ovf/win10-workstation-disk001.vmdk"
+                ]
+            },
+            {
+                "type": "vagrant",
+                "keep_input_artifact": true,
+                "provider_override": "virtualbox",
+                "output": "win10-workstation-virtualbox.box"
+            },
+            {
+                "type": "shell-local",
+                "inline": [
+                    "vagrant box add win10-workstation-virtualbox.box --name win10-workstation"
+                ]
+            }
+        ]
+    ]
+}
