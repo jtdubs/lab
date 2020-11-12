@@ -1,9 +1,8 @@
 Kali Base
-    No Hyper-V image.  What's the plan?  Do I just make my own?
-    I really wanted to start from raw media, but their automated install support is crap.
-
-Ubuntu Workstation
-    Test
+    Switch to pre-seed:
+        https://github.com/Wh1t3Rh1n0/kali-unattended/blob/master/preseed.cfg
+        https://www.kali.org/dojo/preseed.cfg
+        https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
 Win10 Base 
     Hyper-V support, new structure

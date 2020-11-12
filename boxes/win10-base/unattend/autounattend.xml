@@ -44,7 +44,7 @@
             </ImageInstall>
             <UserData>
                 <ProductKey>
-                    <Key>YTMG3-N6DKC-DKB77-7M9GH-8HVX7</Key>
+                    <Key>VK7JG-NPHTM-C97JM-9MPGT-3V66T</Key>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
                 <Organization>Lab</Organization>
@@ -135,5 +135,5 @@
             <EnableLUA>false</EnableLUA>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="wim:d:/win10/sources/install.wim#Windows 10 Home" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <cpi:offlineImage cpi:source="wim:d:/win10/sources/install.wim#Windows 10 Pro" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>

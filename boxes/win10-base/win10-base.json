@@ -1,7 +1,7 @@
 {
     "variables": {
         "iso_path": "iso/Windows.iso",
-        "iso_checksum": "file:iso/sha256sum"
+        "iso_checksum": "7f96789d08835d37b5886f81f1887a38617453a5211e788964553f4194d8b23c"
     },
 
     "builders": [
@@ -10,7 +10,7 @@
             "disk_size": 32768,
             "disk_type_id": 0,
             "iso_url": "{{ user `iso_path` }}",
-            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
             "floppy_files": [
                 "unattend/autounattend.xml",
                 "scripts/Set-Network.ps1",
@@ -39,7 +39,7 @@
             "type": "virtualbox-iso",
             "disk_size": 32768,
             "iso_url": "{{ user `iso_path` }}",
-            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
             "floppy_files": [
                 "unattend/autounattend.xml",
                 "scripts/Set-Network.ps1",
@@ -58,6 +58,34 @@
             "boot_command": [ "<enter>" ],
             "hard_drive_interface": "sata",
             "guest_os_type": "Windows10_64",
+            "shutdown_command": "powershell Stop-Computer",
+            "vm_name": "win10-base"
+        },
+        {
+            "type": "hyperv-iso",
+            "disk_size": 32768,
+            "iso_url": "{{ user `iso_path` }}",
+            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
+            "cd_files": [
+                "unattend/autounattend.xml",
+                "scripts/Set-Network.ps1",
+                "scripts/Install-Updates.ps1",
+                "scripts/Enable-WinRM.ps1"
+            ],
+            "cd_label": "UNATTEND",
+            "http_directory": "tools",
+            "cpus": 4,
+            "memory": 4096,
+            "headless": false,
+            "generation": 2,
+            "switch_name": "Default Switch",
+            "communicator": "winrm",
+            "winrm_username": "packer",
+            "winrm_password": "packer",
+            "winrm_timeout": "60m",
+            "boot_wait": "2s",
+            "boot_command": [ "<enter>" ],
+            "shutdown_command": "powershell Stop-Computer",
             "vm_name": "win10-base"
         }
     ],
@@ -90,5 +118,10 @@
     ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "win10-base-{{ .Provider }}.box"
+        }
     ]
 }
