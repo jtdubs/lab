@@ -3,7 +3,8 @@ Kali Base
     I really wanted to start from raw media, but their automated instal support is crap.
 
 Ubuntu Base
-    Hyper-V support, new structure
+    Make sure install linux-vm-tools didn't do too much crazy GUI stuff...
+    If so, push that out to ubuntu-workstation
 
 Ubuntu Workstation
     Hyper-V support, new structure

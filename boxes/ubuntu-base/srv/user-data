@@ -21,6 +21,7 @@ autoinstall:
     network:
         ethernets:
             ens33: { dhcp4: true }
+            eth0: { dhcp4: true }
         version: 2
     ssh:
         allow-pw: true
@@ -29,4 +30,8 @@ autoinstall:
     storage:
         layout:
             name: direct
+    packages:
+        - linux-cloud-tools-virtual-hwe-20.04
+        - linux-tools-virtual-hwe-20.04
+        - linux-virtual-hwe-20.04
     version: 1
