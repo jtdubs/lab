@@ -1,16 +1,16 @@
 Kali Base
     No Hyper-V image.  What's the plan?  Do I just make my own?
-    I really wanted to start from raw media, but their automated instal support is crap.
-
-Ubuntu Base
-    Re-test
+    I really wanted to start from raw media, but their automated install support is crap.
 
 Ubuntu Workstation
     Hyper-V support, new structure
     linux-vm-tools
 
+Win10 Base 
+    Hyper-V support, new structure
+    Switch to Win10 Pro
+
 Win10 workstation
-    - Switch to Win10 Pro
 #    - Split into phase 1 (as packer) and phase 2 (as jtdubs)
 #    - Setup jtdubs
 #        - Install local store apps (terminal & ubuntu)
