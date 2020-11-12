@@ -31,11 +31,15 @@
             "boot_wait": "5s",
             "clone_from_vmcx_path": "../arch-base/output-hyperv-iso",
             "communicator": "ssh",
+            "cpus": 4,
+            "generation": 2,
             "headless": false,
+            "memory": 4096,
             "shutdown_command": "sudo systemctl poweroff -i",
             "ssh_private_key_file": "../../packer.id_rsa",
             "ssh_timeout": "10m",
             "ssh_username": "packer",
+            "switch_name": "Default Switch",
             "type": "hyperv-vmcx",
             "vm_name": "arch-workstation"
         }
