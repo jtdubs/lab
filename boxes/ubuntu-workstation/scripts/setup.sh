@@ -7,9 +7,9 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get install -y --no-install-recommends \
     build-essential picom curl feh firefox fish git neovim nodejs \
     yarnpkg numlockx python3-pip suckless-tools bspwm sxhkd exa \
-    pulseaudio tmux xorg xserver-xorg xserver-xorg-video-vmware \
-    x11-xserver-utils polybar lightdm lightdm-gtk-greeter \
-    network-manager-gnome
+    pulseaudio tmux xorg xserver-xorg x11-xserver-utils polybar \
+    lightdm lightdm-gtk-greeter network-manager-gnome \
+    xserver-xorg-video-fbdev
 
 echo "Enabling window manager..."
 systemctl enable lightdm.service

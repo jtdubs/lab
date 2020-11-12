@@ -68,7 +68,7 @@
         {
             "type": "shell-local",
             "inline": [
-                "powershell.exe Set-VM -VMName arch-workstation -EnhancedSessionTransportType HvSock"
+                "powershell.exe Set-VM -VMName arch-workstation -EnhancedSessionTransportType HvSocket"
             ]
         }
     ],

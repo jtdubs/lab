@@ -1,26 +1,46 @@
 {
     "builders": [
         {
-            "type": "vmware-vmx",
-            "source_path": "../ubuntu-base/output-vmware-iso/ubuntu-base.vmx",
-            "shutdown_command": "sudo systemctl poweroff -i",
+            "boot_wait": "15s",
             "communicator": "ssh",
-            "ssh_username": "packer",
+            "display_name": "ubuntu-workstation",
+            "headless": false,
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "source_path": "../ubuntu-base/output-vmware-iso/ubuntu-base.vmx",
             "ssh_private_key_file": "../../packer.id_rsa",
             "ssh_timeout": "10m",
-            "boot_wait": "5s",
-            "vm_name": "ubuntu-workstation",
-            "display_name": "ubuntu-workstation"
+            "ssh_username": "packer",
+            "type": "vmware-vmx",
+            "vm_name": "ubuntu-workstation"
+
         },
         {
-            "type": "virtualbox-ovf",
-            "source_path": "../ubuntu-base/output-virtualbox-iso/ubuntu-base.ovf",
-            "shutdown_command": "sudo systemctl poweroff -i",
+            "boot_wait": "15s",
             "communicator": "ssh",
-            "ssh_username": "packer",
+            "headless": false,
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "source_path": "../ubuntu-base/output-virtualbox-iso/ubuntu-base.ovf",
             "ssh_private_key_file": "../../packer.id_rsa",
             "ssh_timeout": "10m",
-            "boot_wait": "15s",
+            "ssh_username": "packer",
+            "type": "virtualbox-ovf",
+            "vm_name": "ubuntu-workstation"
+
+        },
+        {
+            "boot_wait": "5s",
+            "clone_from_vmcx_path": "../ubuntu-base/output-hyperv-iso",
+            "communicator": "ssh",
+            "cpus": 4,
+            "generation": 2,
+            "headless": false,
+            "memory": 4096,
+            "shutdown_command": "sudo systemctl poweroff -i",
+            "ssh_private_key_file": "../../packer.id_rsa",
+            "ssh_timeout": "10m",
+            "ssh_username": "packer",
+            "switch_name": "Default Switch",
+            "type": "hyperv-vmcx",
             "vm_name": "ubuntu-workstation"
         }
     ],
@@ -33,12 +53,42 @@
         },
         {
             "type": "shell",
+            "expect_disconnect": true,
+            "inline": [ "sudo reboot" ],
+            "pause_after": "20s"
+
+        },
+        {
+            "type": "shell",
+            "only": "vmware-vmx",
+            "execute_command": "sudo bash '{{ .Path }}'",
+            "script": "scripts/setup-vmware.sh"
+        },
+        {
+            "type": "shell",
+            "only": "hyperv-vmcx",
+            "execute_command": "sudo bash '{{ .Path }}'",
+            "script": "scripts/setup-hyperv.sh"
+        },
+        {
+            "type": "shell",
             "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
             "script": "scripts/setup-jtdubs.sh"
+        },
+        {
+            "type": "shell-local",
+            "inline": [
+                "powershell.exe Set-VM -VMName ubuntu-workstation -EnhancedSessionTransportType HvSocket"
+            ]
         }
     ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "ubuntu-workstation-{{ .Provider }}.box"
+        },
         {
             "type": "shell-local",
             "inline": [
