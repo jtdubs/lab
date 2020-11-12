@@ -7,7 +7,8 @@ RM = rm -Rf
 endif
 
 all:
-	packer build --on-error=ask ubuntu-workstation.json
+	packer build --on-error=ask ubuntu-workstation-1.json
+	packer build --on-error=ask ubuntu-workstation-2.json
 
 clean:
 	-$(RM) packer_cache
@@ -22,11 +23,12 @@ vbox: ubuntu-workstation-virtualbox.box
 
 hyperv: ubuntu-workstation-hyperv.box
 
-ubuntu-workstation-vmware.box: ubuntu-workstation.json
-	packer build --on-error=ask --only=vmware-vmx ubuntu-workstation.json
+ubuntu-workstation-vmware.box: ubuntu-workstation-1.json
+	packer build --on-error=ask --only=vmware-vmx ubuntu-workstation-2.json
 
-ubuntu-workstation-virtualbox.box: ubuntu-workstation.json
-	packer build --on-error=ask --only=virtualbox-ovf ubuntu-workstation.json
+ubuntu-workstation-virtualbox.box: ubuntu-workstation-1.json
+	packer build --on-error=ask --only=virtualbox-ovf ubuntu-workstation-1.json
 
-ubuntu-workstation-hyperv.box: ubuntu-workstation.json
-	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation.json
+ubuntu-workstation-hyperv.box: ubuntu-workstation-1.json ubuntu-workstation-2.json
+	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation-1.json
+	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation-2.json

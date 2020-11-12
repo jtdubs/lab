@@ -34,6 +34,7 @@
             "cpus": 4,
             "generation": 2,
             "headless": false,
+            "output_directory": "output-hyperv-vmcx-phase1",
             "memory": 4096,
             "shutdown_command": "sudo systemctl poweroff -i",
             "ssh_private_key_file": "../../packer.id_rsa",
@@ -41,7 +42,7 @@
             "ssh_username": "packer",
             "switch_name": "Default Switch",
             "type": "hyperv-vmcx",
-            "vm_name": "ubuntu-workstation"
+            "vm_name": "ubuntu-workstation-phase1"
         }
     ],
 
@@ -53,10 +54,8 @@
         },
         {
             "type": "shell",
-            "expect_disconnect": true,
-            "inline": [ "sudo reboot" ],
-            "pause_after": "20s"
-
+            "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
+            "script": "scripts/setup-jtdubs.sh"
         },
         {
             "type": "shell",
@@ -65,18 +64,8 @@
             "script": "scripts/setup-vmware.sh"
         },
         {
-            "type": "shell",
-            "only": "hyperv-vmcx",
-            "execute_command": "sudo bash '{{ .Path }}'",
-            "script": "scripts/setup-hyperv.sh"
-        },
-        {
-            "type": "shell",
-            "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
-            "script": "scripts/setup-jtdubs.sh"
-        },
-        {
             "type": "shell-local",
+            "only": [ "vmware-vmx", "virtualbox-ovf" ],
             "inline": [
                 "powershell.exe Set-VM -VMName ubuntu-workstation -EnhancedSessionTransportType HvSocket"
             ]
@@ -86,6 +75,7 @@
     "post-processors": [
         {
             "type": "vagrant",
+            "only": [ "vmware-vmx", "virtualbox-ovf" ],
             "keep_input_artifact": true,
             "output": "ubuntu-workstation-{{ .Provider }}.box"
         },
