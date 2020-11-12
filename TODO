@@ -3,11 +3,11 @@ Kali Base
     I really wanted to start from raw media, but their automated instal support is crap.
 
 Ubuntu Base
-    Make sure install linux-vm-tools didn't do too much crazy GUI stuff...
-    If so, push that out to ubuntu-workstation
+    Re-test
 
 Ubuntu Workstation
     Hyper-V support, new structure
+    linux-vm-tools
 
 Win10 workstation
     - Switch to Win10 Pro
