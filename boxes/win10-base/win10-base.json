@@ -12,7 +12,7 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "sha256:{{ user `iso_checksum` }}",
             "floppy_files": [
-                "unattend/autounattend.xml",
+                "unattend/vmware/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
@@ -41,7 +41,7 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "sha256:{{ user `iso_checksum` }}",
             "floppy_files": [
-                "unattend/autounattend.xml",
+                "unattend/virtualbox/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
@@ -67,7 +67,7 @@
             "iso_url": "{{ user `iso_path` }}",
             "iso_checksum": "sha256:{{ user `iso_checksum` }}",
             "cd_files": [
-                "unattend/autounattend.xml",
+                "unattend/hyperv/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"

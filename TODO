@@ -5,8 +5,7 @@ Kali Base
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
 Win10 Base 
-    Hyper-V support, new structure
-    Switch to Win10 Pro
+    Need to go back to EFI layout for Hyper-V Gen 2, resucrrect from git
 
 Win10 workstation
 #    - Split into phase 1 (as packer) and phase 2 (as jtdubs)

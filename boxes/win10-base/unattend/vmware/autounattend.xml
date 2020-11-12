@@ -20,6 +20,21 @@
                         <CreatePartition wcm:action="add">
                             <Order>1</Order>
                             <Type>Primary</Type>
+                            <Size>250</Size>
+                        </CreatePartition>
+                        <CreatePartition wcm:action="add">
+                            <Order>2</Order>
+                            <Type>EFI</Type>
+                            <Size>100</Size>
+                        </CreatePartition>
+                        <CreatePartition wcm:action="add">
+                            <Order>3</Order>
+                            <Type>MSR</Type>
+                            <Size>128</Size>
+                        </CreatePartition>
+                        <CreatePartition wcm:action="add">
+                            <Order>4</Order>
+                            <Type>Primary</Type>
                             <Extend>true</Extend>
                         </CreatePartition>
                     </CreatePartitions>
@@ -27,7 +42,20 @@
                         <ModifyPartition wcm:action="add">
                             <Order>1</Order>
                             <PartitionID>1</PartitionID>
-                            <Label>SYSTEM</Label>
+                            <Label>Recovery</Label>
+                            <Format>NTFS</Format>
+                            <TypeID>DE94BBA4-06D1-4D40-A16A-BFD50179D6AC</TypeID>
+                        </ModifyPartition>
+                        <ModifyPartition wcm:action="add">
+                            <Order>2</Order>
+                            <PartitionID>2</PartitionID>
+                            <Label>System</Label>
+                            <Format>FAT32</Format>
+                        </ModifyPartition>
+                        <ModifyPartition wcm:action="add">
+                            <Order>3</Order>
+                            <PartitionID>4</PartitionID>
+                            <Label>Windows</Label>
                             <Format>NTFS</Format>
                             <Letter>C</Letter>
                         </ModifyPartition>
@@ -38,13 +66,13 @@
                 <OSImage>
                     <InstallTo>
                         <DiskID>0</DiskID>
-                        <PartitionID>1</PartitionID>
+                        <PartitionID>4</PartitionID>
                     </InstallTo>
                 </OSImage>
             </ImageInstall>
             <UserData>
                 <ProductKey>
-                    <Key>VK7JG-NPHTM-C97JM-9MPGT-3V66T</Key>
+                    <Key>YTMG3-N6DKC-DKB77-7M9GH-8HVX7</Key>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
                 <Organization>Lab</Organization>
@@ -135,5 +163,5 @@
             <EnableLUA>false</EnableLUA>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="wim:d:/win10/sources/install.wim#Windows 10 Pro" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <cpi:offlineImage cpi:source="wim:d:/win10/sources/install.wim#Windows 10 Home" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>
