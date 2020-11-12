@@ -1,11 +1,12 @@
-Hyper-V support...
-
-Arch Workstation
-    Hyper-V Enhanced Session Mode
-
 Kali Base
     No Hyper-V image.  What's the plan?  Do I just make my own?
     I really wanted to start from raw media, but their automated instal support is crap.
+
+Ubuntu Base
+    Hyper-V support, new structure
+
+Ubuntu Workstation
+    Hyper-V support, new structure
 
 Win10 workstation
     - Switch to Win10 Pro

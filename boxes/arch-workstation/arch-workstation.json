@@ -67,11 +67,8 @@
         },
         {
             "type": "shell-local",
-            "tempfile_extension": ".ps1",
-            "execute_command": ["powershell.exe", "{{.Vars}} {{.Script}}"],
-            "env_var_format": "$env:%s=\"%s\"; ",
             "inline": [
-                "Set-VM -VMName arch-workstation -EnhancedSessionTransportType HvSock"
+                "powershell.exe Set-VM -VMName arch-workstation -EnhancedSessionTransportType HvSock"
             ]
         }
     ],

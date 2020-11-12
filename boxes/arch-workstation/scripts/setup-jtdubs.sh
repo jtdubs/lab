@@ -14,6 +14,7 @@ pushd dotfiles
 pip3 install -r requirements.txt
 ./sync.py
 popd
+cp .xsession .xinitrc
 
 echo "Installing nvim plugins..."
 rm -Rf ~/.config/nvim/plugged/lightline.vim/
