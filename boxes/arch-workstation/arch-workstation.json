@@ -60,6 +60,13 @@
             "type": "shell",
             "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
             "script": "scripts/setup-jtdubs.sh"
+        },
+        {
+            "type": "shell-local",
+            "execute_command": ["powershell.exe", "{{.Vars}} {{.Script}}"],
+            "inline": [
+                "Set-VM -VMName arch-workstation -EnhancedSessionTransportType HvSock"
+            ]
         }
     ],
 
