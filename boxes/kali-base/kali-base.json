@@ -1,15 +1,13 @@
 {
     "variables": {
         "ova_path": "input/kali-linux-2020.3-vbox-amd64.ova",
-        "vmx_path": "output-kali-converted/Kali-Linux-2020.3-vmware-amd64.vmx"
+        "vmx_path": "input/Kali-Linux-2020.3-vmware-amd64.vmwarevm/Kali-Linux-2020.3-vmware-amd64.vmx"
     },
 
     "builders": [
         {
             "type": "vmware-vmx",
             "source_path": "{{ user `vmx_path` }}",
-            "disk_type_id": 0,
-            "vmdk_name": "disk",
             "shutdown_command": "echo kali | sudo -S systemctl poweroff -i",
             "headless": false,
             "communicator": "ssh",
@@ -75,6 +73,11 @@
     ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "kali-base-{{ .Provider }}.box"
+        },
         {
             "type": "shell-local",
             "inline": [
