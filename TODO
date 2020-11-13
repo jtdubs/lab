@@ -5,11 +5,10 @@ Kali Base
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
 Win10 workstation
-    Something in Phase 1 broke the network...
+    Move jtdubs setup into a first-login script?  How do you do this?
 
-#    - Split into phase 1 (as packer) and phase 2 (as jtdubs)
-#    - Setup jtdubs
-#        - Install local store apps (terminal & ubuntu)
+    - Setup jtdubs
+        - Install local store apps (terminal & ubuntu)
         - Setup ubuntu
         - Setup sudoers
         - Install WSL packages
