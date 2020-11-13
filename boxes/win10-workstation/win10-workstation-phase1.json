@@ -24,6 +24,23 @@
             "boot_wait": "10s",
             "vm_name": "win10-workstation-phase1",
             "output_directory": "output-virtualbox-ovf-phase1"
+        },
+        {
+            "type": "hyperv-vmcx",
+            "clone_from_vmcx_path": "../win10-base/output-hyperv-iso",
+            "shutdown_command": "powershell Stop-Computer",
+            "communicator": "winrm",
+            "winrm_username": "packer",
+            "winrm_password": "packer",
+            "winrm_timeout": "10m",
+            "boot_wait": "5s",
+            "cpus": 4,
+            "generation": 2,
+            "headless": false,
+            "output_directory": "output-hyperv-vmcx-phase1",
+            "memory": 4096,
+            "switch_name": "Default Switch",
+            "vm_name": "win10-workstation-phase1"
         }
     ],
 

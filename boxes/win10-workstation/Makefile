@@ -1,34 +1,39 @@
-.PHONY: all clean vmware vbox
+.PHONY: all clean vmware vbox hyperv
+
+ifeq ($(OS),Windows_NT)
+RM = powershell Remove-Item -Recurse -Force
+else
+RM = rm -Rf
+endif
 
 all:
-	packer build --on-error=ask win10-workstation.json
-	packer build --on-error=ask win10-workstation-vmware-box.json
-	packer build --on-error=ask win10-workstation-virtualbox-box.json
+	packer build --on-error=ask win10-workstation-phase1.json
+	packer build --on-error=ask win10-workstation-phase2.json
 
 clean:
-	-vagrant box remove --all win10-workstation --provider vmware_desktop
-	-vagrant box remove --all win10-workstation --provider virtualbox
-	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf
-	rm -f *.box
+	-$(RM) packer_cache
+	-$(RM) output-vmware-vmx-phase1
+	-$(RM) output-vmware-vmx
+	-$(RM) output-virtualbox-ovf-phase1
+	-$(RM) output-virtualbox-ovf
+	-$(RM) output-hyperv-vmcx-phase1
+	-$(RM) output-hyperv-vmcx
+	-$(RM) *.box
 
 vmware: win10-workstation-vmware.box
 
 vbox: win10-workstation-virtualbox.box
 
-output-vmware-vmx-phase1/win10-workstation-phase1.vmx: win10-workstation-phase1.json
-	packer build --on-error=ask --only=vmware-vmx win10-workstation-phase1.json
+hyperv: win10-workstation-hyperv.box
 
-output-vmware-vmx/win10-workstation.vmx: win10-workstation-phase2.json output-vmware-vmx-phase1/win10-workstation-phase1.vmx
+win10-workstation-vmware.box: win10-workstation-phase1.json win10-workstation-phase2.json
+	packer build --on-error=ask --only=vmware-vmx win10-workstation-phase1.json
 	packer build --on-error=ask --only=vmware-vmx win10-workstation-phase2.json
 
-output-virtualbox-ovf-phase1/win10-workstation-phase1.ovf: win10-workstation-phase1.json
+win10-workstation-virtualbox.box: win10-workstation-phase1.json win10-workstation-phase2.json
 	packer build --on-error=ask --only=virtualbox-ovf win10-workstation-phase1.json
-
-output-virtualbox-ovf/win10-workstation.ovf: win10-workstation-phase2.json output-virtualbox-ovf-phase1/win10-workstation-phase1.ovf
 	packer build --on-error=ask --only=virtualbox-ovf win10-workstation-phase2.json
 
-win10-workstation-vmware.box: output-vmware-vmx/win10-workstation.vmx
-	packer build --on-error=ask win10-workstation-vmware-box.json
-
-win10-workstation-virtualbox.box: output-virtualbox-ovf/win10-workstation.ovf
-	packer build --on-error=ask win10-workstation-virtualbox-box.json
+win10-workstation-hyperv.box: win10-workstation-phase1.json win10-workstation-phase2.json
+	packer build --on-error=ask --only=hyperv-vmcx win10-workstation-phase1.json
+	packer build --on-error=ask --only=hyperv-vmcx win10-workstation-phase2.json

@@ -7,8 +7,8 @@ RM = rm -Rf
 endif
 
 all:
-	packer build --on-error=ask ubuntu-workstation-1.json
-	packer build --on-error=ask ubuntu-workstation-2.json
+	packer build --on-error=ask ubuntu-workstation-phase1.json
+	packer build --on-error=ask ubuntu-workstation-phase2.json
 
 clean:
 	-$(RM) packer_cache
@@ -23,12 +23,12 @@ vbox: ubuntu-workstation-virtualbox.box
 
 hyperv: ubuntu-workstation-hyperv.box
 
-ubuntu-workstation-vmware.box: ubuntu-workstation-1.json
-	packer build --on-error=ask --only=vmware-vmx ubuntu-workstation-2.json
+ubuntu-workstation-vmware.box: ubuntu-workstation-phase1.json
+	packer build --on-error=ask --only=vmware-vmx ubuntu-workstation-phase2.json
 
-ubuntu-workstation-virtualbox.box: ubuntu-workstation-1.json
-	packer build --on-error=ask --only=virtualbox-ovf ubuntu-workstation-1.json
+ubuntu-workstation-virtualbox.box: ubuntu-workstation-phase1.json
+	packer build --on-error=ask --only=virtualbox-ovf ubuntu-workstation-phase1.json
 
-ubuntu-workstation-hyperv.box: ubuntu-workstation-1.json ubuntu-workstation-2.json
-	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation-1.json
-	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation-2.json
+ubuntu-workstation-hyperv.box: ubuntu-workstation-phase1.json ubuntu-workstation-phase2.json
+	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation-phase1.json
+	packer build --on-error=ask --only=hyperv-vmcx ubuntu-workstation-phase2.json

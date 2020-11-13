@@ -4,9 +4,6 @@ Kali Base
         https://www.kali.org/dojo/preseed.cfg
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
-Win10 Base 
-    Need to go back to EFI layout for Hyper-V Gen 2, resucrrect from git
-
 Win10 workstation
 #    - Split into phase 1 (as packer) and phase 2 (as jtdubs)
 #    - Setup jtdubs

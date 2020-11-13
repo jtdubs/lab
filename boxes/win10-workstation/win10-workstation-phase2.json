@@ -22,6 +22,22 @@
             "winrm_timeout": "10m",
             "boot_wait": "10s",
             "vm_name": "win10-workstation"
+        },
+        {
+            "type": "hyperv-vmcx",
+            "clone_from_vmcx_path": "output-hyperv-iso-phase1",
+            "shutdown_command": "powershell Stop-Computer",
+            "communicator": "winrm",
+            "winrm_username": "jtdubs",
+            "winrm_password": "",
+            "winrm_timeout": "10m",
+            "boot_wait": "5s",
+            "cpus": 4,
+            "generation": 2,
+            "headless": false,
+            "memory": 4096,
+            "switch_name": "Default Switch",
+            "vm_name": "win10-workstation"
         }
     ],
 
@@ -35,5 +51,10 @@
     ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "win10-workstation-{{ .Provider }}.box"
+        }
     ]
 }
