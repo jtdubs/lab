@@ -118,7 +118,7 @@
                     </LocalAccount>
                     <LocalAccount wcm:action="add">
                         <Password>
-                            <Value>dgBhAG4AZwByAGEAbgB0AFAAYQBzAHMAdwBvAHIAZAA=</Value>
+                            <Value>dgBhAGcAcgBhAG4AdABQAGEAcwBzAHcAbwByAGQA</Value>
                             <PlainText>false</PlainText>
                         </Password>
                         <Description>Vagrant</Description>
