@@ -9,12 +9,4 @@ Kali Base
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
 Win10 workstation
-    Move jtdubs setup into a first-login script
-
-    - Setup jtdubs
-        - Install local store apps (terminal & ubuntu)
-        - Setup ubuntu
-        - Setup sudoers
-        - Install WSL packages
-        - Install dotfiles
-        - Install Windows Terminal config file
+    Do an auto-login as jtdubs to let it all run, and do a Stop-Computer at the end?
