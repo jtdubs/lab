@@ -3,12 +3,13 @@
         "boot_wait": "10s",
         "communicator": "winrm",
         "cpus": "4",
+        "headless": "false",
         "memory": "4096",
         "shutdown_command": "powershell Stop-Computer",
-        "vm_name": "win10-workstation",
-        "winrm_password": "vagrant",
+        "vm_name": "win10-workstation-phase1",
+        "winrm_password": "packer",
         "winrm_timeout": "10m",
-        "winrm_username": "vagrant"
+        "winrm_username": "packer"
     },
 
     "builders": [
@@ -16,7 +17,8 @@
             "type": "vmware-vmx",
 
             "display_name": "{{ user `vm_name` }}",
-            "source_path": "output-vmware-vmx-phase1/win10-base.vmx",
+            "output_directory": "output-vmware-vmx-phase1",
+            "source_path": "../win10-base/output-vmware-iso/win10-base.vmx",
 
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
@@ -30,7 +32,8 @@
         {
             "type": "virtualbox-ovf",
 
-            "source_path": "output-virtualbox-ovf-phase1/win10-base.ovf",
+            "output_directory": "output-virtualbox-ovf-phase1",
+            "source_path": "../win10-base/output-virtualbox-iso/win10-base.ovf",
 
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
@@ -44,9 +47,10 @@
         {
             "type": "hyperv-vmcx",
 
-            "clone_from_vmcx_path": "output-hyperv-vmcx-phase1",
+            "clone_from_vmcx_path": "../win10-base/output-hyperv-iso",
             "cpus": "{{ user `cpus` }}",
             "generation": 2,
+            "output_directory": "output-hyperv-vmcx-phase1",
             "memory": "{{ user `memory` }}",
             "switch_name": "Default Switch",
 
@@ -63,9 +67,25 @@
 
     "provisioners": [
         {
+            "type": "file",
+            "source": "scripts/First-Logon.ps1",
+            "destination": "C:\\Windows\\Temp\\First-Logon.ps1"
+
+        },
+        {
             "type": "powershell",
             "scripts": [
-                "scripts/Install-JTDubs.ps1"
+                "scripts/Create-User.ps1",
+                "scripts/Install-Software-1.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "scripts": [
+                "scripts/Install-Software-2.ps1"
             ]
         }
     ],

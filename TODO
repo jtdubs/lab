@@ -1,3 +1,7 @@
+General
+    Change all the jtdubs stuff to just vagrant... I think?
+    Should I even get rid of Packer and just run with Vagrant?
+
 Kali Base
     Switch to pre-seed:
         https://github.com/Wh1t3Rh1n0/kali-unattended/blob/master/preseed.cfg
@@ -5,7 +9,7 @@ Kali Base
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
 Win10 workstation
-    Move jtdubs setup into a first-login script?  How do you do this?
+    Move jtdubs setup into a first-login script
 
     - Setup jtdubs
         - Install local store apps (terminal & ubuntu)
