@@ -6,7 +6,7 @@
         "headless": "false",
         "memory": "4096",
         "shutdown_command": "powershell Stop-Computer",
-        "vm_name": "win10-workstation-phase1",
+        "vm_name": "win10-workstation",
         "winrm_password": "packer",
         "winrm_timeout": "10m",
         "winrm_username": "packer"
@@ -17,7 +17,7 @@
             "type": "vmware-vmx",
 
             "display_name": "{{ user `vm_name` }}",
-            "output_directory": "output-vmware-vmx-phase1",
+            "output_directory": "output-vmware-vmx",
             "source_path": "../win10-base/output-vmware-iso/win10-base.vmx",
 
             "boot_wait": "{{ user `boot_wait` }}",
@@ -32,7 +32,7 @@
         {
             "type": "virtualbox-ovf",
 
-            "output_directory": "output-virtualbox-ovf-phase1",
+            "output_directory": "output-virtualbox-ovf",
             "source_path": "../win10-base/output-virtualbox-iso/win10-base.ovf",
 
             "boot_wait": "{{ user `boot_wait` }}",
@@ -50,7 +50,7 @@
             "clone_from_vmcx_path": "../win10-base/output-hyperv-iso",
             "cpus": "{{ user `cpus` }}",
             "generation": 2,
-            "output_directory": "output-hyperv-vmcx-phase1",
+            "output_directory": "output-hyperv-vmcx",
             "memory": "{{ user `memory` }}",
             "switch_name": "Default Switch",
 
@@ -67,9 +67,20 @@
 
     "provisioners": [
         {
+            "type": "powershell",
+            "inline": [
+                "New-Item -Path 'C:\\ProgramData\\Packer' -Type Directory"
+            ]
+        },
+        {
             "type": "file",
-            "source": "scripts/First-Logon.ps1",
-            "destination": "C:\\Windows\\Temp\\First-Logon.ps1"
+            "sources": [
+                "scripts/First-Logon.ps1",
+                "scripts/WSL-Prep.sh",
+                "scripts/WSL-First-Logon.sh",
+                "settings/settings.json"
+            ],
+            "destination": "C:\\ProgramData\\Packer\\"
 
         },
         {

@@ -2,8 +2,6 @@
 
 set -eu
 
-echo '' | sudo -S apt-get install --yes build-essential fish git neovim nodejs python3-pip tmux
-
 cd /home/jtdubs
 
 echo "Installing fzf..."
