@@ -3,7 +3,7 @@
 set -eu
 
 echo "Install dependencies..."
-apt-get upate
+apt-get update
 apt-get install --yes build-essential fish git neovim nodejs python3-pip tmux
 
 echo "Creating jtdubs user..."

@@ -6,7 +6,7 @@ cd /home/jtdubs
 
 echo "Installing fzf..."
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+~/.fzf/install --all
 
 echo "Installing dotfiles (initial)..."
 git clone https://github.com/jtdubs/dotfiles.git
