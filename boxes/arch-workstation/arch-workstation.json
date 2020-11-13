@@ -1,47 +1,64 @@
 {
+    "variables": {
+        "boot_wait": "15s",
+        "communicator": "ssh",
+        "cpus": "4",
+        "headless": "false",
+        "memory": "4096",
+        "shutdown_command": "sudo systemctl poweroff -i",
+        "ssh_private_key_file": "../../packer.id_rsa",
+        "ssh_timeout": "10m",
+        "ssh_username": "packer",
+        "vm_name": "arch-workstation"
+    },
+
     "builders": [
         {
-            "boot_wait": "15s",
-            "communicator": "ssh",
-            "display_name": "arch-workstation",
-            "headless": false,
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "source_path": "../arch-base/output-vmware-iso/arch-base.vmx",
-            "ssh_private_key_file": "../../packer.id_rsa",
-            "ssh_timeout": "10m",
-            "ssh_username": "packer",
             "type": "vmware-vmx",
-            "vm_name": "arch-workstation"
 
+            "display_name": "{{ user `vm_name` }}",
+            "source_path": "../arch-base/output-vmware-iso/arch-base.vmx",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
-            "boot_wait": "15s",
-            "communicator": "ssh",
-            "headless": false,
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "source_path": "../arch-base/output-virtualbox-iso/arch-base.ovf",
-            "ssh_private_key_file": "../../packer.id_rsa",
-            "ssh_timeout": "10m",
-            "ssh_username": "packer",
             "type": "virtualbox-ovf",
-            "vm_name": "arch-workstation"
 
+            "source_path": "../arch-base/output-virtualbox-iso/arch-base.ovf",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
-            "boot_wait": "5s",
-            "clone_from_vmcx_path": "../arch-base/output-hyperv-iso",
-            "communicator": "ssh",
-            "cpus": 4,
-            "generation": 2,
-            "headless": false,
-            "memory": 4096,
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "ssh_private_key_file": "../../packer.id_rsa",
-            "ssh_timeout": "10m",
-            "ssh_username": "packer",
-            "switch_name": "Default Switch",
             "type": "hyperv-vmcx",
-            "vm_name": "arch-workstation"
+
+            "clone_from_vmcx_path": "../arch-base/output-hyperv-iso",
+            "cpus": "{{ user `cpus` }}",
+            "generation": 2,
+            "memory": "{{ user `memory` }}",
+            "switch_name": "Default Switch",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         }
     ],
 
@@ -68,7 +85,7 @@
         {
             "type": "shell-local",
             "inline": [
-                "powershell.exe Set-VM -VMName arch-workstation -EnhancedSessionTransportType HvSocket"
+                "powershell.exe Set-VM -VMName {{ user `vm_name` }} -EnhancedSessionTransportType HvSocket"
             ]
         }
     ],
@@ -77,7 +94,7 @@
         {
             "type": "vagrant",
             "keep_input_artifact": true,
-            "output": "arch-workstation-{{ .Provider }}.box"
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
         },
         {
             "type": "shell-local",

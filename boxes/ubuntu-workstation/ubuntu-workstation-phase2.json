@@ -1,20 +1,37 @@
 {
+    "variables": {
+        "boot_wait": "5s",
+        "communicator": "ssh",
+        "cpus": "4",
+        "headless": "false",
+        "memory": "4096",
+        "shutdown_command": "sudo systemctl poweroff -i",
+        "ssh_private_key_file": "../../packer.id_rsa",
+        "ssh_timeout": "10m",
+        "ssh_username": "packer",
+        "vm_name": "ubuntu-workstation"
+    },
+
     "builders": [
         {
-            "boot_wait": "5s",
-            "clone_from_vmcx_path": "./output-hyperv-vmcx-phase1",
-            "communicator": "ssh",
-            "cpus": 4,
-            "generation": 2,
-            "headless": false,
-            "memory": 4096,
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "ssh_private_key_file": "../../packer.id_rsa",
-            "ssh_timeout": "10m",
-            "ssh_username": "packer",
-            "switch_name": "Default Switch",
+
             "type": "hyperv-vmcx",
-            "vm_name": "ubuntu-workstation"
+
+            "clone_from_vmcx_path": "./output-hyperv-vmcx-phase1",
+            "cpus": "{{ user `cpus` }}",
+            "generation": 2,
+            "memory": "{{ user `memory` }}",
+            "output_directory": "output-hyperv-vmcx-phase1",
+            "switch_name": "Default Switch",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}-phase1"
         }
     ],
 
@@ -29,7 +46,7 @@
             "type": "shell-local",
             "only": "hyperv-vmcx",
             "inline": [
-                "powershell.exe Set-VM -VMName ubuntu-workstation -EnhancedSessionTransportType HvSocket"
+                "powershell.exe Set-VM -VMName {{ user `vm_name` }} -EnhancedSessionTransportType HvSocket"
             ]
         }
     ],
@@ -38,7 +55,7 @@
         {
             "type": "vagrant",
             "keep_input_artifact": true,
-            "output": "ubuntu-workstation-{{ .Provider }}.box"
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
         },
         {
             "type": "shell-local",

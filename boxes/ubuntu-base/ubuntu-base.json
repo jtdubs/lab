@@ -1,104 +1,98 @@
 {
     "variables": {
-        "iso_url": "https://releases.ubuntu.com/20.10/ubuntu-20.10-live-server-amd64.iso",
+        "boot_command_1": "c<wait>",
+        "boot_command_2": "linux /casper/vmlinuz quiet --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
+        "boot_command_3": "initrd /casper/initrd<enter>",
+        "boot_command_4": "boot<enter>",
+        "boot_wait": "5s",
+        "communicator": "ssh",
+        "cpus": "4",
+        "disk_size": "32768",
+        "headless": "false",
+        "http_directory": "srv",
+        "iso_checksum": "sha256:defdc1ad3af7b661fe2b4ee861fb6fdb5f52039389ef56da6efc05e6adfe3d45",
         "iso_path": "iso/ubuntu-20.10-live-server-amd64.iso",
-        "iso_checksum": "defdc1ad3af7b661fe2b4ee861fb6fdb5f52039389ef56da6efc05e6adfe3d45"
+        "iso_url": "https://releases.ubuntu.com/20.10/ubuntu-20.10-live-server-amd64.iso",
+        "memory": "4096",
+        "shutdown_command": "echo packer | sudo -S systemctl poweroff -i",
+        "ssh_password": "packer",
+        "ssh_timeout": "10m",
+        "ssh_username": "packer",
+        "vm_name": "ubuntu-base"
     },
 
     "builders": [
         {
             "type": "vmware-iso",
-            "disk_size": 32768,
-            "disk_type_id": 0,
-            "iso_urls": [
-                "{{ user `iso_path` }}",
-                "{{ user `iso_url` }}"
-            ],
-            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
-            "http_directory": "srv",
-            "shutdown_command": "echo packer | sudo -S systemctl poweroff -i",
-            "cpus": 4,
-            "memory": 4096,
-            "cores": 4,
-            "network": "vmnet8",
-            "headless": false,
-            "communicator": "ssh",
-            "ssh_username": "packer",
-            "ssh_password": "packer",
-            "ssh_timeout": "10m",
-            "boot_wait": "5s",
-            "boot_command": [
-                "c<wait>",
-                "linux /casper/vmlinuz quiet --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
-                "initrd /casper/initrd<enter>",
-                "boot<enter>"
-            ],
-            "disk_adapter_type": "scsi",
+
             "cdrom_adapter_type": "ide",
+            "disk_adapter_type": "scsi",
+            "disk_type_id": 0,
             "guest_os_type": "ubuntu-64",
-            "vmx_data": {
-                "firmware": "efi"
-            },
-            "vm_name": "ubuntu-base"
+            "network": "vmnet8",
+            "vmx_data": { "firmware": "efi" },
+            "cores": "{{ user `cpus` }}",
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
             "type": "virtualbox-iso",
-            "disk_size": 32768,
-            "iso_urls": [
-                "{{ user `iso_path` }}",
-                "{{ user `iso_url` }}"
-            ],
-            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
-            "http_directory": "srv",
-            "shutdown_command": "echo packer | sudo -S systemctl poweroff -i",
-            "cpus": 4,
-            "memory": 4096,
-            "headless": false,
-            "communicator": "ssh",
-            "ssh_username": "packer",
-            "ssh_password": "packer",
-            "ssh_timeout": "10m",
-            "boot_wait": "5s",
-            "boot_command": [
-                "c<wait>",
-                "linux /casper/vmlinuz quiet --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
-                "initrd /casper/initrd<enter>",
-                "boot<enter>"
-            ],
-            "hard_drive_interface": "scsi",
+
             "guest_os_type": "UbuntuLinux_64",
-            "vboxmanage": [
-                [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ]
-            ],
-            "vm_name": "ubuntu-base"
+            "hard_drive_interface": "scsi",
+            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ] ],
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
             "type": "hyperv-iso",
-            "disk_size": 32768,
-            "iso_urls": [
-                "{{ user `iso_path` }}",
-                "{{ user `iso_url` }}"
-            ],
-            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
-            "http_directory": "srv",
-            "shutdown_command": "echo packer | sudo -S systemctl poweroff -i",
-            "cpus": 4,
-            "memory": 4096,
-            "headless": false,
+
             "generation": 2,
             "switch_name": "Default Switch",
-            "communicator": "ssh",
-            "ssh_username": "packer",
-            "ssh_password": "packer",
-            "ssh_timeout": "20m",
-            "boot_wait": "5s",
-            "boot_command": [
-                "c<wait>",
-                "linux /casper/vmlinuz quiet --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
-                "initrd /casper/initrd<enter>",
-                "boot<enter>"
-            ],
-            "vm_name": "ubuntu-base"
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         }
     ],
 
@@ -137,6 +131,11 @@
     ],
 
     "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
+        },
         {
             "type": "shell-local",
             "inline": [

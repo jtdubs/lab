@@ -1,98 +1,96 @@
 {
     "variables": {
-        "iso_url": "http://mirrors.mit.edu/archlinux/iso/2020.11.01/archlinux-2020.11.01-x86_64.iso",
+        "boot_command_1": "<enter><wait40>",
+        "boot_command_2": "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>",
+        "boot_wait": "5s",
+        "communicator": "ssh",
+        "cpus": "4",
+        "disk_size": "32768",
+        "headless": "false",
+        "http_directory": "srv",
+        "iso_checksum": "sha1:739fab8d23430a01629a131ae02713a09af86968",
         "iso_path": "iso/archlinux-2020.11.01-x86_64.iso",
-        "iso_checksum": "739fab8d23430a01629a131ae02713a09af86968"
+        "iso_url": "http://mirrors.mit.edu/archlinux/iso/2020.11.01/archlinux-2020.11.01-x86_64.iso",
+        "memory": "4096",
+        "shutdown_command": "sudo systemctl poweroff -i",
+        "ssh_password": "packer",
+        "ssh_timeout": "10m",
+        "ssh_username": "packer",
+        "vm_name": "arch-base"
     },
 
     "builders": [
         {
             "type": "vmware-iso",
-            "disk_size": 32768,
-            "disk_type_id": 0,
-            "iso_urls": [
-                "{{ user `iso_path` }}",
-                "{{ user `iso_url` }}"
-            ],
-            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
-            "http_directory": "srv",
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "cpus": 4,
-            "memory": 4096,
-            "cores": 4,
-            "network": "vmnet8",
-            "headless": false,
-            "communicator": "ssh",
-            "ssh_username": "packer",
-            "ssh_password": "packer",
-            "ssh_timeout": "10m",
-            "boot_wait": "5s",
-            "boot_command": [
-                "<enter><wait40>",
-                "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>"
-            ],
-            "disk_adapter_type": "scsi",
+
             "cdrom_adapter_type": "ide",
+            "disk_adapter_type": "scsi",
+            "disk_type_id": 0,
             "guest_os_type": "other5xlinux-64",
-            "vmx_data": {
-                "firmware": "efi"
-            },
-            "vm_name": "arch-base"
+            "network": "vmnet8",
+            "vmx_data": { "firmware": "efi" },
+            "cores": "{{ user `cpus` }}",
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
             "type": "virtualbox-iso",
-            "disk_size": 32768,
-            "iso_urls": [
-                "{{ user `iso_path` }}",
-                "{{ user `iso_url` }}"
-            ],
-            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
-            "http_directory": "srv",
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "cpus": 4,
-            "memory": 4096,
-            "headless": false,
-            "communicator": "ssh",
-            "ssh_username": "packer",
-            "ssh_password": "packer",
-            "ssh_timeout": "10m",
-            "boot_wait": "5s",
-            "boot_command": [
-                "<enter><wait40>",
-                "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>"
-            ],
-            "hard_drive_interface": "scsi",
+
             "guest_os_type": "ArchLinux_64",
-            "vboxmanage": [
-                [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ]
-            ],
-            "vm_name": "arch-base"
+            "hard_drive_interface": "scsi",
+            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ] ],
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
             "type": "hyperv-iso",
-            "disk_size": 32768,
-            "iso_urls": [
-                "{{ user `iso_path` }}",
-                "{{ user `iso_url` }}"
-            ],
-            "iso_checksum": "sha1:{{ user `iso_checksum` }}",
-            "http_directory": "srv",
-            "shutdown_command": "sudo systemctl poweroff -i",
-            "cpus": 4,
-            "memory": 4096,
-            "headless": false,
+
             "generation": 2,
             "switch_name": "Default Switch",
-            "communicator": "ssh",
-            "ssh_username": "packer",
-            "ssh_password": "packer",
-            "ssh_timeout": "10m",
-            "boot_wait": "5s",
-            "boot_command": [
-                "<enter><wait40>",
-                "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh-hyperv.sh | bash<enter>"
-            ],
-            "vm_name": "arch-base"
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         }
     ],
 
@@ -149,7 +147,7 @@
         {
             "type": "vagrant",
             "keep_input_artifact": true,
-            "output": "arch-base-{{ .Provider }}.box"
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
         },
         {
             "type": "shell-local",

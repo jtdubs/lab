@@ -1,71 +1,86 @@
 {
     "variables": {
+        "boot_command": "<enter>",
+        "boot_wait": "2s",
+        "communicator": "winrm",
+        "cpus": "4",
+        "disk_size": "32768",
+        "headless": "false",
+        "http_directory": "tools",
+        "iso_checksum": "sha256:7f96789d08835d37b5886f81f1887a38617453a5211e788964553f4194d8b23c",
         "iso_path": "iso/Windows.iso",
-        "iso_checksum": "7f96789d08835d37b5886f81f1887a38617453a5211e788964553f4194d8b23c"
+        "memory": "4096",
+        "shutdown_command": "powershell Stop-Computer",
+        "vm_name": "win10-base",
+        "winrm_password": "packer",
+        "winrm_timeout": "60m",
+        "winrm_username": "packer"
     },
 
     "builders": [
         {
             "type": "vmware-iso",
-            "disk_size": 32768,
+
+            "cdrom_adapter_type": "ide",
+            "cores": "{{ user `cpus` }}",
+            "disk_adapter_type": "sata",
             "disk_type_id": 0,
-            "iso_url": "{{ user `iso_path` }}",
-            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
             "floppy_files": [
                 "unattend/vmware/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
-            "http_directory": "tools",
-            "cpus": 4,
-            "cores": 4,
-            "memory": 4096,
-            "network": "vmnet8",
-            "headless": false,
-            "communicator": "winrm",
-            "winrm_username": "packer",
-            "winrm_password": "packer",
-            "winrm_timeout": "60m",
-            "boot_wait": "2s",
-            "boot_command": [ "<enter>" ],
-            "disk_adapter_type": "sata",
-            "cdrom_adapter_type": "ide",
             "guest_os_type": "windows9-64",
-            "shutdown_command": "powershell Stop-Computer",
-            "vm_name": "win10-base"
+            "network": "vmnet8",
+
+            "boot_command": [ "{{ user `boot_command` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_url": "{{ user `iso_path` }}",
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "winrm_password": "{{ user `winrm_password` }}",
+            "winrm_timeout": "{{ user `winrm_timeout` }}",
+            "winrm_username": "{{ user `winrm_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
             "type": "virtualbox-iso",
-            "disk_size": 32768,
-            "iso_url": "{{ user `iso_path` }}",
-            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
+
             "floppy_files": [
                 "unattend/virtualbox/autounattend.xml",
                 "scripts/Set-Network.ps1",
                 "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
-            "http_directory": "tools",
-            "cpus": 4,
-            "memory": 4096,
-            "headless": false,
-            "communicator": "winrm",
-            "winrm_username": "packer",
-            "winrm_password": "packer",
-            "winrm_timeout": "60m",
-            "boot_wait": "2s",
-            "boot_command": [ "<enter>" ],
-            "hard_drive_interface": "sata",
             "guest_os_type": "Windows10_64",
-            "shutdown_command": "powershell Stop-Computer",
-            "vm_name": "win10-base"
+            "hard_drive_interface": "sata",
+
+            "boot_command": [ "{{ user `boot_command` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_url": "{{ user `iso_path` }}",
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "winrm_password": "{{ user `winrm_password` }}",
+            "winrm_timeout": "{{ user `winrm_timeout` }}",
+            "winrm_username": "{{ user `winrm_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
             "type": "hyperv-iso",
-            "disk_size": 32768,
-            "iso_url": "{{ user `iso_path` }}",
-            "iso_checksum": "sha256:{{ user `iso_checksum` }}",
+
             "cd_files": [
                 "unattend/hyperv/autounattend.xml",
                 "scripts/Set-Network.ps1",
@@ -73,20 +88,24 @@
                 "scripts/Enable-WinRM.ps1"
             ],
             "cd_label": "UNATTEND",
-            "http_directory": "tools",
-            "cpus": 4,
-            "memory": 4096,
-            "headless": false,
             "generation": 2,
             "switch_name": "Default Switch",
-            "communicator": "winrm",
-            "winrm_username": "packer",
-            "winrm_password": "packer",
-            "winrm_timeout": "60m",
-            "boot_wait": "2s",
-            "boot_command": [ "<enter>" ],
-            "shutdown_command": "powershell Stop-Computer",
-            "vm_name": "win10-base"
+
+            "boot_command": [ "{{ user `boot_command` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_url": "{{ user `iso_path` }}",
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "winrm_password": "{{ user `winrm_password` }}",
+            "winrm_timeout": "{{ user `winrm_timeout` }}",
+            "winrm_username": "{{ user `winrm_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         }
     ],
 
@@ -121,7 +140,7 @@
         {
             "type": "vagrant",
             "keep_input_artifact": true,
-            "output": "win10-base-{{ .Provider }}.box"
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
         }
     ]
 }

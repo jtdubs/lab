@@ -2,7 +2,7 @@
     "builders": [
         {
             "type": "vmware-vmx",
-            "source_path": "output-vmware-iso-phase1/win10-base.vmx",
+            "source_path": "output-vmware-vmx-phase1/win10-base.vmx",
             "shutdown_command": "powershell Stop-Computer",
             "communicator": "winrm",
             "winrm_username": "jtdubs",
@@ -14,7 +14,7 @@
         },
         {
             "type": "virtualbox-ovf",
-            "source_path": "output-virtualbox-iso-phase1/win10-base.ovf",
+            "source_path": "output-virtualbox-ovf-phase1/win10-base.ovf",
             "shutdown_command": "powershell Stop-Computer",
             "communicator": "winrm",
             "winrm_username": "jtdubs",
@@ -25,7 +25,7 @@
         },
         {
             "type": "hyperv-vmcx",
-            "clone_from_vmcx_path": "output-hyperv-iso-phase1",
+            "clone_from_vmcx_path": "output-hyperv-vmcx-phase1",
             "shutdown_command": "powershell Stop-Computer",
             "communicator": "winrm",
             "winrm_username": "jtdubs",
