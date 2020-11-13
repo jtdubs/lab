@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-useradd -p $(/usr/bin/openssl passwd -crypt 'packer') -m -U packer
+useradd -p $(/usr/bin/openssl passwd -crypt 'vagrant') -m -U vagrant
 
-cat > /etc/sudoers.d/10_packer <<EOF
+cat > /etc/sudoers.d/10_vagrant <<EOF
 Defaults env_keep += "SSH_AUTH_SOCK"
-packer ALL=(ALL) NOPASSWD: ALL
+vagrant ALL=(ALL) NOPASSWD: ALL
 EOF
 
-chmod 0440 /etc/sudoers.d/10_packer
+chmod 0440 /etc/sudoers.d/10_vagrant
 systemctl start sshd.service
 
 pacman -Sy --noconfirm hyperv

@@ -5,12 +5,14 @@ Add-AppxPackage -DisableDevelopmentMode -Register ((Get-AppxPackage -AllUsers "C
 Add-AppxPackage -DisableDevelopmentMode -Register ((Get-AppxPackage -AllUsers "Microsoft.WindowsTerminal").InstallLocation + "\AppxManifest.xml")
 
 # Install Windows Terminal settings
-Copy-Item -Path C:\ProgramData\Packer\settings.json -Destination ("$env:LOCALAPPDATA\Packages\" + (Get-AppxPackage "Microsoft.WindowsTerminal").PackageFamilyName + "\LocalState")
+Copy-Item -Path C:\ProgramData\Vagrant\settings.json -Destination ("$env:LOCALAPPDATA\Packages\" + (Get-AppxPackage "Microsoft.WindowsTerminal").PackageFamilyName + "\LocalState")
 
 # Setup Ubuntu WSL
 ubuntu2004.exe install --root
-wsl bash /mnt/c/ProgramData/Packer/WSL-Prep.sh
-ubuntu2004.exe config --default-user jtdubs
-wsl bash /mnt/c/ProgramData/Packer/WSL-First-Logon.sh
+wsl bash /mnt/c/ProgramData/Vagrant/WSL-Prep.sh
+ubuntu2004.exe config --default-user vagrant
+wsl bash /mnt/c/ProgramData/Vagrant/WSL-First-Logon.sh
+
+Write-Output "done" > $env:USERPROFILE\run-once-complete.txt
 
 return 0

@@ -1,12 +1,9 @@
-General
-    Change all the jtdubs stuff to just vagrant... I think?
-    Should I even get rid of Packer and just run with Vagrant?
-
 Kali Base
     Switch to pre-seed:
         https://github.com/Wh1t3Rh1n0/kali-unattended/blob/master/preseed.cfg
         https://www.kali.org/dojo/preseed.cfg
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
-Win10 workstation
-    Do an auto-login as jtdubs to let it all run, and do a Stop-Computer at the end?
+Stand up some basic test Vagrant envrionments
+
+Windows Server??

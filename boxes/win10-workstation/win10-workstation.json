@@ -7,9 +7,9 @@
         "memory": "4096",
         "shutdown_command": "powershell Stop-Computer",
         "vm_name": "win10-workstation",
-        "winrm_password": "packer",
+        "winrm_password": "vagrant",
         "winrm_timeout": "10m",
-        "winrm_username": "packer"
+        "winrm_username": "vagrant"
     },
 
     "builders": [
@@ -69,24 +69,23 @@
         {
             "type": "powershell",
             "inline": [
-                "New-Item -Path 'C:\\ProgramData\\Packer' -Type Directory"
+                "New-Item -Path 'C:\\ProgramData\\Vagrant' -Type Directory"
             ]
         },
         {
             "type": "file",
             "sources": [
-                "scripts/First-Logon.ps1",
+                "scripts/Run-Once.ps1",
                 "scripts/WSL-Prep.sh",
                 "scripts/WSL-First-Logon.sh",
                 "settings/settings.json"
             ],
-            "destination": "C:\\ProgramData\\Packer\\"
+            "destination": "C:\\ProgramData\\Vagrant\\"
 
         },
         {
             "type": "powershell",
             "scripts": [
-                "scripts/Create-User.ps1",
                 "scripts/Install-Software-1.ps1"
             ]
         },
@@ -96,7 +95,17 @@
         {
             "type": "powershell",
             "scripts": [
-                "scripts/Install-Software-2.ps1"
+                "scripts/Install-Software-2.ps1",
+                "scripts/Setup-AutoRun.ps1",
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "scripts": [
+                "scripts/Wait-For-AutoRun.ps1"
             ]
         }
     ],

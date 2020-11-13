@@ -10,9 +10,9 @@ autoinstall:
           uri: http://ports.ubuntu.com/ubuntu-ports
     identity:
         hostname: ubuntu-base
-        password: 7WOsrtiQGBXA.
-        realname: packer
-        username: packer
+        password: 5ARiDx.XvTCR.
+        realname: vagrant
+        username: vagrant
     keyboard:
         layout: us
         toggle: null

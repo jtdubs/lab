@@ -1,7 +1,7 @@
 {
     "variables": {
-        "boot_command": "<enter>",
-        "boot_wait": "2s",
+        "boot_command": "<enter><wait><enter><wait><enter><wait><enter>",
+        "boot_wait": "-1s",
         "communicator": "winrm",
         "cpus": "4",
         "disk_size": "32768",
@@ -12,9 +12,9 @@
         "memory": "4096",
         "shutdown_command": "powershell Stop-Computer",
         "vm_name": "win10-base",
-        "winrm_password": "packer",
+        "winrm_password": "vagrant",
         "winrm_timeout": "60m",
-        "winrm_username": "packer"
+        "winrm_username": "vagrant"
     },
 
     "builders": [

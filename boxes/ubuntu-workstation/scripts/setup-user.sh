@@ -2,7 +2,12 @@
 
 set -eu
 
-cd /home/jtdubs
+cd /home/vagrant
+
+echo "Installing alacritty..."
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev cargo
+cargo install alacritty
 
 echo "Installing fzf..."
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -14,7 +19,6 @@ pushd dotfiles
 pip3 install -r requirements.txt
 ./sync.py
 popd
-cp .xsession .xinitrc
 
 echo "Installing nvim plugins..."
 rm -Rf ~/.config/nvim/plugged/lightline.vim/

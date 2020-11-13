@@ -2,6 +2,7 @@
     "variables": {
         "boot_command_1": "<enter><wait40>",
         "boot_command_2": "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | bash<enter>",
+        "boot_command_2_hyperv": "curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh-hyperv.sh | bash<enter>",
         "boot_wait": "5s",
         "communicator": "ssh",
         "cpus": "4",
@@ -13,9 +14,9 @@
         "iso_url": "http://mirrors.mit.edu/archlinux/iso/2020.11.01/archlinux-2020.11.01-x86_64.iso",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
-        "ssh_password": "packer",
+        "ssh_password": "vagrant",
         "ssh_timeout": "10m",
-        "ssh_username": "packer",
+        "ssh_username": "vagrant",
         "vm_name": "arch-base"
     },
 
@@ -76,7 +77,7 @@
             "generation": 2,
             "switch_name": "Default Switch",
 
-            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2_hyperv` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
             "cpus": "{{ user `cpus` }}",
@@ -99,7 +100,6 @@
             "type": "file",
             "sources": [
                 "../../vagrant.id_rsa.pub",
-                "../../packer.id_rsa.pub",
                 "scripts/install.sh",
                 "scripts/install-vmware.sh",
                 "scripts/install-virtualbox.sh",

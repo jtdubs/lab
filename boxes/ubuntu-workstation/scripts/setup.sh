@@ -21,10 +21,5 @@ Name=Xsession
 Exec=/etc/X11/Xsession
 EOF
 
-echo "Creating jtdubs user..."
-useradd -c "Justin Dubs" -U -s /usr/bin/fish -m -p $(/usr/bin/openssl passwd -crypt '') jtdubs
-
-echo "Creating sudoers entry..."
-echo "jtdubs ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/10_jtdubs
-chown root:root /etc/sudoers.d/10_jtdubs
-chmod 0440 /etc/sudoers.d/10_jtdubs
+echo "Changing Vagrant's Shell..."
+chsh -s /usr/bin/fish vagrant

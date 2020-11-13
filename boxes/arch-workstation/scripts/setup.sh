@@ -15,10 +15,5 @@ yay -S --noconfirm polybar xinit-xsession
 echo "Enabling Window Manager..."
 sudo systemctl enable lightdm.service
 
-echo "Creating jtdubs user..."
-sudo useradd -c "Justin Dubs" -U -G wheel -s /usr/bin/fish -m -p $(/usr/bin/openssl passwd -crypt '') jtdubs
-
-echo "Creating sudoers entry..."
-echo "jtdubs ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/10_jtdubs
-sudo chown root:root /etc/sudoers.d/10_jtdubs
-sudo chmod 0440 /etc/sudoers.d/10_jtdubs
+echo "Switching Shell to Fish..."
+chsh -s /usr/bin/fish vagrant

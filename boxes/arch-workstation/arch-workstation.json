@@ -6,9 +6,9 @@
         "headless": "false",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
-        "ssh_private_key_file": "../../packer.id_rsa",
+        "ssh_private_key_file": "../../vagrant.id_rsa",
         "ssh_timeout": "10m",
-        "ssh_username": "packer",
+        "ssh_username": "vagrant",
         "vm_name": "arch-workstation"
     },
 
@@ -79,8 +79,7 @@
         },
         {
             "type": "shell",
-            "execute_command": "sudo -u jtdubs bash '{{ .Path }}'",
-            "script": "scripts/setup-jtdubs.sh"
+            "script": "scripts/setup-user.sh"
         },
         {
             "type": "shell-local",

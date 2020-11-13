@@ -30,22 +30,8 @@ pacman -Syu --noconfirm
 echo "Installing sudo..."
 pacman -S --noconfirm sudo
 
-echo "Setting up Packer..."
-useradd -m -U packer
-cat > /etc/sudoers.d/10_packer <<EOS
-Defaults env_keep += "SSH_AUTH_SOCK"
-packer ALL=(ALL) NOPASSWD: ALL
-EOS
-chmod 0440 /etc/sudoers.d/10_packer
-mkdir -p /home/packer/.ssh
-mv /packer.id_rsa.pub /home/packer/.ssh/authorized_keys
-chown -R packer:packer /home/packer/.ssh
-chmod 700 /home/packer/.ssh
-chmod 600 /home/packer/.ssh/authorized_keys
-
 echo "Setting up Vagrant..."
 useradd -m -U vagrant
-pacman -S --noconfirm python
 cat > /etc/sudoers.d/10_vagrant <<EOS
 Defaults env_keep += "SSH_AUTH_SOCK"
 vagrant ALL=(ALL) NOPASSWD: ALL
@@ -58,15 +44,15 @@ chmod 700 /home/vagrant/.ssh
 chmod 600 /home/vagrant/.ssh/authorized_keys
 
 echo "Installing yay..."
-pacman -S --noconfirm base-devel git
-cat > /home/packer/install-yay.sh <<EOS
+pacman -S --noconfirm base-devel git python
+cat > /home/vagrant/install-yay.sh <<EOS
 #!/bin/bash
 set -eu
-cd /home/packer
+cd /home/vagrant
 git clone https://aur.archlinux.org/yay-git.git
 pushd yay-git
 makepkg --syncdeps --install --noconfirm
 popd
 rm -Rf yay-git
 EOS
-sudo -u packer bash /home/packer/install-yay.sh
+sudo -u vagrant bash /home/vagrant/install-yay.sh

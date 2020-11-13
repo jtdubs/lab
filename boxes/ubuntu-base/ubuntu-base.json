@@ -14,10 +14,10 @@
         "iso_path": "iso/ubuntu-20.10-live-server-amd64.iso",
         "iso_url": "https://releases.ubuntu.com/20.10/ubuntu-20.10-live-server-amd64.iso",
         "memory": "4096",
-        "shutdown_command": "echo packer | sudo -S systemctl poweroff -i",
-        "ssh_password": "packer",
+        "shutdown_command": "echo vagrant | sudo -S systemctl poweroff -i",
+        "ssh_password": "vagrant",
         "ssh_timeout": "10m",
-        "ssh_username": "packer",
+        "ssh_username": "vagrant",
         "vm_name": "ubuntu-base"
     },
 
@@ -100,32 +100,31 @@
         {
             "type": "file",
             "sources": [
-                "../../vagrant.id_rsa.pub",
-                "../../packer.id_rsa.pub"
+                "../../vagrant.id_rsa.pub"
             ],
             "destination": "/tmp/"
         },
         {
             "type": "shell",
             "only": "vmware-iso",
-            "execute_command": "echo packer | sudo -S bash '{{ .Path }}'",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
             "script": "scripts/install-vmware.sh"
         },
         {
             "type": "shell",
             "only": "virtualbox-iso",
-            "execute_command": "echo packer | sudo -S bash '{{ .Path }}'",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
             "script": "scripts/install-virtualbox.sh"
         },
         {
             "type": "shell",
             "only": "hyperv-iso",
-            "execute_command": "echo packer | sudo -S bash '{{ .Path }}'",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
             "script": "scripts/install-hyperv.sh"
         },
         {
             "type": "shell",
-            "execute_command": "echo packer | sudo -S bash '{{ .Path }}'",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
             "script": "scripts/install.sh"
         }
     ],
