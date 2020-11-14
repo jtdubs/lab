@@ -10,7 +10,7 @@
         "iso_checksum": "sha256:7f96789d08835d37b5886f81f1887a38617453a5211e788964553f4194d8b23c",
         "iso_path": "iso/Windows.iso",
         "memory": "4096",
-        "shutdown_command": "powershell Stop-Computer",
+        "shutdown_command": "shutdown /s /t 20 /f /d p:4:1",
         "vm_name": "win10-base",
         "winrm_password": "vagrant",
         "winrm_timeout": "60m",

@@ -5,7 +5,7 @@
         "cpus": "4",
         "headless": "false",
         "memory": "4096",
-        "shutdown_command": "powershell Stop-Computer",
+        "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",
         "vm_name": "win10-workstation",
         "winrm_password": "vagrant",
         "winrm_timeout": "10m",
@@ -96,7 +96,7 @@
             "type": "powershell",
             "scripts": [
                 "scripts/Install-Software-2.ps1",
-                "scripts/Setup-AutoRun.ps1",
+                "scripts/Setup-AutoRun.ps1"
             ]
         },
         {

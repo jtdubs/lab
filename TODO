@@ -1,3 +1,5 @@
+Arch Base: yay-git is currently broken because of a go bug??
+
 Kali Base
     Switch to pre-seed:
         https://github.com/Wh1t3Rh1n0/kali-unattended/blob/master/preseed.cfg

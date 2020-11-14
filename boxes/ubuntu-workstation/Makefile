@@ -15,6 +15,7 @@ clean:
 	-$(RM) output-vmware-vmx
 	-$(RM) output-virtualbox-ovf
 	-$(RM) output-hyperv-vmcx
+	-$(RM) output-hyperv-vmcx-phase1
 	-$(RM) *.box
 
 vmware: ubuntu-workstation-vmware.box
@@ -24,7 +25,7 @@ vbox: ubuntu-workstation-virtualbox.box
 hyperv: ubuntu-workstation-hyperv.box
 
 ubuntu-workstation-vmware.box: ubuntu-workstation-phase1.json
-	packer build --on-error=ask --only=vmware-vmx ubuntu-workstation-phase2.json
+	packer build --on-error=ask --only=vmware-vmx ubuntu-workstation-phase1.json
 
 ubuntu-workstation-virtualbox.box: ubuntu-workstation-phase1.json
 	packer build --on-error=ask --only=virtualbox-ovf ubuntu-workstation-phase1.json
