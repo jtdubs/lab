@@ -32,6 +32,7 @@ pacman -S --noconfirm sudo
 
 echo "Setting up Vagrant..."
 useradd -m -U vagrant
+echo vagrant:vagrant | chpasswd
 cat > /etc/sudoers.d/10_vagrant <<EOS
 Defaults env_keep += "SSH_AUTH_SOCK"
 vagrant ALL=(ALL) NOPASSWD: ALL
@@ -43,16 +44,16 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 chmod 700 /home/vagrant/.ssh
 chmod 600 /home/vagrant/.ssh/authorized_keys
 
-echo "Installing yay..."
-pacman -S --noconfirm base-devel git python
-cat > /home/vagrant/install-yay.sh <<EOS
-#!/bin/bash
+echo "Installing paru..."
+sudo pacman -S --noconfirm base-devel git
+cat > /home/vagrant/install-paru.sh <<EOS
+#!/usr/bin/env bash
 set -eu
 cd /home/vagrant
-git clone https://aur.archlinux.org/yay-git.git
-pushd yay-git
+git clone https://aur.archlinux.org/paru.git
+pushd paru
 makepkg --syncdeps --install --noconfirm
 popd
-rm -Rf yay-git
+rm -Rf paru
 EOS
-sudo -u vagrant bash /home/vagrant/install-yay.sh
+sudo -u vagrant bash /home/vagrant/install-paru.sh

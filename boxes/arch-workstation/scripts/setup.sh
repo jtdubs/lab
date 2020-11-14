@@ -10,10 +10,10 @@ sudo pacman -S --noconfirm \
     python python-pip sxhkd tmux xf86-video-vmware xorg-server \
     xorg-xrdb xorg-xsetroot yarn
 
-yay -S --noconfirm polybar xinit-xsession
+paru -S --noconfirm polybar xinit-xsession
 
 echo "Enabling Window Manager..."
 sudo systemctl enable lightdm.service
 
 echo "Switching Shell to Fish..."
-chsh -s /usr/bin/fish vagrant
+sudo chsh -s /usr/bin/fish vagrant

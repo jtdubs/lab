@@ -1,8 +1,13 @@
 General
     Should I sub-divide further into base image + patched image + workstation image ?
-    Base images should ONLY depend on local media, fully reproduceable
-
-Arch Base: yay-git is currently broken because of a go bug??
+        Base
+            OS is installed
+            Vagrant user (auto-login on Windows)
+            VM tools, if needed
+        Patched
+            Updates applied to base
+        Workstation
+            Custom software load
 
 Kali Base
     Switch to pre-seed:
@@ -10,7 +15,7 @@ Kali Base
         https://www.kali.org/dojo/preseed.cfg
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
-Envrionments
+Environments
     Stand up some basic test Vagrant envrionments
 
 Beyond That

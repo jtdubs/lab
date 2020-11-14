@@ -2,7 +2,7 @@
 
 set -eu
 
-echo "Installing VirtualBox tools..."
+echo "Installing Hyper-V tools..."
 pacman -Sy --noconfirm hyperv
 systemctl enable hv_fcopy_daemon.service
 systemctl enable hv_kvp_daemon.service
