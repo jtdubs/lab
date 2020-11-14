@@ -1,57 +1,99 @@
 {
     "variables": {
-        "ova_path": "input/kali-linux-2020.3-vbox-amd64.ova",
-        "vmx_path": "input/Kali-Linux-2020.3-vmware-amd64.vmwarevm/Kali-Linux-2020.3-vmware-amd64.vmx"
+        "boot_command_1": "c<wait>",
+        "boot_command_2": "linux /install.amd/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg locale=en_US keymap=us hostname=kali domain=local.lan<enter>",
+        "boot_command_3": "initrd /install.amd/initrd.gz<enter>",
+        "boot_command_4": "boot<enter>",
+        "boot_wait": "5s",
+        "communicator": "ssh",
+        "cpus": "4",
+        "disk_size": "32768",
+        "headless": "false",
+        "http_directory": "srv",
+        "iso_checksum": "sha256:f3b303ad328f6f7de6d26ac5fe41a3c10e2dfeda431a039323fc504acab4acfc",
+        "iso_path": "iso/kali-linux-2020.3-installer-amd64.iso",
+        "iso_url": "https://cdimage.kali.org/kali-2020.3/kali-linux-2020.3-installer-amd64.iso",
+        "memory": "4096",
+        "shutdown_command": "echo vagrant | sudo -S systemctl poweroff -i",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "30m",
+        "ssh_username": "vagrant",
+        "vm_name": "kali-base"
     },
+
 
     "builders": [
         {
-            "type": "vmware-vmx",
-            "source_path": "{{ user `vmx_path` }}",
-            "shutdown_command": "echo kali | sudo -S systemctl poweroff -i",
-            "headless": false,
-            "communicator": "ssh",
-            "ssh_username": "kali",
-            "ssh_password": "kali",
-            "ssh_timeout": "2m",
-            "vm_name": "kali-base",
-            "display_name": "kali-base",
-            "boot_wait": "2s",
-            "boot_command": [
-                "<esc>e",
-                "<down><down><down><down><down><down><down><down><down><down><down><down><down><down><end>",
-                " 3",
-                "<f10>",
-                "<wait20>",
-                "kali<enter>kali<enter><wait>",
-                "echo kali | sudo -S systemctl start ssh<enter>"
-            ]
+            "type": "vmware-iso",
+
+            "cdrom_adapter_type": "ide",
+            "disk_adapter_type": "scsi",
+            "disk_type_id": 0,
+            "guest_os_type": "kali-64",
+            "network": "vmnet8",
+            "vmx_data": { "firmware": "efi" },
+            "cores": "{{ user `cpus` }}",
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         },
         {
-            "type": "virtualbox-ovf",
-            "source_path": "{{ user `ova_path` }}",
-            "import_flags": [ "--eula", "accept" ],
-            "shutdown_command": "echo kali | sudo -S systemctl poweroff -i",
-            "headless": false,
-            "communicator": "ssh",
-            "ssh_username": "kali",
-            "ssh_password": "kali",
-            "ssh_timeout": "2m",
-            "vm_name": "kali-base",
-            "boot_wait": "5s",
-            "boot_command": [
-                "<esc>e",
-                "<down><down><down><down><down><down><down><down><down><down><down><down><down><down><end>",
-                " 3",
-                "<f10>",
-                "<wait25>",
-                "kali<enter><wait>kali<enter><wait>",
-                "echo kali | sudo -S systemctl start ssh<enter>"
-            ],
-            "vboxmanage": [
-                ["modifyvm", "{{.Name}}", "--memory", "4096"],
-                ["modifyvm", "{{.Name}}", "--cpus", "4"]
-            ]
+            "type": "virtualbox-iso",
+
+            "guest_os_type": "UbuntuLinux_64",
+            "hard_drive_interface": "scsi",
+            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ] ],
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
+        },
+        {
+            "type": "hyperv-iso",
+
+            "generation": 2,
+            "switch_name": "Default Switch",
+
+            "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "cpus": "{{ user `cpus` }}",
+            "disk_size": "{{ user `disk_size` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
+            "memory": "{{ user `memory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
         }
     ],
 
@@ -59,15 +101,31 @@
         {
             "type": "file",
             "sources": [
-                "../../vagrant.id_rsa.pub",
-                "../../packer.id_rsa.pub"
+                "../../vagrant.id_rsa.pub"
             ],
             "destination": "/tmp/"
         },
         {
             "type": "shell",
-            "only": "vmware-vmx",
-            "execute_command": "echo kali | sudo -S bash '{{ .Path }}'",
+            "only": "vmware-iso",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
+            "script": "scripts/install-vmware.sh"
+        },
+        {
+            "type": "shell",
+            "only": "virtualbox-iso",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
+            "script": "scripts/install-virtualbox.sh"
+        },
+        {
+            "type": "shell",
+            "only": "hyperv-iso",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
+            "script": "scripts/install-hyperv.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
             "script": "scripts/install.sh"
         }
     ],
@@ -76,7 +134,7 @@
         {
             "type": "vagrant",
             "keep_input_artifact": true,
-            "output": "kali-base-{{ .Provider }}.box"
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
         },
         {
             "type": "shell-local",
