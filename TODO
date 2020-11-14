@@ -1,3 +1,7 @@
+General
+    Should I sub-divide further into base image + patched image + workstation image ?
+    Base images should ONLY depend on local media, fully reproduceable
+
 Arch Base: yay-git is currently broken because of a go bug??
 
 Kali Base
@@ -6,6 +10,12 @@ Kali Base
         https://www.kali.org/dojo/preseed.cfg
         https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
 
-Stand up some basic test Vagrant envrionments
+Envrionments
+    Stand up some basic test Vagrant envrionments
 
-Windows Server??
+Beyond That
+    Windows Server images?
+    Domain controller
+    Web server
+    Domain joined workstations
+    etc.
