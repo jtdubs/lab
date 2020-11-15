@@ -1,4 +1,6 @@
 General
+    Auto-login for linux boxes...
+
     Should I sub-divide further into base image + patched image + workstation image ?
         Base
             OS is installed
@@ -15,9 +17,10 @@ CentOs
     Would be nice to have one of these available as well...
 
 Environments
-    Stand up some basic test Vagrant envrionments
-    Dev environment is probably ubuntu workstation only
-    CTF environment is probably Kali + Win10 Workstation
+    Kali Vagrant env. prompt for SMB creds for sharing?  Nothing working?
+    Switch to key-based ssh
+    Validate that vagrant winrm & rdp works for windows
+    vagrant powershell for remoting into windows would be awesome...
 
 Beyond That
     Windows Server images?
