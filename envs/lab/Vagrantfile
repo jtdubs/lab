@@ -2,10 +2,10 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define "kali-workstation" do |kali|
+  config.vm.define "kali" do |kali|
     kali.vm.box = "kali-workstation"
     kali.vm.hostname = "kali-workstation"
-    kali.vm.network "public_network"
+    kali.vm.network "private_network", type: "dhcp"
     kali.vm.communicator = "ssh"
     # kali.ssh.private_key_path = "../../vagrant.id_rsa"
     kali.ssh.username = "vagrant"
@@ -27,10 +27,10 @@ Vagrant.configure("2") do |config|
     end
   end
   
-  config.vm.define "win10-workstation" do |win10|
+  config.vm.define "win10" do |win10|
     win10.vm.box = "win10-workstation"
     win10.vm.hostname = "win10-workstation"
-    win10.vm.network "public_network"
+    win10.vm.network "private_network", type: "dhcp"
     win10.vm.communicator = "winrm"
     win10.winrm.password = "vagrant"
     win10.winrm.username = "vagrant"
