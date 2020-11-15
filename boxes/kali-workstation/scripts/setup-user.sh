@@ -2,11 +2,11 @@
 
 set -eu
 
-cd /home/jtdubs
+cd /home/vagrant
 
 echo "Installing alacritty..."
 export DEBIAN_FRONTEND=noninteractive
-sudo -E apt-get install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev cargo
+sudo apt-get install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev cargo
 cargo install alacritty
 
 echo "Installing fzf..."

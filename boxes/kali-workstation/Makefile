@@ -1,28 +1,35 @@
-.PHONY: all clean vmware vbox
+.PHONY: all clean vmware vbox hyperv
+
+ifeq ($(OS),Windows_NT)
+RM = powershell Remove-Item -Recurse -Force
+else
+RM = rm -Rf
+endif
 
 all:
-	packer build --on-error=ask kali-workstation.json
-	packer build --on-error=ask kali-workstation-vmware-box.json
-	packer build --on-error=ask kali-workstation-virtualbox-box.json
+	packer build --on-error=ask kali-workstation-phase1.json
+	packer build --on-error=ask kali-workstation-phase2.json
 
 clean:
-	-vagrant box remove --all kali-workstation --provider vmware_desktop
-	-vagrant box remove --all kali-workstation --provider virtualbox
-	rm -Rf packer_cache output-vmware-vmx output-virtualbox-ovf
-	rm -f *.box
+	-$(RM) packer_cache
+	-$(RM) output-vmware-vmx
+	-$(RM) output-virtualbox-ovf
+	-$(RM) output-hyperv-vmcx
+	-$(RM) output-hyperv-vmcx-phase1
+	-$(RM) *.box
 
 vmware: kali-workstation-vmware.box
 
 vbox: kali-workstation-virtualbox.box
 
-output-vmware-vmx/kali-workstation.vmx: kali-workstation.json
-	packer build --on-error=ask --only=vmware-vmx kali-workstation.json
+hyperv: kali-workstation-hyperv.box
 
-output-virtualbox-ovf/kali-workstation.ovf: kali-workstation.json
-	packer build --on-error=ask --only=virtualbox-ovf kali-workstation.json
+kali-workstation-vmware.box: kali-workstation-phase1.json
+	packer build --on-error=ask --only=vmware-vmx kali-workstation-phase1.json
 
-kali-workstation-vmware.box: output-vmware-vmx/kali-workstation.vmx
-	packer build --on-error=ask kali-workstation-vmware-box.json
+kali-workstation-virtualbox.box: kali-workstation-phase1.json
+	packer build --on-error=ask --only=virtualbox-ovf kali-workstation-phase1.json
 
-kali-workstation-virtualbox.box: output-virtualbox-ovf/kali-workstation.ovf
-	packer build --on-error=ask kali-workstation-virtualbox-box.json
+kali-workstation-hyperv.box: kali-workstation-phase1.json kali-workstation-phase2.json
+	packer build --on-error=ask --only=hyperv-vmcx kali-workstation-phase1.json
+	packer build --on-error=ask --only=hyperv-vmcx kali-workstation-phase2.json
