@@ -6,7 +6,7 @@ echo "Installing packages..."
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y --no-install-recommends \
-    build-essential picom curl feh firefox fish git neovim nodejs \
+    build-essential picom curl feh firefox-esr fish git neovim nodejs \
     yarnpkg numlockx python3-pip suckless-tools bspwm sxhkd exa \
     tmux x11-xserver-utils polybar
 

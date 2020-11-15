@@ -11,12 +11,6 @@ General
 
     Update hostnames on derived images... :(
 
-Kali Base
-    Switch to pre-seed:
-        https://github.com/Wh1t3Rh1n0/kali-unattended/blob/master/preseed.cfg
-        https://www.kali.org/dojo/preseed.cfg
-        https://kali.training/topic/exercise-4-2-kali-linux-unattended-install/
-
 CentOs
     Would be nice to have one of these available as well...
 
