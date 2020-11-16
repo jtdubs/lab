@@ -1,6 +1,4 @@
 General
-    Auto-login for linux boxes...
-
     Should I sub-divide further into base image + patched image + workstation image ?
         Base
             OS is installed

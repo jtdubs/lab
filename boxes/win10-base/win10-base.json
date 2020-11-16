@@ -113,7 +113,6 @@
         {
             "type": "powershell",
             "scripts": [
-                "scripts/Disable-AutoLogin.ps1",
                 "scripts/Install-Chocolatey.ps1"
             ]
         },
