@@ -14,15 +14,9 @@ General
 
     Update hostnames on derived images... :(
 
-Windows
-    Set all unkown networks to be treated as "private"
-        [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\010103000F0000F0010000000F0000F0C967A3643C3AD745950DA7859209176EF5B87C875FA20DF21951640E807D7C24]
-        "Category"=dword:00000001
-
-    Enable RDP
-        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
-        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+# Windows
+#     Set all unkown networks to be treated as "private"
+#     Enable RDP
 
 CentOs
     Would be nice to have one of these available as well...
