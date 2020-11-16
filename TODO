@@ -10,7 +10,7 @@ General
         Workstation
             Custom software load
 
-    Update hostnames on derived images... :(
+#    Update hostnames on derived images... :(
 
 # Windows
 #     Set all unkown networks to be treated as "private"

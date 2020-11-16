@@ -86,6 +86,7 @@
         {
             "type": "powershell",
             "scripts": [
+                "scripts/Set-Computer-Name.ps1",
                 "scripts/Install-Software-1.ps1"
             ]
         },

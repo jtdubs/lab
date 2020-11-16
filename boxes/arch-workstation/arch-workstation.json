@@ -65,7 +65,10 @@
     "provisioners": [
         {
             "type": "shell",
-            "script": "scripts/setup.sh"
+            "scripts": [
+                "scripts/set-hostname.sh",
+                "scripts/setup.sh"
+            ]
         },
         {
             "type": "shell",
