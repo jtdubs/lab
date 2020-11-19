@@ -1,3 +1,4 @@
+Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
 New-Item -Path "registry::HKCU\Software\Microsoft\Windows\CurrentVersion\" -Name "RunOnce" -Force

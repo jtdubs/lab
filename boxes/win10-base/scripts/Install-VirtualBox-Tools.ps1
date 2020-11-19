@@ -1,3 +1,4 @@
+Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
 $iso = "C:\Windows\Temp\virtualbox-tools.iso"

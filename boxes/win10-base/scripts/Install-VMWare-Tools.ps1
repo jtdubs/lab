@@ -1,3 +1,4 @@
+Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
 $iso = "C:\Windows\Temp\vmware-tools.iso"

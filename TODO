@@ -13,9 +13,26 @@ General
 CentOs
     Would be nice to have one of these available as well...
 
+Vagrant
+    Experiment to turn a patch box into a workstation via vagrant provisioning...
+
 Beyond That
     Windows Server images?
     Domain controller
     Web server
     Domain joined workstations
     etc.
+
+PowerShell
+    https://github.com/rgl/windows-vagrant/blob/master/remove-apps.ps1
+    https://github.com/rgl/windows-vagrant/blob/master/remove-one-drive.ps1
+    https://github.com/rgl/windows-domain-controller-vagrant
+
+    # disable UAC remote restrictions.
+    # see https://support.microsoft.com/en-us/help/951016/description-of-user-account-control-and-remote-restrictions-in-windows
+    # see https://docs.microsoft.com/en-us/windows/desktop/wmisdk/user-account-control-and-wmi#handling-remote-connections-under-uac
+    New-ItemProperty `
+        -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' `
+        -Name LocalAccountTokenFilterPolicy `
+        -Value 1 `
+        -Force

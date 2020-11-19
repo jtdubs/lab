@@ -1,3 +1,4 @@
+Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
 # Set current network to Private

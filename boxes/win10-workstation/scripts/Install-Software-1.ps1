@@ -1,3 +1,4 @@
+Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
 choco install --acceptlicense --yes microsoft-windows-terminal

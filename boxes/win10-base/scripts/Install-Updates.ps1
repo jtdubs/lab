@@ -1,3 +1,4 @@
+Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
