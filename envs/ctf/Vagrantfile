@@ -6,10 +6,12 @@ Vagrant.configure("2") do |config|
     kali.vm.box = "kali-workstation"
     kali.vm.hostname = "kali-workstation"
     kali.vm.network "private_network", type: "dhcp"
+    kali.vm.synced_folder ".", "/vagrant", disabled: true
     kali.vm.communicator = "ssh"
     # kali.ssh.private_key_path = "../../vagrant.id_rsa"
     kali.ssh.username = "vagrant"
     kali.ssh.password = "vagrant"
+
 
     kali.vm.provider "hyperv" do |vm|
       vm.linked_clone = true
@@ -31,6 +33,7 @@ Vagrant.configure("2") do |config|
     win10.vm.box = "win10-workstation"
     win10.vm.hostname = "win10-workstation"
     win10.vm.network "private_network", type: "dhcp"
+    win10.vm.synced_folder ".", "/vagrant", disabled: true
     win10.vm.communicator = "winrm"
     win10.winrm.password = "vagrant"
     win10.winrm.username = "vagrant"

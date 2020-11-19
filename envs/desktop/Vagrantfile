@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.box = "ubuntu-workstation"
     ubuntu.vm.hostname = "ubuntu-workstation"
     ubuntu.vm.network "private_network", type: "dhcp"
+    ubuntu.vm.synced_folder ".", "/vagrant", disabled: true
     ubuntu.vm.communicator = "ssh"
     # ubuntu.ssh.private_key_path = "../../vagrant.id_rsa"
     ubuntu.ssh.username = "vagrant"
