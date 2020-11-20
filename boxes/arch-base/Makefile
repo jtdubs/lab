@@ -11,22 +11,21 @@ all:
 
 clean:
 	-$(RM) packer_cache
-	-$(RM) output-vmware-iso
-	-$(RM) output-virtualbox-iso
-	-$(RM) output-hyperv-iso
-	-$(RM) *.box
+	-$(RM) output-vmware
+	-$(RM) output-virtualbox
+	-$(RM) output-hyperv
 
-vmware: arch-base-vmware.box
+vmware: output-vmware
 
-vbox: arch-base-virtualbox.box
+vbox: output-virtualbox
 
-hyperv: arch-base-hyperv.box
+hyperv: output-hyperv
 
-arch-base-vmware.box: arch-base.json
-	packer build --on-error=ask --only=vmware-iso arch-base.json
+output-vmware: arch-base.json
+	packer build --on-error=ask --only=vmware-iso --force arch-base.json
 
-arch-base-virtualbox.box: arch-base.json
-	packer build --on-error=ask --only=virtualbox-iso arch-base.json
+output-virtualbox: arch-base.json
+	packer build --on-error=ask --only=virtualbox-iso --force arch-base.json
 
-arch-base-hyperv.box: arch-base.json
-	packer build --on-error=ask --only=hyperv-iso arch-base.json
+output-hyperv: arch-base.json
+	packer build --on-error=ask --only=hyperv-iso --force arch-base.json

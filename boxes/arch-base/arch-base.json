@@ -7,7 +7,7 @@
         "communicator": "ssh",
         "cpus": "4",
         "disk_size": "32768",
-        "headless": "false",
+        "headless": "true",
         "http_directory": "srv",
         "iso_checksum": "sha1:739fab8d23430a01629a131ae02713a09af86968",
         "iso_path": "iso/archlinux-2020.11.01-x86_64.iso",
@@ -29,6 +29,7 @@
             "disk_type_id": 0,
             "guest_os_type": "other5xlinux-64",
             "network": "vmnet8",
+            "output_directory": "output-vmware",
             "vmx_data": { "firmware": "efi" },
             "cores": "{{ user `cpus` }}",
 
@@ -53,6 +54,7 @@
 
             "guest_os_type": "ArchLinux_64",
             "hard_drive_interface": "scsi",
+            "output_directory": "output-virtualbox",
             "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ] ],
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
@@ -75,6 +77,7 @@
             "type": "hyperv-iso",
 
             "generation": 2,
+            "output_directory": "output-hyperv",
             "switch_name": "Default Switch",
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2_hyperv` }}" ],
@@ -143,17 +146,5 @@
         }
       ],
 
-    "post-processors": [
-        {
-            "type": "vagrant",
-            "keep_input_artifact": true,
-            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
-        },
-        {
-            "type": "shell-local",
-            "inline": [
-                "ssh-keygen -R {{ build `Host` }}"
-            ]
-        }
-    ]
+    "post-processors": [ ]
 }

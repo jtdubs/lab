@@ -24,9 +24,6 @@ echo "Configuring ssh..."
 pacman -S --noconfirm openssh
 systemctl enable sshd.service
 
-echo "Installing updates..."
-pacman -Syu --noconfirm
-
 echo "Installing sudo..."
 pacman -S --noconfirm sudo
 
@@ -44,16 +41,8 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 chmod 700 /home/vagrant/.ssh
 chmod 600 /home/vagrant/.ssh/authorized_keys
 
-echo "Installing paru..."
-sudo pacman -S --noconfirm base-devel git
-cat > /home/vagrant/install-paru.sh <<EOS
-#!/usr/bin/env bash
-set -eu
-cd /home/vagrant
-git clone https://aur.archlinux.org/paru.git
-pushd paru
-makepkg --syncdeps --install --noconfirm
-popd
-rm -Rf paru
-EOS
-sudo -u vagrant bash /home/vagrant/install-paru.sh
+if [ -e /install-guest-tools.sh ]
+then
+    chmod a+x /install-guest-tools.sh
+    /install-guest-tools.sh
+fi

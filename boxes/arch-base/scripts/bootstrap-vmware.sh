@@ -9,4 +9,4 @@ efibootmgr --disk /dev/sda --part 1 --create --label "Arch Linux" --loader /vmli
 efibootmgr --bootorder 0004
 
 echo "Adding VMWare install steps..."
-cat /tmp/install-vmware.sh >> /mnt/install.sh
+cp /tmp/install-vmware.sh /mnt/install-guest-tools.sh

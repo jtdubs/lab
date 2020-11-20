@@ -1,6 +1,6 @@
 {
     "variables": {
-        "base_image": "arch-interactive-xorg",
+        "base_image": "arch-updated",
         "boot_wait": "15s",
         "communicator": "ssh",
         "cpus": "4",
@@ -10,7 +10,7 @@
         "ssh_private_key_file": "../../vagrant.id_rsa",
         "ssh_timeout": "10m",
         "ssh_username": "vagrant",
-        "vm_name": "arch-workstation"
+        "vm_name": "arch-interactive-xorg"
     },
 
     "builders": [
@@ -69,7 +69,24 @@
     "provisioners": [
         {
             "type": "shell",
-            "scripts": "scripts/setup.sh"
+            "script": "scripts/setup.sh"
+        },
+        {
+            "type": "shell",
+            "only": "vmware-vmx",
+            "script": "scripts/setup-vmware.sh"
+        },
+        {
+            "type": "shell",
+            "only": "hyperv-vmcx",
+            "script": "scripts/setup-hyperv.sh"
+        },
+        {
+            "type": "shell-local",
+            "only": "hyperv-vmcx",
+            "inline": [
+                "powershell.exe Set-VM -VMName {{ user `vm_name` }} -EnhancedSessionTransportType HvSocket"
+            ]
         }
     ],
 

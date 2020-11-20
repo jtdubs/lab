@@ -9,4 +9,4 @@ efibootmgr --disk /dev/sda --part 1 --create --label "Arch Linux" --loader /vmli
 efibootmgr --bootorder 0003
 
 echo "Adding Hyper-V install steps..."
-cat /tmp/install-hyperv.sh >> /mnt/install.sh
+cp /tmp/install-hyperv.sh /mnt/install-guest-tools.sh

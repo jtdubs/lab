@@ -22,7 +22,7 @@ mount /dev/sda1 /mnt/boot
 swapon /dev/sda2
 
 echo "Bootstrapping..."
-pacstrap /mnt base linux linux-firmware man-db man-pages
+pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "Placing chroot files..."
