@@ -1,20 +1,18 @@
-General
-    Should I sub-divide further into base image + patched image + workstation image ?
-        Base
-            OS is installed
-            Vagrant user (auto-login on Windows)
-            VM tools, if needed for IP discovery
-        Patched
-            Updates applied to base
-            VM tools
-        Workstation
-            Custom software load
+Ubuntu
+    Split out into base, updated, interactive, workstation
+
+Kali
+    Split into base, updated, workstation
+
+Windows
+    Split into base, updated, workstation
 
 CentOs
     Would be nice to have one of these available as well...
 
 Vagrant
     Experiment to turn a patch box into a workstation via vagrant provisioning...
+    Probably move all interactive->workstation steps to here
 
 Beyond That
     Windows Server images?
