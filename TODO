@@ -1,5 +1,5 @@
-Kali
-    Split into base, updated, workstation
+JSON files
+    Sanity-check consistance of headless and vm_names
 
 Windows
     Split into base, updated, workstation

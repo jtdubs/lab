@@ -1,9 +1,9 @@
-Ubuntu Updated
-==============
+Kali Updated
+============
 
 Description
 -----------
-Applies all updates to Ubuntu Base VM
+Applies all updates to Kali Base VM, and sets up Hyper-V Enhanced Session support
 
 Makefile Targets
 ----------------

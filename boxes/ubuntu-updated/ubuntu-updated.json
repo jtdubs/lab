@@ -4,13 +4,13 @@
         "boot_wait": "5s",
         "communicator": "ssh",
         "cpus": "4",
-        "headless": "false",
+        "headless": "true",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
         "ssh_private_key_file": "../../vagrant.id_rsa",
         "ssh_timeout": "10m",
         "ssh_username": "vagrant",
-        "vm_name": "ubuntu-workstation"
+        "vm_name": "ubuntu-updated"
     },
 
     "builders": [

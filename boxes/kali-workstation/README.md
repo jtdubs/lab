@@ -1,9 +1,10 @@
-Ubuntu Updated
-==============
+Kali Workstation
+================
 
 Description
 -----------
-Applies all updates to Ubuntu Base VM
+Prepares a Justin-specific Kali workstation.
+Installs window manager, tools, dot files, etc.
 
 Makefile Targets
 ----------------
@@ -13,7 +14,7 @@ Makefile Targets
 
 Output
 ------
-* Vagrant Box
+Vagrant Box
 
 Version
 -------
@@ -21,4 +22,4 @@ Version
 
 Method
 ------
-- Boots VM and installs updates over ssh
+- Boots VM and installs software and tools over ssh

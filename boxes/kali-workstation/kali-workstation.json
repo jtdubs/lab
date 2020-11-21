@@ -1,9 +1,10 @@
 {
     "variables": {
+        "base_image": "kali-updated",
         "boot_wait": "5s",
         "communicator": "ssh",
         "cpus": "4",
-        "headless": "false",
+        "headless": "true",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
         "ssh_private_key_file": "../../vagrant.id_rsa",
@@ -14,10 +15,40 @@
 
     "builders": [
         {
+            "type": "vmware-vmx",
 
+            "display_name": "{{ user `vm_name` }}",
+            "output_directory": "output-vmware",
+            "source_path": "../{{ user `base_image` }}/output-vmware/{{ user `base_image` }}.vmx",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
+        },
+        {
+            "type": "virtualbox-ovf",
+
+            "output_directory": "output-virtualbox",
+            "source_path": "../{{ user `base_image` }}/output-virtualbox/{{ user `base_image` }}.ovf",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
+        },
+        {
             "type": "hyperv-vmcx",
 
-            "clone_from_vmcx_path": "./output-hyperv-vmcx-phase1",
+            "clone_from_vmcx_path": "../{{ user `base_image` }}/output-hyperv",
             "cpus": "{{ user `cpus` }}",
             "generation": 2,
             "memory": "{{ user `memory` }}",
@@ -38,9 +69,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "only": "hyperv-vmcx",
-            "execute_command": "sudo bash '{{ .Path }}'",
-            "script": "scripts/setup-hyperv.sh"
+            "script": "scripts/setup.sh"
         },
         {
             "type": "shell-local",
@@ -56,12 +85,6 @@
             "type": "vagrant",
             "keep_input_artifact": true,
             "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
-        },
-        {
-            "type": "shell-local",
-            "inline": [
-                "ssh-keygen -R {{ build `Host` }}"
-            ]
         }
     ]
 }
