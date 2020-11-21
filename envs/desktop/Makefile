@@ -7,4 +7,4 @@ register:
 	vagrant box add -f --name ubuntu-workstation ../../boxes/ubuntu-workstation/ubuntu-workstation-hyperv.box
 
 unregister:
-	vagrant box remove -f --all --name ubuntu-workstation --provider hyperv 
+	vagrant box remove -f --all --provider hyperv ubuntu-workstation

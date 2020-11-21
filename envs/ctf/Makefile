@@ -8,5 +8,5 @@ register:
 	vagrant box add -f --name kali-workstation ../../boxes/kali-workstation/kali-workstation-hyperv.box
 
 unregister:
-	vagrant box remove -f --all --name win10-workstation --provider hyperv 
-	vagrant box remove -f --all --name kali-workstation --provider hyperv 
+	vagrant box remove -f --all --provider hyperv win10-workstation
+	vagrant box remove -f --all --provider hyperv kali-workstation

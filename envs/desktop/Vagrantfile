@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define "ubuntu-workstation" do |ubuntu|
+  config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu-workstation"
     ubuntu.vm.hostname = "ubuntu-workstation"
     ubuntu.vm.network "private_network", type: "dhcp"
