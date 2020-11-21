@@ -1,12 +1,3 @@
-JSON files
-    Sanity-check consistance of headless and vm_names
-
-Windows
-    Split into base, updated, workstation
-
-CentOs
-    Would be nice to have one of these available as well...
-
 Vagrant
     Experiment to turn a patch box into a workstation via vagrant provisioning...
     Probably move all interactive->workstation steps to here

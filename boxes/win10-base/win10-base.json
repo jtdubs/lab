@@ -5,7 +5,7 @@
         "communicator": "winrm",
         "cpus": "4",
         "disk_size": "32768",
-        "headless": "false",
+        "headless": "true",
         "http_directory": "tools",
         "iso_checksum": "sha256:7f96789d08835d37b5886f81f1887a38617453a5211e788964553f4194d8b23c",
         "iso_path": "iso/Windows.iso",
@@ -28,11 +28,11 @@
             "floppy_files": [
                 "unattend/vmware/autounattend.xml",
                 "scripts/Set-Network.ps1",
-                "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
             "guest_os_type": "windows9-64",
             "network": "vmnet8",
+            "output_directory": "output-vmware",
 
             "boot_command": [ "{{ user `boot_command` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
@@ -56,11 +56,11 @@
             "floppy_files": [
                 "unattend/virtualbox/autounattend.xml",
                 "scripts/Set-Network.ps1",
-                "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
             "guest_os_type": "Windows10_64",
             "hard_drive_interface": "sata",
+            "output_directory": "output-virtualbox",
 
             "boot_command": [ "{{ user `boot_command` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
@@ -84,11 +84,11 @@
             "cd_files": [
                 "unattend/hyperv/autounattend.xml",
                 "scripts/Set-Network.ps1",
-                "scripts/Install-Updates.ps1",
                 "scripts/Enable-WinRM.ps1"
             ],
             "cd_label": "UNATTEND",
             "generation": 2,
+            "output_directory": "output-hyperv",
             "switch_name": "Default Switch",
 
             "boot_command": [ "{{ user `boot_command` }}" ],
@@ -109,37 +109,7 @@
         }
     ],
 
-    "provisioners": [
-        {
-            "type": "powershell",
-            "scripts": [
-                "scripts/Install-Chocolatey.ps1"
-            ]
-        },
-        {
-            "type": "powershell",
-            "only": "vmware-iso",
-            "scripts": [
-                "scripts/Install-VMWare-Tools.ps1"
-            ]
-        },
-        {
-            "type": "powershell",
-            "only": "virtualbox-iso",
-            "scripts": [
-                "scripts/Install-VirtualBox-Tools.ps1"
-            ]
-        },
-        {
-            "type": "windows-restart"
-        }
-    ],
+    "provisioners": [ ],
 
-    "post-processors": [
-        {
-            "type": "vagrant",
-            "keep_input_artifact": true,
-            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
-        }
-    ]
+    "post-processors": [ ]
 }

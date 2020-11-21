@@ -37,16 +37,22 @@ clean:
 	-$(RM) output-virtualbox
 	-$(RM) output-hyperv
 
+tools/virtualbox-tools.iso:
+	cp /mnt/c/Program\ Files/Oracle/VirtualBox/VBoxGuestAdditions.iso tools/virtualbox-tools.iso
+
+tools/vmware-tools.iso:
+	cp /mnt/c/Program\ Files\ \(x86\)/VMware/VMware\ Workstation/windows.iso tools/vmware-tools.iso 
+
 vmware: output-vmware
 
 vbox: output-virtualbox
 
 hyperv: output-hyperv
 
-output-vmware: $(JSON_NAME)
+output-vmware: $(JSON_NAME) tools/vmware-tools.iso
 	packer build --on-error=ask --only=$(VMWARE_TARGET) --force $(JSON_NAME)
 
-output-virtualbox: $(JSON_NAME)
+output-virtualbox: $(JSON_NAME) tools/virtualbox-tools.iso
 	packer build --on-error=ask --only=$(VIRBOX_TARGET) --force $(JSON_NAME)
 
 output-hyperv: $(JSON_NAME)

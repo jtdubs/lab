@@ -1,13 +1,13 @@
 {
     "variables": {
-        "base_vm": "win10-updated",
+        "base_vm": "win10-base",
         "boot_wait": "10s",
         "communicator": "winrm",
         "cpus": "4",
         "headless": "false",
         "memory": "4096",
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",
-        "vm_name": "win10-workstation",
+        "vm_name": "win10-updated",
         "winrm_password": "vagrant",
         "winrm_timeout": "10m",
         "winrm_username": "vagrant"
@@ -69,46 +69,20 @@
     "provisioners": [
         {
             "type": "powershell",
-            "inline": [
-                "New-Item -Path 'C:\\ProgramData\\Vagrant' -Type Directory"
-            ]
-        },
-        {
-            "type": "file",
-            "sources": [
-                "scripts/Run-Once.ps1",
-                "scripts/WSL-Prep.sh",
-                "scripts/WSL-First-Logon.sh",
-                "settings/settings.json"
-            ],
-            "destination": "C:\\ProgramData\\Vagrant\\"
-
+            "only": "virtualbox-ovf",
+            "script": "scripts/Install-VirtualBox-Tools.ps1"
         },
         {
             "type": "powershell",
-            "scripts": [
-                "scripts/Install-Chocolatey.ps1",
-                "scripts/Install-Software-1.ps1"
-            ]
+            "only": "vmware-vmx",
+            "script": "scripts/Install-VMWare-Tools.ps1"
+        },
+        {
+            "type": "powershell",
+            "script": "scripts/Install-Updates.ps1"
         },
         {
             "type": "windows-restart"
-        },
-        {
-            "type": "powershell",
-            "scripts": [
-                "scripts/Install-Software-2.ps1",
-                "scripts/Setup-AutoRun.ps1"
-            ]
-        },
-        {
-            "type": "windows-restart"
-        },
-        {
-            "type": "powershell",
-            "scripts": [
-                "scripts/Wait-For-AutoRun.ps1"
-            ]
         }
     ],
 

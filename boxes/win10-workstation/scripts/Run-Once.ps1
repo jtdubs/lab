@@ -1,10 +1,6 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop" 
 
-# Register packages
-Add-AppxPackage -DisableDevelopmentMode -Register ((Get-AppxPackage -AllUsers "CanonicalGroupLimited.Ubuntu20.04onWindows").InstallLocation + "\AppxManifest.xml")
-Add-AppxPackage -DisableDevelopmentMode -Register ((Get-AppxPackage -AllUsers "Microsoft.WindowsTerminal").InstallLocation + "\AppxManifest.xml")
-
 # Install Windows Terminal settings
 Copy-Item -Path C:\ProgramData\Vagrant\settings.json -Destination ("$env:LOCALAPPDATA\Packages\" + (Get-AppxPackage "Microsoft.WindowsTerminal").PackageFamilyName + "\LocalState")
 

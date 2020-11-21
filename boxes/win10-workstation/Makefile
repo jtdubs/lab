@@ -1,3 +1,21 @@
+# Set VM name && json name match folder name, if not already set
+VM_NAME   ?= $(notdir $(CURDIR))
+JSON_NAME ?= $(VM_NAME).json
+
+# By default, use all providers
+PROVIDERS ?= all
+
+# If VM is a "base" image, we are using ISOs, otherwise we are using another VM
+ifeq ($(findstring base,$(VM_NAME)),)
+VMWARE_TARGET = vmware-vmx
+VIRBOX_TARGET = virtualbox-ovf
+HYPERV_TARGET = hyperv-vmcx
+else
+VMWARE_TARGET = vmware-iso
+VIRBOX_TARGET = virtualbox-iso
+HYPERV_TARGET = hyperv-iso
+endif
+
 .PHONY: all clean vmware vbox hyperv
 
 ifeq ($(OS),Windows_NT)
@@ -6,27 +24,30 @@ else
 RM = rm -Rf
 endif
 
+ifeq ($(PROVIDERS),all)
 all:
-	packer build --on-error=ask win10-workstation.json
+	packer build --on-error=ask --force $(JSON_NAME)
+else
+all: $(PROVIDERS)
+endif
 
 clean:
 	-$(RM) packer_cache
-	-$(RM) output-vmware-vmx
-	-$(RM) output-virtualbox-ovf
-	-$(RM) output-hyperv-vmcx
-	-$(RM) *.box
+	-$(RM) output-vmware
+	-$(RM) output-virtualbox
+	-$(RM) output-hyperv
 
-vmware: win10-workstation-vmware.box
+vmware: output-vmware
 
-vbox: win10-workstation-virtualbox.box
+vbox: output-virtualbox
 
-hyperv: win10-workstation-hyperv.box
+hyperv: output-hyperv
 
-win10-workstation-vmware.box: win10-workstation.json
-	packer build --on-error=ask --only=vmware-vmx win10-workstation.json
+output-vmware: $(JSON_NAME)
+	packer build --on-error=ask --only=$(VMWARE_TARGET) --force $(JSON_NAME)
 
-win10-workstation-virtualbox.box: win10-workstation.json
-	packer build --on-error=ask --only=virtualbox-ovf win10-workstation.json
+output-virtualbox: $(JSON_NAME)
+	packer build --on-error=ask --only=$(VIRBOX_TARGET) --force $(JSON_NAME)
 
-win10-workstation-hyperv.box: win10-workstation.json
-	packer build --on-error=ask --only=hyperv-vmcx win10-workstation.json
+output-hyperv: $(JSON_NAME)
+	packer build --on-error=ask --only=$(HYPERV_TARGET) --force $(JSON_NAME)
