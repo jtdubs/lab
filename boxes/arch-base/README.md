@@ -17,18 +17,18 @@ Does not install updates or any non-essential packages.
 
 Makefile Targets
 ----------------
-all - builds all virtualization targets
-clean - deletes output folders and packer cache
-(vmware | vbox | hyperv) - builds VM image for that virtualization target
+* all - builds all virtualization targets
+* clean - deletes output folders and packer cache
+* (vmware | vbox | hyperv) - builds VM image for that virtualization target
 
 Output
 ------
-Does NOT build a Vagrant box.
-Only output is VM images for reference from other packer scripts
+* Does NOT build a Vagrant box.
+* Only output is VM images for reference from other packer scripts
 
 Version
 -------
-2020-11-20 - 0.1 - Builds agsint archlinux-2020.11.01-x86_64.iso, with targets for vmware, virtualbox and hyperv
+* 2020-11-20 - 0.1 - Builds agsint archlinux-2020.11.01-x86_64.iso, with targets for vmware, virtualbox and hyperv
 
 Method
 ------
