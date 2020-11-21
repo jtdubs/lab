@@ -1,3 +1,6 @@
+Packer
+    Try moving to HCL2?
+
 Vagrant
     Experiment to turn a patch box into a workstation via vagrant provisioning...
     Probably move all interactive->workstation steps to here
@@ -10,6 +13,4 @@ Beyond That
     etc.
 
 PowerShell
-    https://github.com/rgl/windows-vagrant/blob/master/remove-apps.ps1
-    https://github.com/rgl/windows-vagrant/blob/master/remove-one-drive.ps1
     https://github.com/rgl/windows-domain-controller-vagrant
