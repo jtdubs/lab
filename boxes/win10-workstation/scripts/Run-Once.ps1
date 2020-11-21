@@ -4,8 +4,8 @@ $ErrorActionPreference="Stop"
 # Explorer Settings
 Set-ItemProperty -Path "HKCU:Control Panel\Desktop" -Name "DragFullWindows" -Value 1
 Get-Item "HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
-    | Set-ItemProperty -Name "Hidden"      -Value 1
-    | Set-ItemProperty -Name "HideFileExt" -Value 0
+    | Set-ItemProperty -Name "Hidden"      -Value 1 `
+    | Set-ItemProperty -Name "HideFileExt" -Value 0 `
     | Set-ItemProperty -Name "LaunchTo"    -Value 1
 
 # Start Menu Settings
@@ -47,7 +47,7 @@ $pinnedTaskbarPath = "$env:APPDATA\Microsoft\Internet Explorer\Quick Launch\User
 
 # Clean-up Desktop
 Remove-Item "C:\Users\Public\Desktop\*.lnk"
-Remove-Item "C:\Users\Public\Vagrant\*.lnk"
+Remove-Item "C:\Users\Vagrant\Desktop\*.lnk"
 
 # Restart Explorer
 (Get-Process "explorer").Kill()
