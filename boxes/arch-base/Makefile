@@ -1,6 +1,12 @@
+# What HCL templates do we need
+HCL_TEMPLATES += communicator-ssh-pass
+HCL_TEMPLATES += constants
+HCL_TEMPLATES += source-hyperv-iso
+HCL_TEMPLATES += source-virtualbox-iso
+HCL_TEMPLATES += source-vmware-iso
+
 # Set VM name && json name match folder name, if not already set
 VM_NAME   ?= $(notdir $(CURDIR))
-JSON_NAME ?= $(VM_NAME).json
 
 # By default, use all providers
 PROVIDERS ?= all
@@ -20,13 +26,17 @@ endif
 
 ifeq ($(OS),Windows_NT)
 RM = powershell Remove-Item -Recurse -Force
+CP = powershell Copy-Item
 else
 RM = rm -Rf
+CP = cp
 endif
 
+HCL_FILES = $(HCL_TEMPLATES:=.pkr.hcl)
+
 ifeq ($(PROVIDERS),all)
-all:
-	packer build --on-error=ask --force $(JSON_NAME)
+all: $(HCL_FILES)
+	packer build --on-error=ask --force .
 else
 all: $(PROVIDERS)
 endif
@@ -36,6 +46,7 @@ clean:
 	-$(RM) output-vmware
 	-$(RM) output-virtualbox
 	-$(RM) output-hyperv
+	-$(RM) $(HCL_FILES)
 
 vmware: output-vmware
 
@@ -43,11 +54,14 @@ vbox: output-virtualbox
 
 hyperv: output-hyperv
 
-output-vmware: $(JSON_NAME)
-	packer build --on-error=ask --only=$(VMWARE_TARGET) --force $(JSON_NAME)
+output-vmware: build.pkr.hcl $(HCL_FILES)
+	packer build --on-error=ask --only=$(VMWARE_TARGET) --force .
 
-output-virtualbox: $(JSON_NAME)
-	packer build --on-error=ask --only=$(VIRBOX_TARGET) --force $(JSON_NAME)
+output-virtualbox: build.pkr.hcl $(HCL_FILES)
+	packer build --on-error=ask --only=$(VIRBOX_TARGET) --force .
 
-output-hyperv: $(JSON_NAME)
-	packer build --on-error=ask --only=$(HYPERV_TARGET) --force $(JSON_NAME)
+output-hyperv: build.pkr.hcl $(HCL_FILES)
+	packer build --on-error=ask --only=$(HYPERV_TARGET) --force .
+
+$(HCL_FILES): %: ../hcl-templates/%
+	$(CP) $< $@
