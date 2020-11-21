@@ -8,7 +8,7 @@
         "communicator": "ssh",
         "cpus": "4",
         "disk_size": "32768",
-        "headless": "false",
+        "headless": "true",
         "http_directory": "srv",
         "iso_checksum": "sha256:defdc1ad3af7b661fe2b4ee861fb6fdb5f52039389ef56da6efc05e6adfe3d45",
         "iso_path": "iso/ubuntu-20.10-live-server-amd64.iso",
@@ -29,6 +29,8 @@
             "disk_adapter_type": "scsi",
             "disk_type_id": 0,
             "guest_os_type": "ubuntu-64",
+            "http_directory": "{{ user `http_directory` }}/vmware",
+            "output_directory": "output-vmware",
             "network": "vmnet8",
             "vmx_data": { "firmware": "efi" },
             "cores": "{{ user `cpus` }}",
@@ -39,7 +41,6 @@
             "cpus": "{{ user `cpus` }}",
             "disk_size": "{{ user `disk_size` }}",
             "headless": "{{ user `headless` }}",
-            "http_directory": "{{ user `http_directory` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
             "memory": "{{ user `memory` }}",
@@ -54,6 +55,8 @@
 
             "guest_os_type": "UbuntuLinux_64",
             "hard_drive_interface": "scsi",
+            "http_directory": "{{ user `http_directory` }}/virtualbox",
+            "output_directory": "output-virtualbox",
             "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ] ],
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
@@ -62,7 +65,6 @@
             "cpus": "{{ user `cpus` }}",
             "disk_size": "{{ user `disk_size` }}",
             "headless": "{{ user `headless` }}",
-            "http_directory": "{{ user `http_directory` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
             "memory": "{{ user `memory` }}",
@@ -76,6 +78,8 @@
             "type": "hyperv-iso",
 
             "generation": 2,
+            "http_directory": "{{ user `http_directory` }}/hyperv",
+            "output_directory": "output-hyperv",
             "switch_name": "Default Switch",
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
@@ -84,7 +88,6 @@
             "cpus": "{{ user `cpus` }}",
             "disk_size": "{{ user `disk_size` }}",
             "headless": "{{ user `headless` }}",
-            "http_directory": "{{ user `http_directory` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
             "memory": "{{ user `memory` }}",
@@ -106,40 +109,10 @@
         },
         {
             "type": "shell",
-            "only": "vmware-iso",
-            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
-            "script": "scripts/install-vmware.sh"
-        },
-        {
-            "type": "shell",
-            "only": "virtualbox-iso",
-            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
-            "script": "scripts/install-virtualbox.sh"
-        },
-        {
-            "type": "shell",
-            "only": "hyperv-iso",
-            "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
-            "script": "scripts/install-hyperv.sh"
-        },
-        {
-            "type": "shell",
             "execute_command": "echo vagrant | sudo -S bash '{{ .Path }}'",
             "script": "scripts/install.sh"
         }
     ],
 
-    "post-processors": [
-        {
-            "type": "vagrant",
-            "keep_input_artifact": true,
-            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
-        },
-        {
-            "type": "shell-local",
-            "inline": [
-                "ssh-keygen -R {{ build `Host` }}"
-            ]
-        }
-    ]
+    "post-processors": [ ]
 }

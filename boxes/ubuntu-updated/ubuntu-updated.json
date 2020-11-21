@@ -1,6 +1,6 @@
 {
     "variables": {
-        "base_image": "arch-base",
+        "base_image": "ubuntu-base",
         "boot_wait": "5s",
         "communicator": "ssh",
         "cpus": "4",
@@ -10,7 +10,7 @@
         "ssh_private_key_file": "../../vagrant.id_rsa",
         "ssh_timeout": "10m",
         "ssh_username": "vagrant",
-        "vm_name": "arch-updated"
+        "vm_name": "ubuntu-workstation"
     },
 
     "builders": [

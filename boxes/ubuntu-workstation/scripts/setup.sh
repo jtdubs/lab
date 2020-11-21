@@ -2,24 +2,42 @@
 
 set -eu
 
+cd /home/vagrant
+
 echo "Installing packages..."
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y --no-install-recommends \
-    build-essential picom curl feh firefox fish git neovim nodejs \
-    yarnpkg numlockx python3-pip suckless-tools bspwm sxhkd exa \
-    pulseaudio tmux xorg xserver-xorg x11-xserver-utils polybar \
-    lightdm lightdm-gtk-greeter network-manager-gnome \
-    xserver-xorg-video-fbdev
+sudo apt-get install -y --no-install-recommends \
+    build-essential curl feh firefox fish git neovim nodejs \
+    yarnpkg python3-pip suckless-tools bspwm sxhkd exa \
+    tmux polybar network-manager-gnome
 
-echo "Enabling window manager..."
-systemctl enable lightdm.service
+echo "Switching Shell to Fish..."
+sudo chsh -s /usr/bin/fish vagrant
 
-echo "Creating XSession..."
-cat > /usr/share/xsessions/xsession.desktop <<EOF
-[Desktop Entry]
-Name=Xsession
-Exec=/etc/X11/Xsession
-EOF
+echo "Installing alacritty..."
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get install -y cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev cargo
+cargo install alacritty
 
-echo "Changing Vagrant's Shell..."
-chsh -s /usr/bin/fish vagrant
+echo "Installing fzf..."
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+echo "Installing dotfiles (initial)..."
+git clone https://github.com/jtdubs/dotfiles.git
+pushd dotfiles
+pip3 install -r requirements.txt
+./sync.py
+popd
+
+echo "Installing nvim plugins..."
+rm -Rf ~/.config/nvim/plugged/lightline.vim/
+nvim --headless +PlugInstall +CocUpdate +qa || true
+
+echo "Installing dotfiles (final)..."
+pushd ~/dotfiles
+./sync.py
+popd
+
+echo "Validating nvim setup..."
+nvim --headless +PlugInstall +CocUpdate +qa
