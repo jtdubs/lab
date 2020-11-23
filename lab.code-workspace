@@ -9,6 +9,11 @@
 			"**/.undodir": true,
 			"**/.vagrant": true,
 			"**/packer_cache": true
-		}
+		},
+		"editor.minimap.enabled": false,
+		"editor.fontFamily": "Cascadia Code",
+		"editor.fontSize": 14,
+		"editor.fontLigatures": true,
+		"terminal.integrated.allowChords": false
 	}
 }
