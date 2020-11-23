@@ -162,5 +162,5 @@
             <EnableLUA>false</EnableLUA>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="wim:d:/win10/sources/install.wim#Windows 10 Pro" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <cpi:offlineImage cpi:source="wim:d:/install.wim#Windows Server 2019 Standard" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>
