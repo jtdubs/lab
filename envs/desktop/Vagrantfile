@@ -8,9 +8,9 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.network "private_network", type: "dhcp"
     ubuntu.vm.synced_folder ".", "/vagrant", disabled: true
     ubuntu.vm.communicator = "ssh"
-    # ubuntu.ssh.private_key_path = "../../vagrant.id_rsa"
+    ubuntu.ssh.private_key_path = "../../vagrant.id_rsa"
     ubuntu.ssh.username = "vagrant"
-    ubuntu.ssh.password = "vagrant"
+    # ubuntu.ssh.password = "vagrant"
 
     ubuntu.vm.provider "hyperv" do |vm|
       vm.linked_clone = true
@@ -37,9 +37,9 @@ Vagrant.configure("2") do |config|
     kali.vm.network "private_network", type: "dhcp"
     kali.vm.synced_folder ".", "/vagrant", disabled: true
     kali.vm.communicator = "ssh"
-    # kali.ssh.private_key_path = "../../vagrant.id_rsa"
+    kali.ssh.private_key_path = "../../vagrant.id_rsa"
     kali.ssh.username = "vagrant"
-    kali.ssh.password = "vagrant"
+    # kali.ssh.password = "vagrant"
 
     kali.vm.provider "hyperv" do |vm|
       vm.linked_clone = true
@@ -66,9 +66,9 @@ Vagrant.configure("2") do |config|
     arch.vm.network "private_network", type: "dhcp"
     arch.vm.synced_folder ".", "/vagrant", disabled: true
     arch.vm.communicator = "ssh"
-    # arch.ssh.private_key_path = "../../vagrant.id_rsa"
+    arch.ssh.private_key_path = "../../vagrant.id_rsa"
     arch.ssh.username = "vagrant"
-    arch.ssh.password = "vagrant"
+    # arch.ssh.password = "vagrant"
 
     arch.vm.provider "hyperv" do |vm|
       vm.linked_clone = true
