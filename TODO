@@ -1,6 +1,8 @@
 Windows Server
     2019 Box
     2019 Core Box
+    Updated boxes
+    Make vmware/virtualbox unattend files correct
     Vagrant env. w/ DC & Server
     DC
         Static IP
