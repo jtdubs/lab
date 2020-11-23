@@ -3,5 +3,5 @@
 set -eu
 
 echo "Installing VirtualBox tools..."
-pacman -S --noconfirm virtualbox-guest-utils
+pacman -S --needed --noconfirm virtualbox-guest-utils
 systemctl enable vboxservice.service

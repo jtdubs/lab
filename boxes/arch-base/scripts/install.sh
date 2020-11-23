@@ -17,15 +17,15 @@ echo ::1 arch-base >> /etc/hosts
 echo 127.0.1.1 arch-base.localdomain arch-base >> /etc/hosts
 
 echo "Configuring network..."
-pacman -S --noconfirm networkmanager dhclient
+pacman -S --needed --noconfirm networkmanager dhclient
 systemctl enable NetworkManager.service
 
 echo "Configuring ssh..."
-pacman -S --noconfirm openssh
+pacman -S --needed --noconfirm openssh
 systemctl enable sshd.service
 
 echo "Installing sudo..."
-pacman -S --noconfirm sudo
+pacman -S --needed --noconfirm sudo
 
 echo "Setting up Vagrant..."
 useradd -m -U vagrant

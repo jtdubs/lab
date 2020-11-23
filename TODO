@@ -1,8 +1,4 @@
-Packer
-    Try moving to HCL2?
-
 Vagrant
-    Experiment to turn a patch box into a workstation via vagrant provisioning...
     Probably move all interactive->workstation steps to here
 
 Beyond That
