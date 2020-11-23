@@ -1,9 +1,14 @@
-Beyond That
-    Windows Server images?
-    Domain controller
-    Web server
-    Domain joined workstations
-    etc.
+Windows Server
+    2019 Box
+    2019 Core Box
+    Vagrant env. w/ DC & Server
+    DC
+        Static IP
+        Domain controller
+        DHCP Server
+        Certificate Authority
+    Server
+        Domain member
 
 PowerShell
     https://github.com/rgl/windows-domain-controller-vagrant
