@@ -3,14 +3,14 @@
         "base_image": "arch-updated",
         "boot_wait": "15s",
         "communicator": "ssh",
-        "cpus": "4",
+        "cpus": "2",
         "headless": "true",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
         "ssh_private_key_file": "../../vagrant.id_rsa",
         "ssh_timeout": "10m",
         "ssh_username": "vagrant",
-        "vm_name": "arch-interactive-xorg"
+        "vm_name": "arch-xorg"
     },
 
     "builders": [

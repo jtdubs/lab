@@ -3,7 +3,7 @@
         "base_vm": "win10-updated",
         "boot_wait": "10s",
         "communicator": "winrm",
-        "cpus": "4",
+        "cpus": "2",
         "headless": "false",
         "memory": "4096",
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",

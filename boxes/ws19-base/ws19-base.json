@@ -3,7 +3,7 @@
         "boot_command": "<enter><wait><enter><wait><enter><wait><enter>",
         "boot_wait": "-1s",
         "communicator": "winrm",
-        "cpus": "4",
+        "cpus": "2",
         "disk_size": "32768",
         "headless": "true",
         "http_directory": "tools",
@@ -33,6 +33,7 @@
             "guest_os_type": "windows9-64",
             "network": "vmnet8",
             "output_directory": "output-vmware",
+            "vmx_data": { "firmware": "efi", "vhv.enable": "TRUE" },
 
             "boot_command": [ "{{ user `boot_command` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",

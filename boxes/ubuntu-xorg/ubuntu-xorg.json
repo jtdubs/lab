@@ -3,14 +3,14 @@
         "base_image": "ubuntu-updated",
         "boot_wait": "5s",
         "communicator": "ssh",
-        "cpus": "4",
+        "cpus": "2",
         "headless": "true",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
         "ssh_private_key_file": "../../vagrant.id_rsa",
         "ssh_timeout": "10m",
         "ssh_username": "vagrant",
-        "vm_name": "ubuntu-interactive-xorg"
+        "vm_name": "ubuntu-xorg"
     },
 
     "builders": [
