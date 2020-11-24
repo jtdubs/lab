@@ -1,0 +1,105 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "dc" do |box|
+    box.vm.box = "ws19-base"
+    box.vm.hostname = "dc"
+    box.vm.network "private_network", ip: "192.168.64.8"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
+    box.vm.communicator = "winrm"
+    box.winrm.password = "vagrant"
+    box.winrm.username = "vagrant"
+
+    box.vm.provider "hyperv" do |provider|
+      provider.linked_clone = true
+      provider.enable_enhanced_session_mode = true
+      provider.vm_integration_services = {
+        # guest_service_interface: true,
+        heartbeat: true,
+        key_value_pair_exchange: true,
+        shutdown: true,
+        time_synchronization: true,
+        vss: true,
+      }
+      provider.cpus = "2"
+      provider.memory = "4096"
+    end
+  end
+
+  config.vm.define "web" do |box|
+    box.vm.box = "ws19-base"
+    box.vm.hostname = "web"
+    box.vm.network "private_network", ip: "192.168.64.16"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
+    box.vm.communicator = "winrm"
+    box.winrm.password = "vagrant"
+    box.winrm.username = "vagrant"
+
+    box.vm.provider "hyperv" do |provider|
+      provider.linked_clone = true
+      provider.enable_enhanced_session_mode = true
+      provider.vm_integration_services = {
+        # guest_service_interface: true,
+        heartbeat: true,
+        key_value_pair_exchange: true,
+        shutdown: true,
+        time_synchronization: true,
+        vss: true,
+      }
+      provider.cpus = "2"
+      provider.memory = "4096"
+    end
+  end
+
+  config.vm.define "gamer" do |box|
+    box.vm.box = "win10-updated"
+    box.vm.hostname = "gamer"
+    box.vm.network "private_network", ip: "192.168.64.32"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
+    box.vm.communicator = "winrm"
+    box.winrm.password = "vagrant"
+    box.winrm.username = "vagrant"
+
+    box.vm.provider "hyperv" do |provider|
+      provider.linked_clone = true
+      provider.enable_enhanced_session_mode = true
+      provider.vm_integration_services = {
+        # guest_service_interface: true,
+        heartbeat: true,
+        key_value_pair_exchange: true,
+        shutdown: true,
+        time_synchronization: true,
+        vss: true,
+      }
+      provider.cpus = "2"
+      provider.memory = "4096"
+    end
+  end
+
+  config.vm.define "hacker" do |box|
+    box.vm.box = "ubuntu-xorg"
+    box.vm.hostname = "hacker"
+    box.vm.network "private_network", ip: "192.168.64.33"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
+    box.vm.communicator = "ssh"
+    # box.ssh.private_key_path = "../../vagrant.id_rsa"
+    box.ssh.username = "vagrant"
+    box.ssh.password = "vagrant"
+
+    box.vm.provider "hyperv" do |provider|
+      provider.linked_clone = true
+      provider.enable_enhanced_session_mode = true
+      provider.vm_integration_services = {
+        # guest_service_interface: true,
+        heartbeat: true,
+        key_value_pair_exchange: true,
+        shutdown: true,
+        time_synchronization: true,
+        vss: true,
+      }
+      provider.cpus = "2"
+      provider.memory = "4096"
+    end
+  end
+end
