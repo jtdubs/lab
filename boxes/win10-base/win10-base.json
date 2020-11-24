@@ -60,6 +60,7 @@
             "guest_os_type": "Windows10_64",
             "hard_drive_interface": "sata",
             "output_directory": "output-virtualbox",
+            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga", "--vram", "128" ] ],
 
             "boot_command": [ "{{ user `boot_command` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
