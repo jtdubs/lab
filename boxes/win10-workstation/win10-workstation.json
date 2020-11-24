@@ -4,7 +4,7 @@
         "boot_wait": "10s",
         "communicator": "winrm",
         "cpus": "2",
-        "headless": "false",
+        "headless": "true",
         "memory": "4096",
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",
         "vm_name": "win10-workstation",

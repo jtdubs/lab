@@ -20,6 +20,7 @@ autoinstall:
     locale: en_US
     network:
         ethernets:
+            enp0s3: { dhcp4: true }
             ens33: { dhcp4: true }
             eth0: { dhcp4: true }
         version: 2
@@ -30,6 +31,4 @@ autoinstall:
     storage:
         layout:
             name: direct
-    packages:
-        - virtualbox-guest-x11
     version: 1

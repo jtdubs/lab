@@ -8,7 +8,7 @@
         "communicator": "ssh",
         "cpus": "2",
         "disk_size": "32768",
-        "headless": "true",
+        "headless": "false",
         "http_directory": "srv",
         "iso_checksum": "sha256:defdc1ad3af7b661fe2b4ee861fb6fdb5f52039389ef56da6efc05e6adfe3d45",
         "iso_path": "iso/ubuntu-20.10-live-server-amd64.iso",
@@ -57,7 +57,14 @@
             "hard_drive_interface": "scsi",
             "http_directory": "{{ user `http_directory` }}/virtualbox",
             "output_directory": "output-virtualbox",
-            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI" ] ],
+            "vboxmanage": [
+                [
+                    "modifyvm", "{{.Name}}",
+                    "--firmware", "EFI",
+                    "--graphicscontroller", "vmsvga",
+                    "--vram", "128"
+                ]
+            ],
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",

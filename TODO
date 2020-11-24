@@ -1,5 +1,12 @@
 Vagrant
     See if vmware's network support is better than hyper-v's....
+
+VirtualBox
+    Kali-Updated doesn't boot.  EFI issue most likely.
+    Ubuntu Base crashes.  Guru meditation.
+
+VMWare
+    Still crashes with >2 cores
     
 Windows Server
     2016 Core box
