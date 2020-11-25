@@ -3,12 +3,12 @@ Arch Updated      - Check
 Arch XOrg         - Check
 Kali Base         - VirtualBox has an EFI crash on reboot, but succeeds after a reset.
 Kali Updated      - VirtualBox doesn't boot.  EFI entry lost.   Succeeds after running fs0:EFI/kali/grubx64.efi by hand.
-Ubuntu Base       - VirtualBox has an EFI crash on reboot, but succeeds after a reset
-Ubuntu Updated    - Check
-Ubuntu XOrg       - Check
 Win10 Workstation -
 
 Done:
+Ubuntu Base       - Check
+Ubuntu Updated    - Check
+Ubuntu XOrg       - Running...
 Win10 Base        - Check
 Win10 Updated     - Check
 WS12r2 Base       - Check
@@ -25,10 +25,6 @@ VMWare:
 
 VirtualBox:
     Move to BIOS everywhere but Arch?
-
-Hyper-V:
-    Reboot in Hyper-V mode and re-test
-    Try to move to BIOS as well to unify w/ the other platforms
 
 
 Windows Server

@@ -12,8 +12,9 @@ echo "Enabling window manager..."
 sudo systemctl enable lightdm.service
 
 echo "Creating XSession..."
-cat <<EOF
+sudo mkdir -p /usr/share/xsessions
+sudo bash -c 'cat <<EOF >/usr/share/xsessions/xsession.desktop
 [Desktop Entry]
 Name=Xsession
 Exec=/etc/X11/Xsession
-EOF | sudo tee /usr/share/xsessions/xsession.desktop 
+EOF'

@@ -1,7 +1,7 @@
 {
     "variables": {
         "base_image": "ubuntu-updated",
-        "boot_wait": "40s",
+        "boot_wait": "30s",
         "communicator": "ssh",
         "cpus": "2",
         "headless": "false",

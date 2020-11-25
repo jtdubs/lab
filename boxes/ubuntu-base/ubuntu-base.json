@@ -3,7 +3,7 @@
         "boot_command_1": "c<wait>",
         "boot_command_2": "linux /casper/vmlinuz quiet --- autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
         "boot_command_3": "initrd /casper/initrd<enter>",
-        "boot_command_4": "boot<enter>",
+        "boot_command_4": "boot<enter><wait6m>",
         "boot_wait": "5s",
         "communicator": "ssh",
         "cpus": "2",
@@ -18,7 +18,6 @@
         "ssh_password": "vagrant",
         "ssh_timeout": "20m",
         "ssh_username": "vagrant",
-        "pause_before_connecting": "10m", 
         "vm_name": "ubuntu-base"
     },
 
@@ -26,15 +25,15 @@
         {
             "type": "vmware-iso",
 
-            "cdrom_adapter_type": "ide",
-            "disk_adapter_type": "scsi",
+            "cdrom_adapter_type": "sata",
+            "disk_adapter_type": "sata",
             "disk_type_id": 0,
             "guest_os_type": "ubuntu-64",
             "http_directory": "{{ user `http_directory` }}/vmware",
             "output_directory": "output-vmware",
             "network": "vmnet8",
-            "vmx_data": { "firmware": "efi", "vhv.enable": "TRUE" },
             "cores": "{{ user `cpus` }}",
+            "version": "18",
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
@@ -45,7 +44,6 @@
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
             "memory": "{{ user `memory` }}",
-            "pause_before_connecting": "{{ user `pause_before_connecting` }}",
             "shutdown_command": "{{ user `shutdown_command` }}",
             "ssh_password": "{{ user `ssh_password` }}",
             "ssh_timeout": "{{ user `ssh_timeout` }}",
@@ -56,10 +54,11 @@
             "type": "virtualbox-iso",
 
             "guest_os_type": "UbuntuLinux_64",
-            "hard_drive_interface": "scsi",
+            "hard_drive_interface": "sata",
             "http_directory": "{{ user `http_directory` }}/virtualbox",
             "output_directory": "output-virtualbox",
-            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI", "--graphicscontroller", "vmsvga", "--vram", "128" ] ],
+            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga", "--vram", "128" ] ],
+
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}", "{{ user `boot_command_3` }}", "{{ user `boot_command_4` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
@@ -70,7 +69,6 @@
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
             "memory": "{{ user `memory` }}",
-            "pause_before_connecting": "{{ user `pause_before_connecting` }}",
             "shutdown_command": "{{ user `shutdown_command` }}",
             "ssh_password": "{{ user `ssh_password` }}",
             "ssh_timeout": "{{ user `ssh_timeout` }}",
@@ -94,7 +92,6 @@
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_urls": [ "{{ user `iso_path` }}", "{{ user `iso_url` }}" ],
             "memory": "{{ user `memory` }}",
-            "pause_before_connecting": "{{ user `pause_before_connecting` }}",
             "shutdown_command": "{{ user `shutdown_command` }}",
             "ssh_password": "{{ user `ssh_password` }}",
             "ssh_timeout": "{{ user `ssh_timeout` }}",
