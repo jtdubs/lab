@@ -4,7 +4,7 @@
         "boot_wait": "10s",
         "communicator": "winrm",
         "cpus": "2",
-        "headless": "true",
+        "headless": "false",
         "memory": "4096",
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",
         "vm_name": "win10-workstation",
@@ -38,6 +38,7 @@
 
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
+            "guest_additions_mode": "disable",
             "headless": "{{ user `headless` }}",
             "shutdown_command": "{{ user `shutdown_command` }}",
             "winrm_password": "{{ user `winrm_password` }}",

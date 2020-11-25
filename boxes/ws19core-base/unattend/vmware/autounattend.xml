@@ -20,21 +20,6 @@
                         <CreatePartition wcm:action="add">
                             <Order>1</Order>
                             <Type>Primary</Type>
-                            <Size>250</Size>
-                        </CreatePartition>
-                        <CreatePartition wcm:action="add">
-                            <Order>2</Order>
-                            <Type>EFI</Type>
-                            <Size>100</Size>
-                        </CreatePartition>
-                        <CreatePartition wcm:action="add">
-                            <Order>3</Order>
-                            <Type>MSR</Type>
-                            <Size>128</Size>
-                        </CreatePartition>
-                        <CreatePartition wcm:action="add">
-                            <Order>4</Order>
-                            <Type>Primary</Type>
                             <Extend>true</Extend>
                         </CreatePartition>
                     </CreatePartitions>
@@ -42,20 +27,7 @@
                         <ModifyPartition wcm:action="add">
                             <Order>1</Order>
                             <PartitionID>1</PartitionID>
-                            <Label>Recovery</Label>
-                            <Format>NTFS</Format>
-                            <TypeID>DE94BBA4-06D1-4D40-A16A-BFD50179D6AC</TypeID>
-                        </ModifyPartition>
-                        <ModifyPartition wcm:action="add">
-                            <Order>2</Order>
-                            <PartitionID>2</PartitionID>
-                            <Label>System</Label>
-                            <Format>FAT32</Format>
-                        </ModifyPartition>
-                        <ModifyPartition wcm:action="add">
-                            <Order>3</Order>
-                            <PartitionID>4</PartitionID>
-                            <Label>Windows</Label>
+                            <Label>SYSTEM</Label>
                             <Format>NTFS</Format>
                             <Letter>C</Letter>
                         </ModifyPartition>
@@ -66,13 +38,13 @@
                 <OSImage>
                     <InstallTo>
                         <DiskID>0</DiskID>
-                        <PartitionID>4</PartitionID>
+                        <PartitionID>1</PartitionID>
                     </InstallTo>
                     <InstallFrom>
-                        <MetaData wcm:action="add">
-                            <Key>/IMAGE/NAME</Key>
-                            <Value>Windows Server 2019 SERVERSTANDARDCORE</Value>
-                        </MetaData>
+                         <MetaData wcm:action="add">
+                             <Key>/IMAGE/NAME</Key>
+                             <Value>Windows Server 2019 SERVERSTANDARDCORE</Value>
+                         </MetaData>
                     </InstallFrom>
                 </OSImage>
             </ImageInstall>

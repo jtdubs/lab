@@ -1,13 +1,36 @@
-Vagrant
-    See if vmware's network support is better than hyper-v's....
+Arch Base         - Check
+Arch Updated      - Check
+Arch XOrg         - Check
+Kali Base         - VirtualBox has an EFI crash on reboot, but succeeds after a reset.
+Kali Updated      - VirtualBox doesn't boot.  EFI entry lost.   Succeeds after running fs0:EFI/kali/grubx64.efi by hand.
+Ubuntu Base       - VirtualBox has an EFI crash on reboot, but succeeds after a reset
+Ubuntu Updated    - Check
+Ubuntu XOrg       - Check
+Win10 Workstation -
 
-VirtualBox
-    Kali-Updated doesn't boot.  EFI issue most likely.
-    Ubuntu Base crashes.  Guru meditation.
+Done:
+Win10 Base        - Check
+Win10 Updated     - Check
+WS12r2 Base       - Check
+WS16 Base         - Check
+WS19 Base         - Check
+WS19 Core Base    - Check
 
-VMWare
-    Still crashes with >2 cores
-    
+
+Arch:
+    Move to BIOS?
+
+VMWare:
+    Move to Version 18 everywhere?
+
+VirtualBox:
+    Move to BIOS everywhere but Arch?
+
+Hyper-V:
+    Reboot in Hyper-V mode and re-test
+    Try to move to BIOS as well to unify w/ the other platforms
+
+
 Windows Server
     2016 Core box
     2012 Core box

@@ -1,10 +1,10 @@
 {
     "variables": {
         "base_image": "ubuntu-base",
-        "boot_wait": "5s",
+        "boot_wait": "40s",
         "communicator": "ssh",
         "cpus": "2",
-        "headless": "true",
+        "headless": "false",
         "memory": "4096",
         "shutdown_command": "sudo systemctl poweroff -i",
         "ssh_private_key_file": "../../vagrant.id_rsa",
@@ -38,6 +38,7 @@
 
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
+            "guest_additions_mode": "disable",
             "headless": "{{ user `headless` }}",
             "shutdown_command": "{{ user `shutdown_command` }}",
             "ssh_private_key_file": "{{ user `ssh_private_key_file` }}",

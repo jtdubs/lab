@@ -1,11 +1,10 @@
 {
     "variables": {
         "boot_command": "<enter><wait><enter><wait><enter><wait><enter>",
-        "boot_wait": "-1s",
         "communicator": "winrm",
         "cpus": "2",
         "disk_size": "32768",
-        "headless": "true",
+        "headless": "false",
         "iso_checksum": "sha256:7f96789d08835d37b5886f81f1887a38617453a5211e788964553f4194d8b23c",
         "iso_path": "iso/Windows.iso",
         "memory": "4096",
@@ -20,7 +19,7 @@
         {
             "type": "vmware-iso",
 
-            "cdrom_adapter_type": "ide",
+            "cdrom_adapter_type": "sata",
             "cores": "{{ user `cpus` }}",
             "disk_adapter_type": "sata",
             "disk_type_id": 0,
@@ -32,10 +31,10 @@
             "guest_os_type": "windows9-64",
             "network": "vmnet8",
             "output_directory": "output-vmware",
-            "vmx_data": { "firmware": "efi", "vhv.enable": "TRUE" },
+            "version": "18",
 
             "boot_command": [ "{{ user `boot_command` }}" ],
-            "boot_wait": "{{ user `boot_wait` }}",
+            "boot_wait": "-1s",
             "communicator": "{{ user `communicator` }}",
             "cpus": "{{ user `cpus` }}",
             "disk_size": "{{ user `disk_size` }}",
@@ -63,10 +62,11 @@
             "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga", "--vram", "128" ] ],
 
             "boot_command": [ "{{ user `boot_command` }}" ],
-            "boot_wait": "{{ user `boot_wait` }}",
+            "boot_wait": "1s",
             "communicator": "{{ user `communicator` }}",
             "cpus": "{{ user `cpus` }}",
             "disk_size": "{{ user `disk_size` }}",
+            "guest_additions_mode": "disable",
             "headless": "{{ user `headless` }}",
             "iso_checksum": "{{ user `iso_checksum` }}",
             "iso_url": "{{ user `iso_path` }}",
@@ -91,7 +91,7 @@
             "switch_name": "Default Switch",
 
             "boot_command": [ "{{ user `boot_command` }}" ],
-            "boot_wait": "{{ user `boot_wait` }}",
+            "boot_wait": "-1s",
             "communicator": "{{ user `communicator` }}",
             "cpus": "{{ user `cpus` }}",
             "disk_size": "{{ user `disk_size` }}",

@@ -4,7 +4,7 @@
         "boot_wait": "10s",
         "communicator": "winrm",
         "cpus": "2",
-        "headless": "true",
+        "headless": "false",
         "http_directory": "tools",
         "memory": "4096",
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",
@@ -40,6 +40,7 @@
 
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
+            "guest_additions_mode": "disable",
             "headless": "{{ user `headless` }}",
             "http_directory": "{{ user `http_directory` }}",
             "shutdown_command": "{{ user `shutdown_command` }}",
