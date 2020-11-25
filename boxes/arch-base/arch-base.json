@@ -32,6 +32,7 @@
             "output_directory": "output-vmware",
             "vmx_data": { "firmware": "efi", "vhv.enable": "TRUE" },
             "cores": "{{ user `cpus` }}",
+            "version": "18",
 
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
