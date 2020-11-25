@@ -16,16 +16,13 @@ echo 127.0.0.1 arch-base > /etc/hosts
 echo ::1 arch-base >> /etc/hosts
 echo 127.0.1.1 arch-base.localdomain arch-base >> /etc/hosts
 
-echo "Configuring network..."
-pacman -S --needed --noconfirm networkmanager dhclient
-systemctl enable NetworkManager.service
+echo "Installing software..."
+pacman -S --needed --noconfirm networkmanager dhclient openssh sudo grub
 
-echo "Configuring ssh..."
-pacman -S --needed --noconfirm openssh
-systemctl enable sshd.service
-
-echo "Installing sudo..."
-pacman -S --needed --noconfirm sudo
+echo "Installing grub..."
+mkinitcpio -p linux
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Setting up Vagrant..."
 useradd -m -U vagrant

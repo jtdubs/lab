@@ -1,7 +1,2 @@
-Short Term
-    Switch Arch to BIOS: https://wiki.archlinux.org/index.php/GRUB#BIOS_systems
-    WS12r2 Core image
-    WS16 Core image
-
 Domain Vagrant Environment
     https://github.com/rgl/windows-domain-controller-vagrant

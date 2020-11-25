@@ -30,7 +30,6 @@
             "guest_os_type": "other5xlinux-64",
             "network": "vmnet8",
             "output_directory": "output-vmware",
-            "vmx_data": { "firmware": "efi", "vhv.enable": "TRUE" },
             "cores": "{{ user `cpus` }}",
             "version": "18",
 
@@ -56,7 +55,7 @@
             "guest_os_type": "ArchLinux_64",
             "hard_drive_interface": "scsi",
             "output_directory": "output-virtualbox",
-            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--firmware", "EFI", "--graphicscontroller", "vmsvga", "--vram", "128" ] ],
+            "vboxmanage": [ [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga", "--vram", "128" ] ],
             "boot_command": [ "{{ user `boot_command_1` }}", "{{ user `boot_command_2` }}" ],
             "boot_wait": "{{ user `boot_wait` }}",
             "communicator": "{{ user `communicator` }}",
@@ -101,43 +100,45 @@
 
     "provisioners": [
         {
-            "type": "file",
-            "sources": [
-                "../../vagrant.id_rsa.pub",
-                "scripts/install.sh",
-                "scripts/install-vmware.sh",
-                "scripts/install-virtualbox.sh",
-                "scripts/install-hyperv.sh"
-            ],
-            "destination": "/tmp/"
-        },
-        {
             "type": "shell",
             "execute_command": "sudo bash '{{ .Path }}'",
             "script": "scripts/bootstrap.sh"
         },
         {
-            "type": "shell",
+            "type": "file",
+            "sources": [
+                "../../vagrant.id_rsa.pub",
+                "scripts/install-chroot.sh",
+                "scripts/install-nspawn.sh"
+            ],
+            "destination": "/tmp/"
+        },
+        {
+            "type": "file",
             "only": "vmware-iso",
-            "execute_command": "sudo bash '{{ .Path }}'",
-            "script": "scripts/bootstrap-vmware.sh"
+            "source": "scripts/install-vmware.sh",
+            "destination": "/tmp/install-guest-tools.sh"
         },
         {
-            "type": "shell",
+            "type": "file",
             "only": "virtualbox-iso",
-            "execute_command": "sudo bash '{{ .Path }}'",
-            "script": "scripts/bootstrap-virtualbox.sh"
+            "source": "scripts/install-virtualbox.sh",
+            "destination": "/tmp/install-guest-tools.sh"
         },
         {
-            "type": "shell",
+            "type": "file",
             "only": "hyperv-iso",
-            "execute_command": "sudo bash '{{ .Path }}'",
-            "script": "scripts/bootstrap-hyperv.sh"
+            "source": "scripts/install-hyperv.sh",
+            "destination": "/tmp/install-guest-tools.sh"
         },
         {
             "type": "shell",
             "inline": [
-                "sudo systemd-nspawn --machine=guest -D /mnt /install.sh"
+                "sudo mv /tmp/vagrant.id_rsa.pub /mnt",
+                "sudo mv /tmp/install*.sh /mnt",
+                "sudo chmod a+x /mnt/install*.sh",
+                "sudo arch-chroot /mnt /install-chroot.sh",
+                "sudo systemd-nspawn --machine=guest -D /mnt /install-nspawn.sh"
             ]
         },
         {
