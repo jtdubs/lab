@@ -90,7 +90,7 @@ EOF
 chmod 0600 /etc/sssd/sssd.conf
 
 # restart sssd to apply the configuration.
-systemctl restart sssd
+systemctl restart sssd || (sleep 20 && systemctl restart sssd)
 
 # configure pam to automatically create the home directory.
 sed -i -E 's,^(session\s+required\s+pam_unix.so.*),\1\nsession required pam_mkhomedir.so skel=/etc/skel umask=0077,g' /etc/pam.d/common-session

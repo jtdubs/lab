@@ -1,2 +1,6 @@
-Domain Vagrant Environment
+Domain Environment
+    dev box has wrong DNSHostName on AD controller, just "dev" rather than "dev.lab.dubs.zone"
+    also, it's Name and SamAccountName are lower-case, which is weird
+    maybe see if realm is better than heimdal for this?
+
     https://github.com/rgl/windows-domain-controller-vagrant
