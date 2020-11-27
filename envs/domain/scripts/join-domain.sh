@@ -67,7 +67,7 @@ cat >/etc/sssd/sssd.conf <<EOF
 [sssd]
 config_file_version = 2
 services = nss, pam
-domains = $domain
+domains = 
 [nss]
 entry_negative_timeout = 0
 #debug_level = 5

@@ -1,10 +1,10 @@
 Domain Environment
     dc
         add CA capability
-        add NTP server and also turn on external time-sync
+        turn on NTP time sync
 
     dev box
-        get ad join order right
+        DNSHostName missing domainname portion
         permanent time sync with AD
         trust DC certs
         
