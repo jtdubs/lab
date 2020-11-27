@@ -4,7 +4,6 @@ Domain Environment
         turn on NTP time sync
 
     dev box
-        DNSHostName missing domainname portion
         permanent time sync with AD
         trust DC certs
         

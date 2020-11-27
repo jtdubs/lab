@@ -9,7 +9,7 @@ account="Administrator"
 password="sup3rs3cr3t!"
 
 # add domain to hostname
-# hostnamectl set-hostname "$(hostname).$domain"
+hostnamectl set-hostname "$(hostname).$domain"
 
 # add DC entry to hosts file
 echo "$dc_ip dc.$domain" >> /etc/hosts
@@ -82,21 +82,11 @@ $password
 EOF
 
 # join domain
-realm join $domain --unattended --verbose
-
-# add OS and version info to computer's AD entry
-ldapmodify \
-    -h dc.$domain \
-    <<EOF
-dn: CN=$(hostname),CN=Computers,$domain_dn
-changeType: modify
-replace: operatingSystem
-operatingSystem: $(bash -c 'source /etc/os-release && echo $NAME')
--
-replace: operatingSystemVersion
-operatingSystemVersion: $(bash -c 'source /etc/os-release && echo $VERSION')
--
-EOF
+realm join $domain \
+  --os-name="$(source /etc/os-release && echo $NAME)" \
+  --os-version="$(source /etc/os-release && echo $VERSION)" \
+  --unattended \
+  --verbose
 
 # destroy kerberos ticket (no longer needed)
 kdestroy
