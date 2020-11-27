@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define "dc" do |box|
-    box.vm.box = "ws19core-base"
+    box.vm.box = "ws19core-updated"
     box.vm.hostname = "dc"
     box.vm.network "private_network", ip: "192.168.64.8"
     box.vm.synced_folder ".", "/vagrant", disabled: true
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "web" do |box|
-    box.vm.box = "ws19core-base"
+    box.vm.box = "ws19core-updated"
     box.vm.hostname = "web"
     box.vm.network "private_network", ip: "192.168.64.16"
     box.vm.synced_folder ".", "/vagrant", disabled: true

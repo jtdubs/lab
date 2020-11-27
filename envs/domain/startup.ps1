@@ -1,6 +1,5 @@
-#!/bin/sh
-
-set -eu
+Set-StrictMode -Version Latest
+$ErrorActionPreference="Stop"
 
 vagrant up dc
 vagrnat up web
