@@ -3,7 +3,7 @@
 set -eu
 
 vagrant up dc
-vagrnat up web
-vagrnat up user
-vagrnat up dev
-vagrnat up hacker
+vagrant up web
+vagrant up user
+vagrant up dev
+vagrant up hacker

@@ -23,11 +23,11 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep"
 
     # setup active directory
-    box.vm.provision "shell", path: "scripts/Create-AD-Forest.ps1", reboot: true
-    box.vm.provision "shell", path: "scripts/Configure-DC.ps1"
-    box.vm.provision "shell", path: "scripts/Create-Domain-Share.ps1"
-    box.vm.provision "shell", path: "scripts/Configure-CA.ps1"
-    box.vm.provision "shell", path: "scripts/Create-Domain-Users.ps1"
+    box.vm.provision "shell", name: "forest", path: "scripts/Create-AD-Forest.ps1", reboot: true
+    box.vm.provision "shell", name: "dc",     path: "scripts/Configure-DC.ps1"
+    box.vm.provision "shell", name: "share",  path: "scripts/Create-Domain-Share.ps1"
+    box.vm.provision "shell", name: "ca",     path: "scripts/Configure-CA.ps1"
+    box.vm.provision "shell", name: "users",  path: "scripts/Create-Domain-Users.ps1"
   end
 
   config.vm.define "web" do |box|
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep"
 
     # join domain
-    box.vm.provision "shell", path: "scripts/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "join", path: "scripts/Join-Domain.ps1", reboot: true
   end
 
   config.vm.define "user" do |box|
@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep"
 
     # join domain
-    box.vm.provision "shell", path: "scripts/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "join", path: "scripts/Join-Domain.ps1", reboot: true
   end
 
   config.vm.define "dev" do |box|
@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
     end
 
     # join domain
-    box.vm.provision "shell", path: "scripts/join-domain.sh"
+    box.vm.provision "shell", name: "join", path: "scripts/join-domain.sh"
   end
 
   config.vm.define "hacker" do |box|
@@ -108,6 +108,6 @@ Vagrant.configure("2") do |config|
       provider.memory = "8192"
     end
 
-    box.vm.provision "shell", path: "scripts/setup-hacker.sh", privileged: false
+    box.vm.provision "shell", name: "setup", path: "scripts/setup-hacker.sh", privileged: false
   end
 end
