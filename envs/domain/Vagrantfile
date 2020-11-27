@@ -10,12 +10,22 @@ Vagrant.configure("2") do |config|
     box.vm.communicator = "winrm"
     box.winrm.password = "vagrant"
     box.winrm.username = "vagrant"
+    box.winrm.transport = :plaintext
+    box.winrm.basic_auth_only = true
 
     box.vm.provider "virtualbox" do |provider|
       provider.linked_clone = true
       provider.cpus = "2"
       provider.memory = "4096"
     end
+
+    # sysprep to give us a unique machine RID
+    box.vm.provision "windows-sysprep"
+
+    # setup active directory
+    box.vm.provision "shell", path: "files/Create-AD-Forest.ps1", reboot: true
+    box.vm.provision "shell", path: "files/Configure-DC.ps1"
+    box.vm.provision "shell", path: "files/Create-Domain-Users.ps1"
   end
 
   config.vm.define "web" do |box|
@@ -32,6 +42,13 @@ Vagrant.configure("2") do |config|
       provider.cpus = "2"
       provider.memory = "4096"
     end
+
+    # sysprep to give us a unique machine RID
+    box.vm.provision "windows-sysprep"
+
+    # join domain
+    box.vm.provision "shell", path: "files/Join-Domain.ps1", reboot: true
+
   end
 
   config.vm.define "gamer" do |box|
@@ -48,6 +65,12 @@ Vagrant.configure("2") do |config|
       provider.cpus = "2"
       provider.memory = "4096"
     end
+
+    # sysprep to give us a unique machine RID
+    box.vm.provision "windows-sysprep"
+
+    # join domain
+    box.vm.provision "shell", path: "files/Join-Domain.ps1", reboot: true
   end
 
   config.vm.define "hacker" do |box|
@@ -64,5 +87,8 @@ Vagrant.configure("2") do |config|
       provider.cpus = "2"
       provider.memory = "4096"
     end
+
+    # join domain
+    box.vm.provision "shell", path: "files/join_domain.sh"
   end
 end
