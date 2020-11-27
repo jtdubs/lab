@@ -1,6 +1,11 @@
 Domain Environment
-    dev box has wrong DNSHostName on AD controller, just "dev" rather than "dev.lab.dubs.zone"
-    also, it's Name and SamAccountName are lower-case, which is weird
-    maybe see if realm is better than heimdal for this?
+    dc
+        add CA capability
+        add NTP server and also turn on external time-sync
 
+    dev box
+        get ad join order right
+        permanent time sync with AD
+        trust DC certs
+        
     https://github.com/rgl/windows-domain-controller-vagrant

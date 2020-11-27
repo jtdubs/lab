@@ -13,11 +13,11 @@ sudo -E apt-get install -y --no-install-recommends \
 if [ ! -e /usr/share/xsessions/xsession.desktop ]
 then
     echo "Creating XSession..."
-    cat <<EOF
+    sudo bash -c 'cat > /usr/share/xsessions/xsession.desktop <<EOF
 [Desktop Entry]
 Name=Xsession
 Exec=/etc/X11/Xsession
-EOF | sudo tee /usr/share/xsessions/xsession.desktop 
+EOF'
 fi
 
 cd /home/vagrant

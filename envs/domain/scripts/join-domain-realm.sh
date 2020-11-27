@@ -5,16 +5,11 @@ set -eu
 domain="lab.dubs.zone"
 domain_dn="DC=lab,DC=dubs,DC=zone"
 dc_ip="192.168.64.8"
-account="Administrator"
-password="sup3rs3cr3t!"
 
 # add domain to hostname
-# hostnamectl set-hostname "$(hostname).$domain"
+hostnamectl set-hostname "$(hostname).$domain"
 
-# add DC entry to hosts file
-echo "$dc_ip dc.$domain" >> /etc/hosts
-
-# point DNS to DC
+# fix dns
 systemctl disable systemd-resolved
 systemctl stop systemd-resolved
 unlink /etc/resolv.conf
@@ -23,12 +18,9 @@ nameserver $dc_ip
 search lab.dubs.zone
 EOF
 
-# install kerberos tools
+# install realm
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli 
-
-# sync time with AD
-ntpdate dc.lab.dubs.zone
+apt-get install -y realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit krb5-user
 
 # setup realm config
 cat > /etc/realmd.conf <<EOF
@@ -62,50 +54,17 @@ ${domain^^} = {
 }
 EOF
 
-# create sssd config
-cat >/etc/sssd/sssd.conf <<EOF
-[sssd]
-config_file_version = 2
-services = nss, pam
-domains = $domain
-[nss]
-entry_negative_timeout = 0
-#debug_level = 5
-[pam]
-#debug_level = 5
-EOF
-chmod 0600 /etc/sssd/sssd.conf
-
-# authenticate to domain
-kinit --password-file=STDIN $account <<EOF
-$password
-EOF
-
 # join domain
-realm join $domain --unattended --verbose
-
-# add OS and version info to computer's AD entry
-ldapmodify \
-    -h dc.$domain \
-    <<EOF
-dn: CN=$(hostname),CN=Computers,$domain_dn
-changeType: modify
-replace: operatingSystem
-operatingSystem: $(bash -c 'source /etc/os-release && echo $NAME')
--
-replace: operatingSystemVersion
-operatingSystemVersion: $(bash -c 'source /etc/os-release && echo $VERSION')
--
-EOF
-
-# destroy kerberos ticket (no longer needed)
+realm discover $domain
+echo "sup3rs3cr3t!" | kinit "administrator@${domain^^}"
+realm join $domain --unattended
 kdestroy
 
 # allow login for all domain users
 realm permit --all
 
-# configure pam to automatically create the home directory.
-cat > /usr/share/pam-configs/mkhomedir <<EOF
+# setup auto-home creation
+sudo bash -c "cat > /usr/share/pam-configs/mkhomedir" <<EOF
 Name: activate mkhomedir
 Default: yes
 Priority: 900
@@ -114,6 +73,9 @@ Session:
         required                        pam_mkhomedir.so umask=0077 skel=/etc/skel
 EOF
 pam-auth-update --package --enable mkhomedir --force
+
+# restart sssd
+systemctl restart sssd
 
 # allow domain administrators to use sudo without asking for password.
 cat >/etc/sudoers.d/domain-admins <<'EOF'
