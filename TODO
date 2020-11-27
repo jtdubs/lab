@@ -1,10 +1,3 @@
 Domain Environment
-    dc
-        add CA capability
-        turn on NTP time sync
-
-    dev box
-        permanent time sync with AD
-        trust DC certs
-        
+    Test it again and see if CA stuff works
     https://github.com/rgl/windows-domain-controller-vagrant

@@ -1,0 +1,101 @@
+{
+    "variables": {
+        "base_vm": "ws19-base",
+        "boot_wait": "10s",
+        "communicator": "winrm",
+        "cpus": "2",
+        "headless": "false",
+        "http_directory": "tools",
+        "memory": "4096",
+        "shutdown_command": "shutdown /s /t 10 /f /d p:4:1",
+        "vm_name": "ws19-updated",
+        "winrm_password": "vagrant",
+        "winrm_timeout": "10m",
+        "winrm_username": "vagrant"
+    },
+
+    "builders": [
+        {
+            "type": "vmware-vmx",
+
+            "display_name": "{{ user `vm_name` }}",
+            "output_directory": "output-vmware",
+            "source_path": "../{{ user `base_vm` }}/output-vmware/{{ user `base_vm` }}.vmx",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "winrm_password": "{{ user `winrm_password` }}",
+            "winrm_timeout": "{{ user `winrm_timeout` }}",
+            "winrm_username": "{{ user `winrm_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
+        },
+        {
+            "type": "virtualbox-ovf",
+
+            "output_directory": "output-virtualbox",
+            "source_path": "../{{ user `base_vm` }}/output-virtualbox/{{ user `base_vm` }}.ovf",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "guest_additions_mode": "disable",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "winrm_password": "{{ user `winrm_password` }}",
+            "winrm_timeout": "{{ user `winrm_timeout` }}",
+            "winrm_username": "{{ user `winrm_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
+        },
+        {
+            "type": "hyperv-vmcx",
+
+            "clone_from_vmcx_path": "../{{ user `base_vm` }}/output-hyperv",
+            "cpus": "{{ user `cpus` }}",
+            "generation": 2,
+            "output_directory": "output-hyperv",
+            "memory": "{{ user `memory` }}",
+            "switch_name": "Default Switch",
+
+            "boot_wait": "{{ user `boot_wait` }}",
+            "communicator": "{{ user `communicator` }}",
+            "headless": "{{ user `headless` }}",
+            "http_directory": "{{ user `http_directory` }}",
+            "shutdown_command": "{{ user `shutdown_command` }}",
+            "winrm_password": "{{ user `winrm_password` }}",
+            "winrm_timeout": "{{ user `winrm_timeout` }}",
+            "winrm_username": "{{ user `winrm_username` }}",
+            "vm_name": "{{ user `vm_name` }}"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "powershell",
+            "only": "virtualbox-ovf",
+            "script": "scripts/Install-VirtualBox-Tools.ps1"
+        },
+        {
+            "type": "powershell",
+            "only": "vmware-vmx",
+            "script": "scripts/Install-VMWare-Tools.ps1"
+        },
+        {
+            "type": "powershell",
+            "script": "scripts/Install-Updates.ps1"
+        },
+        {
+            "type": "windows-restart"
+        }
+    ],
+
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "{{ user `vm_name` }}-{{ .Provider }}.box"
+        }
+    ]
+}
