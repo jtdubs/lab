@@ -92,14 +92,13 @@ realm join $domain \
   --verbose
 
 # trust the ad ca
-cert_base="$(echo $domain | tr '.' '_')"
 pushd /tmp
-echo "get $cert_base.der" | smbclient -k \\\\dc.$domain\\DomainShare
+echo "get domain_root.der" | smbclient -k \\\\dc.$domain\\DomainShare
 popd
 openssl x509 \
     -inform der \
-    -in /tmp/$cert_base.der \
-    -out /usr/local/share/ca-certificates/$cert_base.crt
+    -in /tmp/domain_root.der \
+    -out /usr/local/share/ca-certificates/$domain.crt
 update-ca-certificates --verbose
 
 # destroy kerberos ticket (no longer needed)

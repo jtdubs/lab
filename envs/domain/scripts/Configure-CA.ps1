@@ -19,5 +19,5 @@ Install-AdcsCertificationAuthority `
 
 # export root cert
 Get-ChildItem Cert:\LocalMachine\My -DnsName $caCommonName `
-    | Export-Certificate -FilePath "C:\DomainShare\$($caCommonName -replace ' ','_').der" `
+    | Export-Certificate -FilePath "C:\DomainShare\domain_root.der" `
     | Out-Null
