@@ -23,12 +23,15 @@ nameserver $dc_ip
 search lab.dubs.zone
 EOF
 
-# install kerberos tools
+# install AD tools
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli 
+apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli smbclient
 
 # sync time with AD
 ntpdate dc.lab.dubs.zone
+sed -i 's/#NTP=/NTP=dc.lab.dubs.zone/' /etc/systemd/timesyncd.conf 
+sed -i 's/#RootDistanceMaxSec=.*/RootDistanceMaxSec=31536000/' /etc/systemd/timesyncd.conf 
+systemctl restart systemd-timesyncd
 
 # setup realm config
 cat > /etc/realmd.conf <<EOF
@@ -87,6 +90,17 @@ realm join $domain \
   --os-version="$(source /etc/os-release && echo $VERSION)" \
   --unattended \
   --verbose
+
+# trust the ad ca
+cert_base="$(echo $domain | tr '.' '_')"
+pushd /tmp
+echo "get $cert_base.der" | smbclient -k \\\\dc.$domain\\DomainShare
+popd
+openssl x509 \
+    -inform der \
+    -in /tmp/$cert_base.der \
+    -out /usr/local/share/ca-certificates/$cert_base.crt
+update-ca-certificates --verbose
 
 # destroy kerberos ticket (no longer needed)
 kdestroy

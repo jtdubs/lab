@@ -25,6 +25,8 @@ Vagrant.configure("2") do |config|
     # setup active directory
     box.vm.provision "shell", path: "scripts/Create-AD-Forest.ps1", reboot: true
     box.vm.provision "shell", path: "scripts/Configure-DC.ps1"
+    box.vm.provision "shell", path: "scripts/Create-Domain-Share.ps1"
+    box.vm.provision "shell", path: "scripts/Configure-CA.ps1"
     box.vm.provision "shell", path: "scripts/Create-Domain-Users.ps1"
   end
 
@@ -48,7 +50,6 @@ Vagrant.configure("2") do |config|
 
     # join domain
     box.vm.provision "shell", path: "scripts/Join-Domain.ps1", reboot: true
-
   end
 
   config.vm.define "user" do |box|
