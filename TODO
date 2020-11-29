@@ -1,5 +1,0 @@
-Bugs
-    Kali Updated didn't get an IP on boot in Domain environment...
-    Workaround:
-        kali> sudo dhclient eth0
-        host> vagrant provision hacker
