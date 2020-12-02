@@ -1,0 +1,15 @@
+overall
+    Injecting windows product keys... and activating?
+
+domain
+    need to set up some service accounts and SPNs for testing
+
+    DC:
+    New-ADServiceAccount MSA-Web -DNSHostName "web.lab.dubs.zone" -ServicePrincipalNames http/web.lab.dubs.zone, http/web -Verbose
+    Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web&
+
+    Web:
+    Install-ADServiceAccount MSA-Web
+
+    Connect to DC: Enter-PSSession -Credential (Get-Credential) -ComputerName localhost -Port (vagrant port --machine-readable dc | ConvertFrom-Csv | ? { $_.dc -eq "dc" -and $_.metadata -eq "forwarded_port" -and $_.provider -eq 5985 }).vagrant
+    Connect to Web: Enter-PSSession -Credential (Get-Credential) -ComputerName localhost -Port (vagrant port --machine-readable web | ConvertFrom-Csv | ? { $_.web -eq "web" -and $_.metadata -eq "forwarded_port" -and $_.provider -eq 5985 }).vagrant

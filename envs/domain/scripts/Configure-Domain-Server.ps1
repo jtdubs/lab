@@ -14,3 +14,6 @@ Add-Computer `
                     System.Management.Automation.PSCredential(
                         "vagrant@$domain",
                         (ConvertTo-SecureString "vagrant" -AsPlainText -Force)))
+
+# install helpful tools
+Add-WindowsFeature RSAT
