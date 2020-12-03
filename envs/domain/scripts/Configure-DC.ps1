@@ -58,4 +58,4 @@ Set-ADUser `
     -PasswordNeverExpires $true
 
 # Initialize KDS
-Add-KdsRootKey -EffectiveTime ((Get-Date).AddHours(-10))
+# Add-KdsRootKey -EffectiveTime ((Get-Date).AddHours(-10))
