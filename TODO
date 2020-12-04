@@ -4,8 +4,6 @@ overall
 domain
     Failed: Add-KdsRootKey -EffectiveTime ((Get-Date).AddHours(-10))
 
-    need to set up some service accounts and SPNs for testing
-
     DC:
     New-ADServiceAccount MSA-Web -DNSHostName "web.lab.dubs.zone" -ServicePrincipalNames http/web.lab.dubs.zone, http/web -Verbose
     Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web$

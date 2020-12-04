@@ -56,6 +56,3 @@ Set-ADAccountPassword `
 Set-ADUser `
     -Identity "CN=Administrator,$usersAdPath" `
     -PasswordNeverExpires $true
-
-# Initialize KDS
-# Add-KdsRootKey -EffectiveTime ((Get-Date).AddHours(-10))

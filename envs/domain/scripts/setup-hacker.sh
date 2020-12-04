@@ -2,6 +2,26 @@
 
 set -eu
 
+domain="lab.dubs.zone"
+dc_ip="192.168.64.8"
+
+echo "Adding hosts entry for DC..."
+echo "$dc_ip dc.$domain" | sudo tee -a /etc/hosts
+
+echo "Pointing to DC for DNS services..."
+sudo systemctl disable systemd-resolved
+sudo systemctl stop systemd-resolved
+sudo unlink /etc/resolv.conf
+sudo -E bash -c "cat > /etc/resolv.conf <<EOF
+nameserver $dc_ip
+search lab.dubs.zone
+EOF"
+
+echo "Pointing to DC for NTP services..."
+sudo sed -i 's/#NTP=/NTP=dc.lab.dubs.zone/' /etc/systemd/timesyncd.conf 
+sudo sed -i 's/#RootDistanceMaxSec=.*/RootDistanceMaxSec=31536000/' /etc/systemd/timesyncd.conf 
+sudo systemctl restart systemd-timesyncd
+
 echo "Installing packages..."
 export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get install -y --no-install-recommends \

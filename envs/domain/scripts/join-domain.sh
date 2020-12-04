@@ -8,13 +8,13 @@ dc_ip="192.168.64.8"
 account="Administrator"
 password="sup3rs3cr3t!"
 
-# add domain to hostname
+echo "Updating hostname..."
 hostnamectl set-hostname "$(hostname).$domain"
 
-# add DC entry to hosts file
+echo "Adding hosts entry for DC..."
 echo "$dc_ip dc.$domain" >> /etc/hosts
 
-# point DNS to DC
+echo "Pointing to DC for DNS services..."
 systemctl disable systemd-resolved
 systemctl stop systemd-resolved
 unlink /etc/resolv.conf
@@ -23,17 +23,17 @@ nameserver $dc_ip
 search lab.dubs.zone
 EOF
 
-# install AD tools
-export DEBIAN_FRONTEND=noninteractive
-apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli smbclient
-
-# sync time with AD
+echo "Pointing to DC for NTP services..."
 ntpdate dc.lab.dubs.zone
 sed -i 's/#NTP=/NTP=dc.lab.dubs.zone/' /etc/systemd/timesyncd.conf 
 sed -i 's/#RootDistanceMaxSec=.*/RootDistanceMaxSec=31536000/' /etc/systemd/timesyncd.conf 
 systemctl restart systemd-timesyncd
 
-# setup realm config
+echo "Install AD tools..."
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli smbclient
+
+echo "Configuring realmd..."
 cat > /etc/realmd.conf <<EOF
 [users]
 default-home = /home/%D/%U
@@ -51,7 +51,7 @@ user-principal = yes
 manage-system = yes
 EOF
 
-# create kerberos config
+echo "Configuring krb5..."
 cat >/etc/krb5.conf <<EOF
 [libdefaults]
 default_realm = ${domain^^}
@@ -65,7 +65,7 @@ ${domain^^} = {
 }
 EOF
 
-# create sssd config
+echo "Configuring sssd..."
 cat >/etc/sssd/sssd.conf <<EOF
 [sssd]
 config_file_version = 2
@@ -79,19 +79,19 @@ entry_negative_timeout = 0
 EOF
 chmod 0600 /etc/sssd/sssd.conf
 
-# authenticate to domain
+echo "Authenticating to domain..."
 kinit --password-file=STDIN $account <<EOF
 $password
 EOF
 
-# join domain
+echo "Joining domain..."
 realm join $domain \
   --os-name="$(source /etc/os-release && echo $NAME)" \
   --os-version="$(source /etc/os-release && echo $VERSION)" \
   --unattended \
   --verbose
 
-# trust the ad ca
+echo "Trusting domain CA..."
 pushd /tmp
 echo "get domain_root.der" | smbclient -k \\\\dc.$domain\\DomainShare
 popd
@@ -101,13 +101,13 @@ openssl x509 \
     -out /usr/local/share/ca-certificates/$domain.crt
 update-ca-certificates --verbose
 
-# destroy kerberos ticket (no longer needed)
+echo "Logging out..."
 kdestroy
 
-# allow login for all domain users
+echo "Enabling local login for all domain users..."
 realm permit --all
 
-# configure pam to automatically create the home directory.
+echo "Configuring PAM to create home directories automatically..."
 cat > /usr/share/pam-configs/mkhomedir <<EOF
 Name: activate mkhomedir
 Default: yes
@@ -118,7 +118,7 @@ Session:
 EOF
 pam-auth-update --package --enable mkhomedir --force
 
-# allow domain administrators to use sudo without asking for password.
+echo "Enabling sudo for domain admins..."
 cat >/etc/sudoers.d/domain-admins <<'EOF'
 # Allow members of the domain admins group to execute
 # any command (as root) without asking for password.

@@ -29,6 +29,15 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", name: "share",  path: "scripts/Create-Domain-Share.ps1"
     box.vm.provision "shell", name: "ca",     path: "scripts/Configure-CA.ps1"
     box.vm.provision "shell", name: "users",  path: "scripts/Create-Domain-Users.ps1"
+    box.vm.provision "shell", name: "kds",    path: "scripts/Configure-KDS.ps1"
+
+    # fix time after resumes
+    box.trigger.after :resume do |trigger|
+      trigger.info = "Updating time"
+      trigger.run_remote = {
+        inline: "powershell.exe Restart-Service w32time"
+      }
+    end
   end
 
   config.vm.define "web" do |box|
@@ -52,6 +61,14 @@ Vagrant.configure("2") do |config|
 
     # join domain
     box.vm.provision "shell", name: "join", path: "scripts/Configure-Domain-Server.ps1", reboot: true
+
+    # fix time after resumes
+    box.trigger.after :resume do |trigger|
+      trigger.info = "Updating time"
+      trigger.run_remote = {
+        inline: "powershell.exe Restart-Service w32time"
+      }
+    end
   end
 
   config.vm.define "user" do |box|
@@ -75,6 +92,14 @@ Vagrant.configure("2") do |config|
 
     # join domain
     box.vm.provision "shell", name: "join", path: "scripts/Configure-Domain-Workstation.ps1", reboot: true
+
+    # fix time after resumes
+    box.trigger.after :resume do |trigger|
+      trigger.info = "Updating time"
+      trigger.run_remote = {
+        inline: "powershell.exe Restart-Service w32time"
+      }
+    end
   end
 
   config.vm.define "dev" do |box|
@@ -94,6 +119,14 @@ Vagrant.configure("2") do |config|
 
     # join domain
     box.vm.provision "shell", name: "join", path: "scripts/join-domain.sh"
+
+    # fix time after resumes
+    box.trigger.after :resume do |trigger|
+      trigger.info = "Updating time"
+      trigger.run_remote = {
+        inline: "sudo systemctl restart systemd-timesyncd"
+      }
+    end
   end
 
   config.vm.define "hacker" do |box|
@@ -111,6 +144,15 @@ Vagrant.configure("2") do |config|
       provider.memory = "8192"
     end
 
+    # install tools and setup environment
     box.vm.provision "shell", name: "setup", path: "scripts/setup-hacker.sh", privileged: false
+
+    # fix time after resumes
+    box.trigger.after :resume do |trigger|
+      trigger.info = "Updating time"
+      trigger.run_remote = {
+        inline: "sudo systemctl restart systemd-timesyncd"
+      }
+    end
   end
 end
