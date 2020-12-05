@@ -2,8 +2,6 @@ overall
     Consider setting up VAMT to manage retail keys and allow for windows activations...
 
 domain
-    Failed: Add-KdsRootKey -EffectiveTime ((Get-Date).AddHours(-10))
-
     DC:
     New-ADServiceAccount MSA-Web -DNSHostName "web.lab.dubs.zone" -ServicePrincipalNames http/web.lab.dubs.zone, http/web -Verbose
     Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web$
