@@ -2,9 +2,37 @@ overall
     Consider setting up VAMT to manage retail keys and allow for windows activations...
 
 domain
-    DC:
-    New-ADServiceAccount MSA-Web -DNSHostName "web.lab.dubs.zone" -ServicePrincipalNames http/web.lab.dubs.zone, http/web -Verbose
-    Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web$
+    tomcat & postgres on new unix web server
+
+    Deploy:
+        # TODO: Install Azure DevOps
+        # Upload mu_azure_devops_server_2020_x64_dvd_633b160b.iso
+        # https://docs.microsoft.com/en-us/azure/devops/server/install/unattended?view=azure-devops-2019
 
     Web:
-    Install-ADServiceAccount MSA-Web
+        # Install IIS w/ Remote Management
+        Install-WindowsFeature Web-Server
+        Install-WindowsFeature Web-Ftp-Server
+        Install-WindowsFeature Web-Mgmt-Service
+        netsh advfirewall firewall add rule name=”IIS Remote Management” dir=in action=allow service=WMSVC
+        Set-ItemProperty HKLM:\SOFTWARE\Microsoft\WebManagement\Server EnableRemoteManagement 1
+        Set-Service -Name WMSVC -StartupType Automatic
+        Start-Service -Name WMSVC
+
+        # TODO: MS SQL
+        # Upload en_sql_server_2019_standard_x64_dvd_814b57aa.iso
+        # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt?view=sql-server-ver15
+
+    User:
+        # TODO: Upload inetmgr_amd64_en-US.msi 
+
+        # Enable IIS remote management
+        Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole -All
+        msiexec /i inetmgr_amd64_en-US.msi /qn
+
+    # DC:
+    # New-ADServiceAccount MSA-Web -DNSHostName "web.lab.dubs.zone" -ServicePrincipalNames http/web.lab.dubs.zone, http/web -Verbose
+    # Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web$
+
+    # Web:
+    # Install-ADServiceAccount MSA-Web
