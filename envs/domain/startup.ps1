@@ -1,6 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
+$env:VAGRANT_EXPERIMENTAL = "disks"
+
 vagrant up dc --no-provision
 vagrant snapshot save dc initial
 vagrant provision dc --provision-with=windows-sysprep

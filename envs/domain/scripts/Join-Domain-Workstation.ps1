@@ -30,3 +30,6 @@ Add-Computer `
 
 # install helpful tools
 Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
+
+# enable CredSSP for remote powershell credential delegation
+Enable-WSManCredSSP -Force Server

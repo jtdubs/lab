@@ -30,3 +30,7 @@ Add-Computer `
 
 # install helpful tools
 Add-WindowsFeature RSAT
+Install-WindowsFeature RSAT-Role-Tools -IncludeAllSubFeature
+
+# enable CredSSP for remote powershell credential delegation
+Enable-WSManCredSSP -Force Server
