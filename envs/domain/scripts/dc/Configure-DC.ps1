@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-# Wait for Domain to finish standing up
+Write-Host "Waiting for AD Domain to become available..."
 while ($true) {
     try {
         Get-ADDomain | Out-Null
@@ -16,6 +16,8 @@ $domain = $adDomain.DNSRoot
 $domainDn = $adDomain.DistinguishedName
 $usersAdPath = "CN=Users,$domainDn"
 $password = ConvertTo-SecureString "sup3rs3cr3t!" -AsPlainText -Force
+
+Write-Host "Configure NICs..."
 
 # Find the Vagrant "management" NIC
 $vagrantNatAdapter = Get-NetAdapter -Physical `
@@ -37,18 +39,18 @@ $dnsServerSettings.ListeningIPAddress = @(
 Set-DnsServerSetting $dnsServerSettings
 Clear-DnsClientCache
 
-# Setup group memberships for Vagrant domain account
+Write-Host "Setting group memberships..."
 Add-ADGroupMember `
     -Identity 'Enterprise Admins' `
     -Members "CN=vagrant,$usersAdPath"
 
-# Disable guest and other domain accounts, except for whitelist below
+Write-Host "Disabling unused accounts..."
 $enabledAccounts = @('vagrant', 'Administrator')
 Get-ADUser -Filter {Enabled -eq $true} `
     | Where-Object {$enabledAccounts -notcontains $_.Name} `
     | Disable-ADAccount
 
-# Set domain Administrator password
+Write-Host "Setting Administrator password..."
 Set-ADAccountPassword `
     -Identity "CN=Administrator,$usersAdPath" `
     -Reset `

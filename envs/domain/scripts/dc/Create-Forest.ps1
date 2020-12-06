@@ -17,8 +17,7 @@ Write-Host "Disabling admin account..."
 Disable-LocalUser -Name Administrator
 
 Write-Host "Installing AD Services..."
-Install-WindowsFeature AD-Domain-Services
-Install-WindowsFeature RSAT-Role-Tools -IncludeAllSubFeature
+Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
 
 Write-Host "Creating AD Forest..."
 Import-Module ADDSDeployment

@@ -3,6 +3,8 @@ $ErrorActionPreference = 'Stop'
 
 Import-Module GroupPolicy
 
+Write-Host "Creating credential delegation GPO..."
+
 $gpo = New-GPO -Name "Enable Credential Delegation"
 
 $gpo | Set-GPRegistryValue `

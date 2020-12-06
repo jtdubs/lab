@@ -4,10 +4,10 @@ $ErrorActionPreference = 'Stop'
 $domainDn = (Get-ADDomain).DistinguishedName
 $caCommonName = 'Lab Root CA'
 
-# install CA feature
+Write-Host "Install CA feature..."
 Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools
 
-# setup CA
+Write-Host "Creating CA..."
 Install-AdcsCertificationAuthority `
     -CAType EnterpriseRootCa `
     -CACommonName $caCommonName `
@@ -17,7 +17,7 @@ Install-AdcsCertificationAuthority `
     -ValidityPeriod Years `
     -Force
 
-# export root cert
+Write-Host "Exporting root cert..."
 Get-ChildItem Cert:\LocalMachine\My -DnsName $caCommonName `
     | Export-Certificate -FilePath "C:\DomainShare\domain_root.der" `
     | Out-Null

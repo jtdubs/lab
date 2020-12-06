@@ -1,5 +1,5 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-# Initialize KDS
+Write-Host "Creating KDS Root Key..."
 Add-KdsRootKey -EffectiveTime ((Get-Date).AddHours(-10))

@@ -1,12 +1,12 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-# Create SQL gMSA
+Write-Host "Creating SQL gMSA..."
 New-ADServiceAccount MSA-Sql -DNSHostName "web.lab.dubs.zone" -Verbose
 Set-ADServiceAccount MSA-Sql -PrincipalsAllowedToRetrieveManagedPassword Web$
 Install-ADServiceAccount MSA-Sql
 
-# Install MS SQL
+Write-Host "Installing SQL..."
 Start-Process `
     -Wait `
     -FilePath "D:\setup.exe" `

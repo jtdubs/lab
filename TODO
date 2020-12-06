@@ -1,24 +1,10 @@
 domain
     Switch Windows guests to VMSVGA adapter on VirtualBox...
 
-    DC:
-        Need to setup GPO as part of startup
-        Enable-WSManCredSSP -Force -Role Client -DelegateComputer "*.lab.dubs.zone"
-        Enable-WSManCredSSP -Force -Role Server
-
-    Web:
-        Enable-WSManCredSSP -Force -Role Client -DelegateComputer "*.lab.dubs.zone"
-        Enable-WSManCredSSP -Force -Role Server
-
-        Install IIS
-        Install SQL Server
-        Upload en_sql_server_2019_standard_x64_dvd_814b57aa.iso
-        https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt?view=sql-server-ver15
-        # vboxmanage storageattach domain_web_1607119591875_32572 --storagectl "SATA Controller" --device 0 --port 1 --type dvddrive --medium emptydrive
+    Scripts:
+        Summary script?
 
     User:
-        Enable-WSManCredSSP -Force -Role Client -DelegateComputer "*.lab.dubs.zone"
-        Enable-WSManCredSSP -Force -Role Server
         Enable IIS remote management
         Upload inetmgr_amd64_en-US.msi 
         Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole -All

@@ -1,12 +1,12 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-# Create Web gMSA
+Write-Host "Creating Web gMSA..."
 New-ADServiceAccount MSA-Web -DNSHostName "web.lab.dubs.zone" -ServicePrincipalNames http/web.lab.dubs.zone, http/web -Verbose
 Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web$
 Install-ADServiceAccount MSA-Web
 
-# Install IIS w/ Remote Management
+Write-Host "Installing IIS..."
 Install-WindowsFeature Web-Server
 Install-WindowsFeature Web-Ftp-Server
 Install-WindowsFeature Web-Mgmt-Service

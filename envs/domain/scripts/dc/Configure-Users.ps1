@@ -7,6 +7,8 @@ $domainDn = $adDomain.DistinguishedName
 $usersAdPath = "CN=Users,$domainDn"
 $password = ConvertTo-SecureString -AsPlainText 'sup3rs3cr3t!' -Force
 
+Write-Host "Creating Domain users..."
+
 $name = 'justin.dubs'
 New-ADUser `
     -Path $usersAdPath `

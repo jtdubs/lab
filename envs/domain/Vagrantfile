@@ -24,12 +24,15 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # setup active directory
-    box.vm.provision "shell", name: "forest", path: "scripts/Create-AD-Forest.ps1", reboot: true
-    box.vm.provision "shell", name: "dc",     path: "scripts/Configure-DC.ps1"
-    box.vm.provision "shell", name: "share",  path: "scripts/Create-Domain-Share.ps1"
-    box.vm.provision "shell", name: "ca",     path: "scripts/Configure-CA.ps1"
-    box.vm.provision "shell", name: "users",  path: "scripts/Create-Domain-Users.ps1"
-    box.vm.provision "shell", name: "kds",    path: "scripts/Configure-KDS.ps1"
+    box.vm.provision "shell", name: "tools",   path: "scripts/dc/Install-Tools.ps1"
+    box.vm.provision "shell", name: "forest",  path: "scripts/dc/Create-Forest.ps1", reboot: true
+    box.vm.provision "shell", name: "dc",      path: "scripts/dc/Configure-DC.ps1"
+    box.vm.provision "shell", name: "share",   path: "scripts/dc/Create-Share.ps1"
+    box.vm.provision "shell", name: "ca",      path: "scripts/dc/Create-CA.ps1"
+    box.vm.provision "shell", name: "users",   path: "scripts/dc/Configure-Users.ps1"
+    box.vm.provision "shell", name: "kds",     path: "scripts/dc/Configure-KDS.ps1"
+    box.vm.provision "shell", name: "gpo",     path: "scripts/dc/Configure-GPO.ps1"
+    box.vm.provision "shell", name: "credssp", path: "scripts/dc/Configure-CredSSP.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
@@ -54,8 +57,6 @@ Vagrant.configure("2") do |config|
       provider.linked_clone = true
       provider.cpus = "2"
       provider.memory = "4096"
-
-      # provider.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--device", "0", "--port", "1", "--type", "dvddrive", "--medium", "emptydrive"]
     end
 
     # attach SQL DVD
@@ -65,8 +66,11 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
-    box.vm.provision "shell", name: "join", path: "scripts/Join-Domain-Server.ps1", reboot: true
-    box.vm.provision "shell", name: "web", path: "scripts/Configure-Web-Server.ps1", reboot: true
+    box.vm.provision "shell", name: "tools",   path: "scripts/web/Install-Tools.ps1"
+    box.vm.provision "shell", name: "join",    path: "scripts/web/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "web",     path: "scripts/web/Configure-Web-Server.ps1"
+    box.vm.provision "shell", name: "sql",     path: "scripts/web/Configure-SQL-Server.ps1"
+    box.vm.provision "shell", name: "credssp", path: "scripts/web/Configure-CredSSP.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
@@ -97,7 +101,9 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
-    box.vm.provision "shell", name: "join", path: "scripts/Join-Domain-Workstation.ps1", reboot: true
+    box.vm.provision "shell", name: "tools",   path: "scripts/user/Install-Tools.ps1"
+    box.vm.provision "shell", name: "join",    path: "scripts/user/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "credssp", path: "scripts/user/Configure-CredSSP.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
@@ -124,7 +130,7 @@ Vagrant.configure("2") do |config|
     end
 
     # join domain
-    box.vm.provision "shell", name: "join", path: "scripts/join-domain.sh"
+    box.vm.provision "shell", name: "join", path: "scripts/dev/join-domain.sh"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
@@ -151,7 +157,7 @@ Vagrant.configure("2") do |config|
     end
 
     # install tools and setup environment
-    box.vm.provision "shell", name: "setup", path: "scripts/setup-hacker.sh", privileged: false
+    box.vm.provision "shell", name: "setup", path: "scripts/hacker/setup.sh", privileged: false
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
