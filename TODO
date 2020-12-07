@@ -1,5 +1,7 @@
 domain
-    Switch Windows guests to VMSVGA adapter on VirtualBox...
+    Overall:
+        Why doesn't the "vagrant" shared folder feature work?
+        Can't resolve vboxsrv, but why?
 
     Scripts:
         Summary script?
