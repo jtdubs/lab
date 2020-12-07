@@ -1,0 +1,8 @@
+
+Algorithm       Hash                                                                   Path
+---------       ----                                                                   ----
+SHA256          1E56705B3544E77039584B3B38461DF0321834822776AEF8E50847FDD9EDAD44       en_sql_server_2019_standard_x64_dvd_814b57aa.iso
+SHA256          1ACC8864E0967D67FBBA1C3153205EF4F8B20DC609C01FDAD35A86E606375FC6       inetmgr_amd64_en-US.msi
+SHA256          FC85C1CAEAF84967D9103418FE124A0F813EBBDDCD476D1B1A5A487C2E9F2A95       mu_azure_devops_server_2020_x64_dvd_633b160b.iso
+SHA256          A7FC3DDEC79EA973EBD578BAC91F135D6C53B4388AF50385279F50741FACACAA       mu_azure_devops_server_2020_x64_web_installer_633b160b.exe
+SHA256          27FBEAD01257513F87C619765C06611B2F4F53C7C6C2B9F1DC3EDF3ACE14295D       SSMS-Setup-ENU.exe
