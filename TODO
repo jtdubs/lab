@@ -1,8 +1,6 @@
 domain
     Overall:
         vNICs are super slow on VirtualBox
-
-    Domain:
         Document boxes and series of snapshots in README
 
     Scripts:

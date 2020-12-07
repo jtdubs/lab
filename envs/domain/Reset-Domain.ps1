@@ -36,11 +36,11 @@ Exec { vagrant snapshot restore user sysprep }
 Exec { vagrant snapshot restore dev  initial }
 
 Log "Joining Web..."
-Exec { vagrant provision web --provision-with tools,join,credssp }
+Exec { vagrant provision web --provision-with ntp,tools,join,credssp }
 Exec { vagrant snapshot save --force web member }
 
 Log "Joining User..."
-Exec { vagrant provision user --provision-with tools,join,credssp }
+Exec { vagrant provision user --provision-with ntp,tools,join,credssp }
 Exec { vagrant snapshot save --force user member }
 
 Log "Joining Dev..."

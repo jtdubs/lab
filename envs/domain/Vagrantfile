@@ -24,6 +24,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # setup active directory
+    box.vm.provision "shell", name: "ntp",     path: "scripts/dc/Configure-NTP.ps1"
     box.vm.provision "shell", name: "tools",   path: "scripts/dc/Install-Tools.ps1"
     box.vm.provision "shell", name: "forest",  path: "scripts/dc/Create-Forest.ps1", reboot: true
     box.vm.provision "shell", name: "dc",      path: "scripts/dc/Configure-DC.ps1"
@@ -63,6 +64,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
+    box.vm.provision "shell", name: "ntp",     path: "scripts/web/Configure-NTP.ps1"
     box.vm.provision "shell", name: "tools",   path: "scripts/web/Install-Tools.ps1"
     box.vm.provision "shell", name: "join",    path: "scripts/web/Join-Domain.ps1", reboot: true
     box.vm.provision "shell", name: "web",     path: "scripts/web/Create-Web-Server.ps1"
@@ -98,6 +100,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
+    box.vm.provision "shell", name: "ntp",     path: "scripts/user/Configure-NTP.ps1"
     box.vm.provision "shell", name: "tools",   path: "scripts/user/Install-Tools.ps1"
     box.vm.provision "shell", name: "join",    path: "scripts/user/Join-Domain.ps1", reboot: true
     box.vm.provision "shell", name: "credssp", path: "scripts/user/Configure-CredSSP.ps1"
