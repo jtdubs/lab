@@ -20,14 +20,22 @@ Get-WmiObject -Class Win32_LogicalDisk `
     | Out-Host
 
 Write-Host "Domain Info:"
-Get-ADDomain `
-    | Select-Object -Property Forest,DomainMode,DNSRoot,NetBIOSName,PDCEmulator,InfrastructureMaster `
-    | Out-Host
+try {
+    Get-ADDomain `
+        | Select-Object -Property Forest,DomainMode,DNSRoot,NetBIOSName,PDCEmulator,InfrastructureMaster `
+        | Out-Host
+} catch {
+    Write-Host "N/A"
+}
 
 Write-Host "Local Users:"
 Get-LocalUser `
     | Out-Host
 
 Write-Host "Local Administrators:"
-Get-LocalGroupMember Administrators `
-    | Out-Host
+try {
+    Get-LocalGroupMember Administrators `
+        | Out-Host
+} catch {
+    Write-Host "N/A"
+}

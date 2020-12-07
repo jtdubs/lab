@@ -5,6 +5,12 @@ domain
     NixWeb:
         Create new Ubuntu Sever VM for this
         Tomcat & Postgresql
+    
+    Web:
+        Add user access to SQL server
+    
+    User:
+        Validate SQL access
 
     Deploy:
         Create new VM for this
