@@ -8,6 +8,10 @@ dc_ip="192.168.64.8"
 account="Administrator"
 password="sup3rs3cr3t!"
 
+echo "Install AD tools..."
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli smbclient
+
 echo "Updating hostname..."
 hostnamectl set-hostname "$(hostname).$domain"
 
@@ -28,10 +32,6 @@ ntpdate dc.lab.dubs.zone
 sed -i 's/#NTP=/NTP=dc.lab.dubs.zone/' /etc/systemd/timesyncd.conf 
 sed -i 's/#RootDistanceMaxSec=.*/RootDistanceMaxSec=31536000/' /etc/systemd/timesyncd.conf 
 systemctl restart systemd-timesyncd
-
-echo "Install AD tools..."
-export DEBIAN_FRONTEND=noninteractive
-apt-get install -y ntpdate sssd sssd-tools heimdal-clients msktutil realmd adcli smbclient
 
 echo "Configuring realmd..."
 cat > /etc/realmd.conf <<EOF

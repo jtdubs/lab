@@ -1,6 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Set-PSDebug -Trace 1
+
 $domain = "lab.dubs.zone"
 $nbDomain = "LAB"
 $password = ConvertTo-SecureString "sup3rs3cr3t!" -AsPlainText -Force

@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 $domainDn = (Get-ADDomain).DistinguishedName
 $caCommonName = 'Lab Root CA'
 
-Write-Host "Install CA feature..."
+Write-Host "Installing CA feature..."
 Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools
 
 Write-Host "Creating CA..."

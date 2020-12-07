@@ -4,12 +4,6 @@ domain
     Scripts:
         Summary script?
 
-    User:
-        Enable IIS remote management
-        Upload inetmgr_amd64_en-US.msi 
-        Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole -All
-        msiexec /i inetmgr_amd64_en-US.msi /qn
-
     NixWeb:
         Create new Ubuntu Sever VM for this
         Tomcat & Postgresql

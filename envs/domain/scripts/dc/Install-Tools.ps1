@@ -1,6 +1,6 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-Write-Host "Creating RSAT tools..."
-Install-WindowsFeature RSAT
+Write-Host "Installing RSAT..."
+Install-WindowsFeature RSAT,RSAT-AD-AdminCenter,RSAT-ADDS-Tools
 Install-WindowsFeature RSAT-Role-Tools -IncludeAllSubFeature
