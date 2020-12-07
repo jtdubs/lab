@@ -1,10 +1,6 @@
 domain
     Overall:
-        vNICs are super slow on VirtualBox
         Document boxes and series of snapshots in README
-
-    Scripts:
-        Summary script?
 
     NixWeb:
         Create new Ubuntu Sever VM for this

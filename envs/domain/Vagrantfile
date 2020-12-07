@@ -33,7 +33,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", name: "users",   path: "scripts/dc/Configure-Users.ps1"
     box.vm.provision "shell", name: "kds",     path: "scripts/dc/Configure-KDS.ps1"
     box.vm.provision "shell", name: "gpo",     path: "scripts/dc/Configure-GPO.ps1"
-    box.vm.provision "shell", name: "credssp", path: "scripts/dc/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "credssp", path: "scripts/windows/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "summary", path: "scripts/windows/Summary.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
@@ -64,12 +65,13 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
-    box.vm.provision "shell", name: "ntp",     path: "scripts/web/Configure-NTP.ps1"
+    box.vm.provision "shell", name: "ntp",     path: "scripts/windows/Configure-NTP.ps1"
     box.vm.provision "shell", name: "tools",   path: "scripts/web/Install-Tools.ps1"
-    box.vm.provision "shell", name: "join",    path: "scripts/web/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "join",    path: "scripts/windows/Join-Domain.ps1", reboot: true
     box.vm.provision "shell", name: "web",     path: "scripts/web/Create-Web-Server.ps1"
     box.vm.provision "shell", name: "sql",     path: "scripts/web/Create-Sql-Server.ps1"
-    box.vm.provision "shell", name: "credssp", path: "scripts/web/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "credssp", path: "scripts/windows/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "summary", path: "scripts/windows/Summary.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
@@ -100,12 +102,13 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
-    box.vm.provision "shell", name: "ntp",     path: "scripts/user/Configure-NTP.ps1"
+    box.vm.provision "shell", name: "ntp",     path: "scripts/windows/Configure-NTP.ps1"
     box.vm.provision "shell", name: "tools",   path: "scripts/user/Install-Tools.ps1"
-    box.vm.provision "shell", name: "join",    path: "scripts/user/Join-Domain.ps1", reboot: true
-    box.vm.provision "shell", name: "credssp", path: "scripts/user/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "join",    path: "scripts/windows/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "credssp", path: "scripts/windows/Configure-CredSSP.ps1"
     box.vm.provision "shell", name: "web",     path: "scripts/user/Install-Web-Tools.ps1"
     box.vm.provision "shell", name: "sql",     path: "scripts/user/Install-Sql-Tools.ps1"
+    box.vm.provision "shell", name: "summary", path: "scripts/windows/Summary.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
