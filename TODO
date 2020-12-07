@@ -1,7 +1,9 @@
 domain
     Overall:
-        Why doesn't the "vagrant" shared folder feature work?
-        Can't resolve vboxsrv, but why?
+        vNICs are super slow on VirtualBox
+
+    Domain:
+        Document boxes and series of snapshots in README
 
     Scripts:
         Summary script?

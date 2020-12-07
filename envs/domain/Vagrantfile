@@ -59,9 +59,6 @@ Vagrant.configure("2") do |config|
       provider.memory = "4096"
     end
 
-    # attach SQL DVD
-    box.vm.disk :dvd, name: "sql_server", file: "./media/en_sql_server_2019_standard_x64_dvd_814b57aa.iso"
-
     # sysprep to give us a unique machine RID
     box.vm.provision "windows-sysprep", name: "sysprep"
 
@@ -69,7 +66,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", name: "tools",   path: "scripts/web/Install-Tools.ps1"
     box.vm.provision "shell", name: "join",    path: "scripts/web/Join-Domain.ps1", reboot: true
     box.vm.provision "shell", name: "web",     path: "scripts/web/Create-Web-Server.ps1"
-    box.vm.provision "shell", name: "sql",     path: "scripts/web/Create-SQL-Server.ps1"
+    box.vm.provision "shell", name: "sql",     path: "scripts/web/Create-Sql-Server.ps1"
     box.vm.provision "shell", name: "credssp", path: "scripts/web/Configure-CredSSP.ps1"
 
     # fix time after resumes
@@ -104,8 +101,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", name: "tools",   path: "scripts/user/Install-Tools.ps1"
     box.vm.provision "shell", name: "join",    path: "scripts/user/Join-Domain.ps1", reboot: true
     box.vm.provision "shell", name: "credssp", path: "scripts/user/Configure-CredSSP.ps1"
-    box.vm.provision "file", source: "media/inetmgr_amd64_en-US.msi", destination: "C:/Windows/Temp/inetmgr_amd64_en-US.msi"
     box.vm.provision "shell", name: "web",     path: "scripts/user/Install-Web-Tools.ps1"
+    box.vm.provision "shell", name: "sql",     path: "scripts/user/Install-Sql-Tools.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|

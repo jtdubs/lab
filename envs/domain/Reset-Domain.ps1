@@ -54,4 +54,8 @@ Log "Setting up Web..."
 Exec { vagrant provision web --provision-with web,sql }
 Exec { vagrant snapshot save --force web ready }
 
+Log "Setting up User..."
+Exec { vagrant provision user --provision-with web,sql }
+Exec { vagrant snapshot save --force user ready }
+
 Log "Done."

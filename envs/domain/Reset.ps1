@@ -32,7 +32,7 @@ function Log {
 Log "Rolling back VMs..."
 Exec { vagrant snapshot restore dc   joined }
 Exec { vagrant snapshot restore web  ready  }
-Exec { vagrant snapshot restore user member }
+Exec { vagrant snapshot restore user ready  }
 Exec { vagrant snapshot restore dev  member }
 
 Log "Done."

@@ -55,14 +55,11 @@ Log "Snapshotting domain..."
 Exec { vagrant snapshot save --force dc joined }
 
 Log "Setting up Web..."
-$env:VAGRANT_EXPERIMENTAL = "disks"
-Exec { vagrant reload web }
-Remove-Item Env:\VAGRANT_EXPERIMENTAL
 Exec { vagrant provision web --provision-with web,sql }
 Exec { vagrant snapshot save --force web ready }
 
 Log "Setting up User..."
-Exec { vagrant provision user --provision-with file,web }
+Exec { vagrant provision user --provision-with web,sql }
 Exec { vagrant snapshot save --force user ready }
 
 Log "Done."

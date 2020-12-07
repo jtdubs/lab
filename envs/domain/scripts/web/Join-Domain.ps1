@@ -8,17 +8,8 @@ Write-Host "Configuring DNS..."
 Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses $dcIp
 
 Write-Host "Configuring NTP..."
-Push-Location
-Set-Location HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers
-Set-ItemProperty . 0 "dc.$domain"
-Set-ItemProperty . "(Default)" "0"
-Set-Location HKLM:\SYSTEM\CurrentControlSet\services\W32Time\Parameters
-Set-ItemProperty . NtpServer "dc.$domain"
-Pop-Location
-
-Write-Host "Updating time..."
-Restart-Service w32time
-Start-Sleep -Seconds 1
+w32tm /config /manualpeerlist:$dc /syncfromflags:manual /reliable:yes /update
+w32tm /resync
 
 Write-Host "Joining domain..."
 Add-Computer `
