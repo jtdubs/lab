@@ -29,14 +29,19 @@ Start-Process `
         "/Q",
         "/SUPPRESSPRIVACYSTATEMENTNOTICE",
         "/IACCEPTSQLSERVERLICENSETERMS",
-        "/ACTION=install",
+        "/ACTION=Install",
         "/FEATURES=SQLEngine",
         "/INSTANCENAME=MSSQLSERVER",
-        "/SQLSVCACCOUNT=LAB\MSA-Sql",
+        "/SQLSVCACCOUNT=LAB\MSA-Sql$",
         "/SQLSYSADMINACCOUNTS=LAB\justin.dubs",
         "/UPDATEENABLED=False",
-        "/INDICATEPROGRESS" `
+        "/TCPENABLED=1",
+        "/NPENABLED=0",
+        "/INDICATEPROGRESS=True" `
     -Wait
+
+# TODO: accounts for SQL Server Agent, SQL Server Database Engine, SQL Server Browser ?
+# Does the MSA need a "$" at the end in the setup command?
 
 Write-Host "Unmounting ISO..."
 Dismount-DiskImage -ImagePath $iso

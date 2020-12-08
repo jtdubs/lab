@@ -6,9 +6,6 @@ domain
         Create new Ubuntu Sever VM for this
         Tomcat & Postgresql
     
-    User:
-        Validate SQL access
-
     Deploy:
         Create new VM for this
         Install Azure DevOps
