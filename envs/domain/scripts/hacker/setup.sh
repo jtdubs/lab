@@ -79,6 +79,3 @@ popd
 
 echo "Validating nvim setup..."
 nvim --headless +PlugInstall +CocUpdate +qa
-
-echo "Creating xinitrc..."
-cp -f ~/.xsession ~/.xinitrc
