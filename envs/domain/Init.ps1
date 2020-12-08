@@ -52,21 +52,15 @@ Exec { vagrant up dev --no-provision }
 Exec { vagrant snapshot save --force dev initial }
 
 Log "Creating Domain..."
-Exec { vagrant provision dc --provision-with tools,forest,dc,share,ca,users,kds,gpo,credssp }
+Exec { vagrant provision dc --provision-with ntp,tools,forest,dc,share,ca,users,kds,gpo,credssp }
 Exec { vagrant snapshot save --force dc ready }
 
-Log "Setting up Hacker..."
-Exec { vagrant up hacker --no-provision }
-Exec { vagrant snapshot save --force hacker initial }
-Exec { vagrant provision hacker --provision-with setup }
-Exec { vagrant snapshot save --force hacker ready }
-
 Log "Joining Web..."
-Exec { vagrant provision web --provision-with tools,join,credssp }
+Exec { vagrant provision web --provision-with ntp,tools,join,credssp }
 Exec { vagrant snapshot save --force web member }
 
 Log "Joining User..."
-Exec { vagrant provision user --provision-with tools,join,credssp }
+Exec { vagrant provision user --provision-with ntp,tools,join,credssp }
 Exec { vagrant snapshot save --force user member }
 
 Log "Joining Dev..."
@@ -77,10 +71,17 @@ Log "Snapshotting domain..."
 Exec { vagrant snapshot save --force dc joined }
 
 Log "Setting up Web..."
-$env:VAGRANT_EXPERIMENTAL = "disks"
-Exec { vagrant reload web }
-Remove-Item Env:\VAGRANT_EXPERIMENTAL
-Exec { vagrant provision web --provision-with web,sql }
+Exec { vagrant provision web --provision-with web,sql,sqltools }
 Exec { vagrant snapshot save --force web ready }
+
+Log "Setting up User..."
+Exec { vagrant provision user --provision-with web,sql }
+Exec { vagrant snapshot save --force user ready }
+
+Log "Setting up Hacker..."
+Exec { vagrant up hacker --no-provision }
+Exec { vagrant snapshot save --force hacker initial }
+Exec { vagrant provision hacker --provision-with setup }
+Exec { vagrant snapshot save --force hacker ready }
 
 Log "Done."

@@ -7,8 +7,8 @@ Set-ADServiceAccount MSA-Web -PrincipalsAllowedToRetrieveManagedPassword Web$
 Install-ADServiceAccount MSA-Web
 
 Write-Host "Installing IIS..."
-Install-WindowsFeature Web-Server
-Install-WindowsFeature Web-Ftp-Server
+Install-WindowsFeature Web-Server -IncludeManagementTools
+Install-WindowsFeature Web-Ftp-Server -IncludeManagementTools
 Install-WindowsFeature Web-Mgmt-Service
 netsh advfirewall firewall add rule name="IIS Remote Management" dir=in action=allow service=WMSVC
 Set-ItemProperty HKLM:\SOFTWARE\Microsoft\WebManagement\Server EnableRemoteManagement 1

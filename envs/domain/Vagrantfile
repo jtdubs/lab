@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define "dc" do |box|
-    box.vm.box = "ws19core-updated"
+    box.vm.box = "ws19-updated"
     box.vm.hostname = "dc"
     box.vm.network "private_network", ip: "192.168.64.8"
     box.vm.network "forwarded_port", guest: 3389, host: 33389, auto_correct: true
@@ -40,13 +40,13 @@ Vagrant.configure("2") do |config|
     box.trigger.after :resume do |trigger|
       trigger.info = "Updating time"
       trigger.run_remote = {
-        inline: "powershell.exe Restart-Service w32time"
+        inline: "w32tm /resync"
       }
     end
   end
 
   config.vm.define "web" do |box|
-    box.vm.box = "ws19core-updated"
+    box.vm.box = "ws19-updated"
     box.vm.hostname = "web"
     box.vm.network "private_network", ip: "192.168.64.16"
     box.vm.network "forwarded_port", guest: 3389, host: 23389, auto_correct: true
@@ -65,19 +65,20 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # join domain
-    box.vm.provision "shell", name: "ntp",     path: "scripts/windows/Configure-NTP.ps1"
-    box.vm.provision "shell", name: "tools",   path: "scripts/web/Install-Tools.ps1"
-    box.vm.provision "shell", name: "join",    path: "scripts/windows/Join-Domain.ps1", reboot: true
-    box.vm.provision "shell", name: "web",     path: "scripts/web/Create-Web-Server.ps1"
-    box.vm.provision "shell", name: "sql",     path: "scripts/web/Create-Sql-Server.ps1"
-    box.vm.provision "shell", name: "credssp", path: "scripts/windows/Configure-CredSSP.ps1"
-    box.vm.provision "shell", name: "summary", path: "scripts/windows/Summary.ps1"
+    box.vm.provision "shell", name: "ntp",      path: "scripts/windows/Configure-NTP.ps1"
+    box.vm.provision "shell", name: "tools",    path: "scripts/web/Install-Tools.ps1"
+    box.vm.provision "shell", name: "join",     path: "scripts/windows/Join-Domain.ps1", reboot: true
+    box.vm.provision "shell", name: "web",      path: "scripts/web/Create-Web-Server.ps1"
+    box.vm.provision "shell", name: "sql",      path: "scripts/web/Create-Sql-Server.ps1"
+    box.vm.provision "shell", name: "sqltools", path: "scripts/user/Install-Sql-Tools.ps1"
+    box.vm.provision "shell", name: "credssp",  path: "scripts/windows/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "summary",  path: "scripts/windows/Summary.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
       trigger.info = "Updating time"
       trigger.run_remote = {
-        inline: "powershell.exe Restart-Service w32time"
+        inline: "w32tm /resync"
       }
     end
   end
@@ -114,7 +115,7 @@ Vagrant.configure("2") do |config|
     box.trigger.after :resume do |trigger|
       trigger.info = "Updating time"
       trigger.run_remote = {
-        inline: "powershell.exe Restart-Service w32time"
+        inline: "w32tm /resync"
       }
     end
   end

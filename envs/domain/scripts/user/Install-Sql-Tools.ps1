@@ -8,4 +8,12 @@ $cred = New-Object -TypeName System.Management.Automation.PSCredential -Argument
 New-PSDrive -Name "X" -PSProvider FileSystem -Root \\192.168.64.1\domain -Credential $cred
 
 Write-Host "Installing SQL Server Management Studio..."
-Start-Process "X:\media\SSMS-Setup-ENU.exe /install /quiet /norestart" -Wait
+Copy-Item -Path "X:\media\SSMS-Setup-ENU.exe" -Destination C:\Windows\Temp
+Start-Process `
+    -FilePath "C:\Windows\Temp\SSMS-Setup-ENU.exe" `
+    -ArgumentList `
+        "/install",
+        "/quiet",
+        "/norestart" `
+    -Wait
+Remove-Item "C:\Windows\Temp\SSMS-Setup-ENU.exe"
