@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "kali" do |box|
+    box.vm.box = "kali-updated"
+    box.vm.hostname = "kali"
+    box.vm.network "private_network", ip: "192.168.64.33"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
+    box.vm.communicator = "ssh"
+    box.ssh.username = "vagrant"
+    box.ssh.private_key_path = "../../vagrant.id_rsa"
+
+    box.vm.provider "virtualbox" do |provider|
+      provider.linked_clone = true
+      provider.cpus = "4"
+      provider.memory = "8192"
+    end
+
+    box.vm.provision "shell", name: "kali", path: "scripts/setup-kali.sh", privileged: false
+    box.vm.provision "shell", name: "common", path: "scripts/setup-common.sh", privileged: false
+    box.vm.provision "shell", name: "share", path: "scripts/mount-share.sh", privileged: false
+  end
+
+  config.vm.define "win10" do |box|
+    box.vm.box = "win10-workstation"
+    box.vm.hostname = "win10"
+    box.vm.network "private_network", ip: "192.168.64.32"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
+    box.vm.communicator = "winrm"
+    box.winrm.password = "vagrant"
+    box.winrm.username = "vagrant"
+
+    box.vm.provider "virtualbox" do |provider|
+      provider.linked_clone = true
+      provider.cpus = "4"
+      provider.memory = "8192"
+    end
+
+    box.vm.provision "shell", name: "share", path: "scripts/Create-Share.ps1", privileged: false
+  end
+end
