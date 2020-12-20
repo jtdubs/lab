@@ -1,6 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
+$env:VAGRANT_DEFAULT_PROVIDER = "hyperv"
+
 function Exec {
     [CmdletBinding()]
     param(

@@ -53,7 +53,7 @@ echo "Validating nvim setup..."
 nvim --headless +PlugInstall +CocUpdate +qa
 
 echo "Creating xinitrc..."
-if [ -e /etc/release -a $(source /etc/release; echo $ID) = "arch"]
+if [ \( -f /etc/release \) -a \( $(source /etc/release && echo $ID) = "arch" \) ]
 then
     ln -s ~/.xsession ~/.xinitrc
 fi
