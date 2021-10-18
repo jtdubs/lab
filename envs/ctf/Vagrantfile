@@ -5,11 +5,23 @@ Vagrant.configure("2") do |config|
   config.vm.define "kali" do |box|
     box.vm.box = "kali-updated"
     box.vm.hostname = "kali"
-    box.vm.network "private_network", dhcp: true
+    box.vm.network "private_network", ip: "192.168.32.33"
     box.vm.synced_folder ".", "/vagrant", disabled: true
     box.vm.communicator = "ssh"
     box.ssh.username = "vagrant"
     box.ssh.private_key_path = "../../vagrant.id_rsa"
+
+    box.vm.provider "virtualbox" do |provider|
+      provider.linked_clone = true
+      provider.memory = "16384"
+      provider.cpus = "4"
+    end
+
+    box.vm.provider "vmware" do |provider|
+      provider.linked_clone = true
+      provider.vmx["memsize"] = "16384"
+      provider.vmx["numvcpus"] = "4"
+    end
 
     box.vm.provider "hyperv" do |provider|
       provider.linked_clone = true
@@ -33,11 +45,23 @@ Vagrant.configure("2") do |config|
   config.vm.define "win10" do |box|
     box.vm.box = "win10-workstation"
     box.vm.hostname = "win10"
-    box.vm.network "private_network", dhcp: true
+    box.vm.network "private_network", ip: "192.168.32.32"
     box.vm.synced_folder ".", "/vagrant", disabled: true
     box.vm.communicator = "winrm"
     box.winrm.password = "vagrant"
     box.winrm.username = "vagrant"
+
+    box.vm.provider "virtualbox" do |provider|
+      provider.linked_clone = true
+      provider.memory = "16384"
+      provider.cpus = "4"
+    end
+
+    box.vm.provider "vmware" do |provider|
+      provider.linked_clone = true
+      provider.vmx["memsize"] = "16384"
+      provider.vmx["numvcpus"] = "4"
+    end
 
     box.vm.provider "hyperv" do |provider|
       provider.linked_clone = true

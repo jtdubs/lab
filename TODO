@@ -1,13 +1,50 @@
-domain
-    Overall:
-        Document boxes and series of snapshots in README
+add an apt-get update before apt-get install is vagrant provisioning scripts...
 
-    NixWeb:
-        Create new Ubuntu Sever VM for this
-        Tomcat & Postgresql
-    
-    Deploy:
-        Create new VM for this
-        Install Azure DevOps
-        Upload mu_azure_devops_server_2020_x64_dvd_633b160b.iso
-        https://docs.microsoft.com/en-us/azure/devops/server/install/unattended?view=azure-devops-2019
+Random names: https://namey.muffinlabs.com/
+Nonsense words: http://soybomb.com/tricks/words/
+
+Can build images for everyone, and suspend most of them.  Just resume the ones I need for testing.
+
+Replace all the sup3rs3cr3t! passwords with random ones.
+
+Domain Design
+    Roles
+        Domain Admin
+            - Extra memberships: Enterprise Admins
+        Windows Engineer
+            - Extra memberships: Remote Management Users
+            - GPO: Remote Desktop Users on Windows Non-Prod Servers OU
+            - GPO: Local Administrator on Windows Non-Prod Servers OU
+        Windows Operator
+            - Extra memberships: Remote Management Users
+            - GPO: Remote Desktop Users on Windows Prod Servers OU
+            - GPO: Local Administrator on Windows Prod Servers OU
+        Windows Developer
+            - GPO: Remote Desktop Users on Windows Non-Prod Servers OU
+            - GPO: Local Administrator on Windows Non-Prod Servers OU
+        Help Desk
+            - GPO: Remote Desktop Users on Windows Workstations
+            - GPO: Local Administrator on Windows Workstations
+
+    Applications (http://soybomb.com/tricks/words/)
+        corobe - ASP.NET on IIS / SQL
+            Service Account: MSA-Corobe-Web, MSA-Corobe-Sql
+        bertal - Java on Tomcat / Postgresql
+
+    Servers
+        - WS19
+            - DC               192.168.64.8
+            - Deploy           192.168.64.32
+            - CorobeApp        192.168.64.33
+            - CorobeApp-N      192.168.64.34
+        - Ubuntu
+            - BertalApp        192.168.64.35
+            - BertalApp-N      192.168.64.36
+            
+    Workstations
+        - Win10
+            - WS-FLast         192.168.64.64+
+        - Ubuntu
+            - WS-FLast         192.168.64.96+
+        - Kali
+            - Hacker           192.168.64.128

@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
-$env:VAGRANT_DEFAULT_PROVIDER = "hyperv"
+$env:VAGRANT_DEFAULT_PROVIDER = "virtualbox"
  
 function Exec {
     [CmdletBinding()]
@@ -42,7 +42,7 @@ Exec { vagrant up kali --no-provision }
 Exec { vagrant snapshot save --force kali initial }
 Exec { vagrant provision kali --provision-with kali,common }
 Exec { vagrant snapshot save --force kali customized }
-# Exec { vagrant provision kali --provision-with share }
-# Exec { vagrant snapshot save --force kali ready }
+Exec { vagrant provision kali --provision-with share }
+Exec { vagrant snapshot save --force kali ready }
 
 Log "Done."

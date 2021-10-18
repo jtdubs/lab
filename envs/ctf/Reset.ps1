@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
-$env:VAGRANT_DEFAULT_PROVIDER = "hyperv"
+$env:VAGRANT_DEFAULT_PROVIDER = "virtualbox"
 
 function Exec {
     [CmdletBinding()]

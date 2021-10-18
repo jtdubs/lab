@@ -36,7 +36,10 @@ Exec { vagrant snapshot restore user sysprep }
 Exec { vagrant snapshot restore dev  initial }
 
 Log "Creating Domain..."
-Exec { vagrant provision dc --provision-with ntp,tools,forest,dc,share,ca,users,kds,gpo,credssp }
+Exec { vagrant provision dc --provision-with ntp,tools,forest,dc,share,ca,kds,credssp }
+Exec { vagrant snapshot save --force dc built }
+exit 0
+Exec { vagrant provision dc --provision-with populate,gpo }
 Exec { vagrant snapshot save --force dc ready }
 
 Log "Joining Web..."

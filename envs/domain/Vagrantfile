@@ -24,17 +24,17 @@ Vagrant.configure("2") do |config|
     box.vm.provision "windows-sysprep", name: "sysprep"
 
     # setup active directory
-    box.vm.provision "shell", name: "ntp",     path: "scripts/dc/Configure-NTP.ps1"
-    box.vm.provision "shell", name: "tools",   path: "scripts/dc/Install-Tools.ps1"
-    box.vm.provision "shell", name: "forest",  path: "scripts/dc/Create-Forest.ps1", reboot: true
-    box.vm.provision "shell", name: "dc",      path: "scripts/dc/Configure-DC.ps1"
-    box.vm.provision "shell", name: "share",   path: "scripts/dc/Create-Share.ps1"
-    box.vm.provision "shell", name: "ca",      path: "scripts/dc/Create-CA.ps1"
-    box.vm.provision "shell", name: "users",   path: "scripts/dc/Configure-Users.ps1"
-    box.vm.provision "shell", name: "kds",     path: "scripts/dc/Configure-KDS.ps1"
-    box.vm.provision "shell", name: "gpo",     path: "scripts/dc/Configure-GPO.ps1"
-    box.vm.provision "shell", name: "credssp", path: "scripts/windows/Configure-CredSSP.ps1"
-    box.vm.provision "shell", name: "summary", path: "scripts/windows/Summary.ps1"
+    box.vm.provision "shell", name: "ntp",      path: "scripts/dc/Configure-NTP.ps1"
+    box.vm.provision "shell", name: "tools",    path: "scripts/dc/Install-Tools.ps1"
+    box.vm.provision "shell", name: "forest",   path: "scripts/dc/Create-Forest.ps1", reboot: true
+    box.vm.provision "shell", name: "dc",       path: "scripts/dc/Configure-DC.ps1"
+    box.vm.provision "shell", name: "share",    path: "scripts/dc/Create-Share.ps1"
+    box.vm.provision "shell", name: "ca",       path: "scripts/dc/Create-CA.ps1"
+    box.vm.provision "shell", name: "kds",      path: "scripts/dc/Configure-KDS.ps1"
+    box.vm.provision "shell", name: "credssp",  path: "scripts/windows/Configure-CredSSP.ps1"
+    box.vm.provision "shell", name: "populate", path: "scripts/dc/Populate-AD.ps1"
+    box.vm.provision "shell", name: "gpo",      path: "scripts/dc/Configure-GPO.ps1"
+    box.vm.provision "shell", name: "summary",  path: "scripts/windows/Summary.ps1"
 
     # fix time after resumes
     box.trigger.after :resume do |trigger|
